@@ -112,6 +112,7 @@ npm run setup                        # секреты воркера из .env, 
 - Python: кириллица в выводе — `PYTHONIOENCODING=utf-8`, файлы — `encoding="utf-8"`; Pillow стоит. Временные скрипты — во временной папке сессии, не в репо.
 - **Голос `edge-tts`** 7.3.1 — ставить во временную папку сессии: `python -m pip install --target <tmp>/pylib edge-tts==7.3.1`. Многоязычные голоса (`en-US-AndrewMultilingualNeural` и др.) читают русский текст — список: `python -m edge_tts --list-voices | grep Multilingual`. Сервис иногда не отдаёт звук (`NoAudioReceived`) — `tools/voice.py` повторяет. Паузы до 1 с между предложениями он режет сам; фильтр ffmpeg `silenceremove` сжимает плохо.
 - Пуш: `git push` — `main` отправлен 2026-11-07, вход GitHub сохранён.
+- **`gh` на этом компьютере залогинен в основной аккаунт решающего — для этого репо не использовать.** Настройки репо (GitHub Pages и т. п.) решающий делает сам в браузере под `mryahoopryanichek`.
 
 ## Дальше
 
