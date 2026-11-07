@@ -1,0 +1,58 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/fontan-vivienne-q-3c4daf4a.mp3",
+      "len": 1.67
+    },
+    "a": {
+      "file": "q/fontan-vivienne-a-81a042d2.mp3",
+      "len": 2.24
+    },
+    "h": {
+      "file": "q/fontan-vivienne-h-274ad7c7.mp3",
+      "len": 2.32
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/fontan-andrew-q-ea824633.mp3",
+      "len": 1.68
+    },
+    "a": {
+      "file": "q/fontan-andrew-a-d9aa734f.mp3",
+      "len": 2.26
+    },
+    "h": {
+      "file": "q/fontan-andrew-h-a05c8445.mp3",
+      "len": 2.47
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/fontan-remy-q-4630d4a6.mp3",
+      "len": 1.79
+    },
+    "a": {
+      "file": "q/fontan-remy-a-2d3dc2ea.mp3",
+      "len": 2.24
+    },
+    "h": {
+      "file": "q/fontan-remy-h-17a268c1.mp3",
+      "len": 2.46
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/fontan-svetlana-q-c5722d04.mp3",
+      "len": 1.6
+    },
+    "a": {
+      "file": "q/fontan-svetlana-a-20c101eb.mp3",
+      "len": 2.28
+    },
+    "h": {
+      "file": "q/fontan-svetlana-h-7cf9e12a.mp3",
+      "len": 2.42
+    }
+  }
+}

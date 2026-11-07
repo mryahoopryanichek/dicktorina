@@ -1,0 +1,58 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/twerk-vivienne-q-bf677834.mp3",
+      "len": 0.82
+    },
+    "a": {
+      "file": "q/twerk-vivienne-a-415225e2.mp3",
+      "len": 0.89
+    },
+    "h": {
+      "file": "q/twerk-vivienne-h-d9129d1e.mp3",
+      "len": 2.05
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/twerk-andrew-q-8fb2c34c.mp3",
+      "len": 0.69
+    },
+    "a": {
+      "file": "q/twerk-andrew-a-c98b32c7.mp3",
+      "len": 0.87
+    },
+    "h": {
+      "file": "q/twerk-andrew-h-8f33d2ee.mp3",
+      "len": 2.08
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/twerk-remy-q-e77498eb.mp3",
+      "len": 0.87
+    },
+    "a": {
+      "file": "q/twerk-remy-a-1a03de26.mp3",
+      "len": 0.89
+    },
+    "h": {
+      "file": "q/twerk-remy-h-b522d71c.mp3",
+      "len": 2.18
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/twerk-svetlana-q-ddb55561.mp3",
+      "len": 0.88
+    },
+    "a": {
+      "file": "q/twerk-svetlana-a-0177cb4b.mp3",
+      "len": 0.8
+    },
+    "h": {
+      "file": "q/twerk-svetlana-h-8f18ca1f.mp3",
+      "len": 2.19
+    }
+  }
+}

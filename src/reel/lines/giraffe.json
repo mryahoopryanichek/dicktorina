@@ -1,0 +1,58 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/giraffe-vivienne-q-7a04025b.mp3",
+      "len": 2.68
+    },
+    "a": {
+      "file": "q/giraffe-vivienne-a-dd3b8e99.mp3",
+      "len": 3.67
+    },
+    "h": {
+      "file": "q/giraffe-vivienne-h-f98196ec.mp3",
+      "len": 2.44
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/giraffe-andrew-q-6a1f32fd.mp3",
+      "len": 2.51
+    },
+    "a": {
+      "file": "q/giraffe-andrew-a-6edef85d.mp3",
+      "len": 3.63
+    },
+    "h": {
+      "file": "q/giraffe-andrew-h-3c8371fb.mp3",
+      "len": 2.65
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/giraffe-remy-q-012c2a4d.mp3",
+      "len": 2.74
+    },
+    "a": {
+      "file": "q/giraffe-remy-a-9159f404.mp3",
+      "len": 3.47
+    },
+    "h": {
+      "file": "q/giraffe-remy-h-4c0975cb.mp3",
+      "len": 2.67
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/giraffe-svetlana-q-df160649.mp3",
+      "len": 2.9
+    },
+    "a": {
+      "file": "q/giraffe-svetlana-a-c62ee0d2.mp3",
+      "len": 3.34
+    },
+    "h": {
+      "file": "q/giraffe-svetlana-h-7457c36a.mp3",
+      "len": 2.84
+    }
+  }
+}

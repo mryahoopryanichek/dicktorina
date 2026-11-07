@@ -1,0 +1,58 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/clown-vivienne-q-d2f93bff.mp3",
+      "len": 3.11
+    },
+    "a": {
+      "file": "q/clown-vivienne-a-ef435b0d.mp3",
+      "len": 1.35
+    },
+    "h": {
+      "file": "q/clown-vivienne-h-afefec76.mp3",
+      "len": 2.11
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/clown-andrew-q-e3d14fe9.mp3",
+      "len": 2.9
+    },
+    "a": {
+      "file": "q/clown-andrew-a-59e35e96.mp3",
+      "len": 1.4
+    },
+    "h": {
+      "file": "q/clown-andrew-h-a89d944f.mp3",
+      "len": 2.19
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/clown-remy-q-76a89a7e.mp3",
+      "len": 2.94
+    },
+    "a": {
+      "file": "q/clown-remy-a-8359c4d8.mp3",
+      "len": 1.41
+    },
+    "h": {
+      "file": "q/clown-remy-h-69e254c2.mp3",
+      "len": 2.27
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/clown-svetlana-q-50bc9e75.mp3",
+      "len": 3.07
+    },
+    "a": {
+      "file": "q/clown-svetlana-a-2bcab43c.mp3",
+      "len": 1.38
+    },
+    "h": {
+      "file": "q/clown-svetlana-h-e0004e6b.mp3",
+      "len": 2.35
+    }
+  }
+}

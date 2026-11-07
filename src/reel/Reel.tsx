@@ -26,7 +26,7 @@ import {Background} from '../Background';
 import {FONT, PALETTES, REEL, chipColors, textWidth, useFontReady, type Palette, type PaletteId} from '../brand';
 import {Outro, outroSeconds, type VoiceId} from '../outro/Outro';
 import {QUESTIONS, type QuestionId} from './questions';
-import {LINES} from './voiceLines';
+import {LINES} from './questions';
 
 export type Media =
   // revealSrc — картинка на ответе; hide — [x, y, w, h] долями картинки: размыто до ответа (нужен aspect = ширина/высота)
