@@ -23,7 +23,7 @@ export type {VoiceId};
 
 export const CTA_TEXT = {
   question: ['Поиграл бы в такую', 'викторину?'],
-  voice: 'Поиграл бы в такую викторину? Если да, регистрируйся на сайте. Наберём тысячу игроков — сделаем!',
+  voice: 'Поиграл бы в такую викторину? Если да, регистрируйся на сайте. Наберём пять тысяч игроков — сделаем!',
   arrow: 'ссылка в профиле',
 };
 
@@ -36,6 +36,7 @@ const timing = (voice: VoiceId) => {
   const end = VOICE_AT + v.len + 0.05;
   return {v, end, total: end + EXIT};
 };
+export const outroSeconds = (voice: VoiceId) => timing(voice).total; // длина концовки с этим голосом
 
 const LEFT = 86; // левый край слова и текста, px
 const LOGO_Y = 0.175; // середина слова, доля высоты кадра
@@ -136,7 +137,7 @@ const Cta = ({palette, voice, t}: {palette: Palette; voice: VoiceId; t: number})
             на сайте.
           </Reveal>
           <Reveal t={t} at={at(v.gather)}>
-            Наберём <span style={{background: fill, color: label, borderRadius: 14, padding: '0 14px'}}>1000</span>
+            Наберём <span style={{background: fill, color: label, borderRadius: 14, padding: '0 14px'}}>5000</span>
           </Reveal>
           <div>
             <Reveal t={t} at={at(v.gather) + 0.5} inline>

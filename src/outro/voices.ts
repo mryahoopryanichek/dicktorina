@@ -1,9 +1,9 @@
 // Сгенерировано tools/voice.py — не править руками. Голоса концовки: длина фразы, с, и когда начинается
 // кусок «Если да», «регистрируйся», «Наберём», «сделаем» — по ним появляются строки.
 export const VOICES = {
-  vivienne: {name: 'fr-FR-VivienneMultilingualNeural', rate: '+36%', len: 4.85, yes: 1.35, reg: 1.99, gather: 3.11, done: 4.35},
-  andrew: {name: 'en-US-AndrewMultilingualNeural', rate: '+55%', len: 4.71, yes: 1.28, reg: 1.87, gather: 3.04, done: 4.27},
-  remy: {name: 'fr-FR-RemyMultilingualNeural', rate: '+46%', len: 4.88, yes: 1.34, reg: 2.02, gather: 3.14, done: 4.38},
-  svetlana: {name: 'ru-RU-SvetlanaNeural', rate: '+38%', len: 4.88, yes: 1.39, reg: 1.9, gather: 3.17, done: 4.29},
+  vivienne: {name: 'fr-FR-VivienneMultilingualNeural', rate: '+40%', len: 4.85, yes: 1.31, reg: 1.94, gather: 3.04, done: 4.36},
+  andrew: {name: 'en-US-AndrewMultilingualNeural', rate: '+61%', len: 4.81, yes: 1.26, reg: 1.81, gather: 3.04, done: 4.39},
+  remy: {name: 'fr-FR-RemyMultilingualNeural', rate: '+50%', len: 4.89, yes: 1.31, reg: 1.98, gather: 3.08, done: 4.41},
+  svetlana: {name: 'ru-RU-SvetlanaNeural', rate: '+45%', len: 4.87, yes: 1.33, reg: 1.83, gather: 3.07, done: 4.32},
 };
 export type VoiceId = keyof typeof VOICES;

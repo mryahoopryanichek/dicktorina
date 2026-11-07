@@ -3,12 +3,24 @@ import {Composition} from 'remotion';
 import {Intro, INTRO_SECONDS, type IntroProps} from './intro/Intro';
 import {Outro, outroMetadata, type OutroProps} from './outro/Outro';
 import {PALETTE_IDS, REEL} from './brand';
+import {Reel, reelMetadata, type ReelProps} from './reel/Reel';
 import {Palettes} from './Palettes';
 import {AVATAR_SIZE, AVATAR_VARIANTS, Avatars} from './profile/Avatar';
 import {BANNER, BANNER_VARIANTS, Banners} from './profile/Banner';
 
 export const RemotionRoot = () => (
   <>
+    {/* Ролик-вопрос: --props='{"q":"clown","palette":"sunset","voice":"remy"}', q — id из src/reel/questions.ts */}
+    <Composition
+      id="Reel"
+      component={Reel}
+      defaultProps={{q: 'clown', palette: 'sunset', voice: 'andrew'} satisfies ReelProps}
+      calculateMetadata={reelMetadata}
+      durationInFrames={1}
+      fps={REEL.fps}
+      width={REEL.width}
+      height={REEL.height}
+    />
     <Composition
       id="Outro"
       component={Outro}

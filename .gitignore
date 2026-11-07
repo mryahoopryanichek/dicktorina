@@ -6,3 +6,6 @@ node_modules/
 
 # Передачи между сессиями — личное, в git не идут
 *.local.md
+
+# Медиа для роликов — копии из materials/, в git не идут
+public/media/

@@ -1,11 +1,18 @@
-"""Голос концовки: edge-tts → паузы ужаты → скорость подобрана под длину → public/voices/<id>.mp3
-и src/outro/voices.ts — длина фразы и когда начинается каждый кусок (по границам слов).
+"""Голоса роликов через edge-tts, паузы ужаты.
+
+    python tools/voice.py            — концовка: скорость подобрана под длину → public/voices/<id>.mp3
+                                       и src/outro/voices.ts (длина фразы, когда начинается каждый кусок)
+    python tools/voice.py questions  — вопросы и ответы из src/reel/questions.json каждым голосом →
+                                       public/voices/q/*.mp3 и src/reel/voiceLines.ts (файл и длина).
+                                       Уже озвученное не трогает: имя файла — от текста, голоса и скорости.
 
 edge-tts ставить во временную папку, не в систему:
     python -m pip install --target <tmp>/pylib edge-tts==7.3.1
-    PYTHONPATH=<tmp>/pylib PYTHONIOENCODING=utf-8 python tools/voice.py
+    PYTHONPATH=<tmp>/pylib PYTHONIOENCODING=utf-8 python tools/voice.py [questions]
 """
 import asyncio
+import hashlib
+import json
 import os
 import re
 import shutil
@@ -16,7 +23,7 @@ import time
 
 import edge_tts
 
-TEXT = "Поиграл бы в такую викторину? Если да, регистрируйся на сайте. Наберём тысячу игроков — сделаем!"
+TEXT = "Поиграл бы в такую викторину? Если да, регистрируйся на сайте. Наберём пять тысяч игроков — сделаем!"
 # Куски фразы: имя → слово, с которого кусок начинается. По ним в ролике появляются строки
 MARKS = {"yes": "Если", "reg": "регистрируйся", "gather": "Наберём", "done": "сделаем"}
 VOICES = {  # id → голос edge-tts, высота
@@ -25,7 +32,9 @@ VOICES = {  # id → голос edge-tts, высота
     "remy": ("fr-FR-RemyMultilingualNeural", "+0Hz"),
     "svetlana": ("ru-RU-SvetlanaNeural", "+12Hz"),
 }
-TARGET = 4.9  # с: фраза целиком, с запасом до 5
+TARGET = 4.9  # с: фраза концовки целиком, с запасом до 5
+# Вопросы читаются живее обычного, но без гонки, как в концовке
+QRATE = {"vivienne": "+20%", "andrew": "+35%", "remy": "+28%", "svetlana": "+22%"}
 GAP, MAXGAP, PAD = 0.14, 0.2, 0.03  # пауза длиннее MAXGAP становится GAP; поля у кусков речи
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -46,8 +55,8 @@ def ffmpeg(name):
 FF = ffmpeg("ffmpeg")
 
 
-async def synth(voice, rate, pitch):
-    c = edge_tts.Communicate(TEXT, voice, rate=rate, pitch=pitch, boundary="WordBoundary")
+async def synth(text, voice, rate, pitch):
+    c = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch, boundary="WordBoundary")
     audio, words = bytearray(), []
     async for ch in c.stream():
         if ch["type"] == "audio":
@@ -103,20 +112,23 @@ def remap(t, segs, starts):
     return starts[-1] + segs[-1][1] - segs[-1][0]
 
 
+def say(text, voice, rate, pitch, label):
+    for _try in range(6):  # сервис иногда не отдаёт звук — повторить
+        try:
+            audio, words = asyncio.run(synth(text, voice, rate, pitch))
+        except edge_tts.exceptions.NoAudioReceived:
+            audio = b""
+        if audio:
+            return audio, words
+        time.sleep(2)
+    sys.exit(f"{label}: голос не отдаёт звук")
+
+
 def build(vid, voice, pitch, tmp):
     rate = 0.2
     for _ in range(6):
         r = f"{round(rate * 100):+d}%"
-        for _try in range(6):  # сервис иногда не отдаёт звук — повторить
-            try:
-                audio, words = asyncio.run(synth(voice, r, pitch))
-            except edge_tts.exceptions.NoAudioReceived:
-                audio = b""
-            if audio:
-                break
-            time.sleep(2)
-        else:
-            sys.exit(f"{vid}: голос не отдаёт звук")
+        audio, words = say(TEXT, voice, r, pitch, vid)
         raw = os.path.join(tmp, f"{vid}.raw.mp3")
         with open(raw, "wb") as f:
             f.write(audio)
@@ -155,4 +167,48 @@ def main():
         f.write("\n".join(lines))
 
 
-main()
+def questions():
+    src = os.path.join(ROOT, "src", "reel", "questions.json")
+    qs = json.load(open(src, encoding="utf-8"))
+    qdir = os.path.join(ROOT, "public", "voices", "q")
+    os.makedirs(qdir, exist_ok=True)
+    out, keep = {}, set()
+    with tempfile.TemporaryDirectory() as tmp:
+        for qid, q in qs.items():
+            answer = q["options"][q["answer"]] if isinstance(q["answer"], int) else q["answer"]
+            texts = {"q": q.get("say") or q["text"], "a": q.get("answerSay") or f"Правильный ответ — {answer}!"}
+            if q.get("hook"):  # хук в начале ролика
+                texts["h"] = q.get("hookSay") or f"Внимание! {q['hook']}!"
+            out[qid] = {}
+            for vid, (voice, pitch) in VOICES.items():
+                rate = QRATE[vid]
+                out[qid][vid] = {}
+                for kind, text in texts.items():
+                    h = hashlib.sha1(f"{text}|{voice}|{rate}|{pitch}".encode()).hexdigest()[:8]
+                    name = f"{qid}-{vid}-{kind}-{h}.mp3"
+                    dst = os.path.join(qdir, name)
+                    keep.add(name)
+                    if not os.path.exists(dst):
+                        audio, _ = say(text, voice, rate, pitch, f"{qid}/{vid}/{kind}")
+                        raw = os.path.join(tmp, "raw.mp3")
+                        with open(raw, "wb") as f:
+                            f.write(audio)
+                        squeeze(raw, dst, speech_segments(raw))
+                    err = subprocess.run([FF, "-i", dst], capture_output=True, text=True, encoding="utf-8", errors="replace").stderr
+                    h_, m_, s_ = re.search(r"Duration: (\d+):(\d+):([\d.]+)", err).groups()
+                    out[qid][vid][kind] = {"file": f"q/{name}", "len": round(int(h_) * 3600 + int(m_) * 60 + float(s_), 2)}
+                print(qid, vid, {k: v["len"] for k, v in out[qid][vid].items()})
+    for f in os.listdir(qdir):  # старые озвучки поменявшихся текстов
+        if f.endswith(".mp3") and f not in keep:
+            os.remove(os.path.join(qdir, f))
+    body = json.dumps(out, ensure_ascii=False, indent=2)
+    with open(os.path.join(ROOT, "src", "reel", "voiceLines.ts"), "w", encoding="utf-8", newline="\n") as f:
+        f.write("// Сгенерировано tools/voice.py questions — не править руками.\n"
+                "// Озвучка хука (h), вопроса (q) и ответа (a) каждым голосом: файл в public/voices/ и длина, с.\n"
+                f"export const LINES: Record<string, Record<string, Record<string, {{file: string; len: number}}>>> = {body};\n")
+
+
+if len(sys.argv) > 1 and sys.argv[1] == "questions":
+    questions()
+else:
+    main()
