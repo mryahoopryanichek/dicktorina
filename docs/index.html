@@ -4,16 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dикторина — квиз для компании</title>
-<meta name="description" content="Квиз не про знания, а про чёрный юмор, шутки ниже пояса и песни, которые стыдно знать. Наберём 1000 игроков — сделаем игру.">
+<meta name="description" content="Квиз для компании: вопросы на телевизоре, ответы с телефонов. Не про знания, а про чёрный юмор, шутки ниже пояса и песни, которые стыдно знать. Наберём 5000 игроков — сделаем игру.">
 <meta property="og:title" content="Dикторина — квиз для компании">
-<meta property="og:description" content="Квиз не про знания, а про чёрный юмор и шутки ниже пояса. Наберём 1000 игроков — сделаем игру.">
+<meta property="og:description" content="Вопросы на телевизоре, ответы с телефонов. Чёрный юмор и шутки ниже пояса. Наберём 5000 игроков — сделаем игру.">
 <meta property="og:image" content="https://mryahoopryanichek.github.io/dicktorina/og.png">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#2A1A6E">
 <link rel="icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;600&family=Unbounded:wght@600;800&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
 <style>
   /* Палитра night из src/brand.ts — та же, что у аватара и шапки */
   :root {
@@ -22,16 +23,24 @@
     --high: #35D0DA;
     --ink: #FFFFFF;
     --on-button: #2A1A6E;
+    --bezel: #170E45;
+    --bezel-edge: #3B2E8C;
+    --display: 'Unbounded', system-ui, sans-serif;
+    --text: 'Golos Text', system-ui, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; }
-  html, body { min-height: 100%; }
+  html { scroll-behavior: smooth; }
   body {
     min-height: 100svh;
-    font-family: 'Unbounded', system-ui, sans-serif;
+    font-family: var(--text);
     color: var(--ink);
     background: var(--low);
     overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
   }
+  button, input { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
   /* Фон: градиент снизу-слева к верху, медленно переливается; блик, искры, зерно */
   .bg, .bg::before, .bg::after { position: fixed; inset: 0; pointer-events: none; }
   .bg {
@@ -65,68 +74,449 @@
     opacity: 0; animation: twinkle var(--d) ease-in-out var(--delay) infinite;
   }
   @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.4) rotate(0); } 50% { opacity: 1; transform: scale(1) rotate(45deg); } }
-  @media (prefers-reduced-motion: reduce) { .bg, .bg::before, .spark { animation: none; } }
+
+  /* Сколько прочитано: 8, потом =, в конце D */
+  .meter {
+    position: fixed; z-index: 3; top: 0; left: 0; right: 0;
+    display: flex; align-items: center; height: 30px; padding: 0 16px;
+    font: 800 13px/1 var(--display); letter-spacing: .02em;
+    background: linear-gradient(rgba(42,26,110,.85), rgba(42,26,110,0));
+    pointer-events: none;
+  }
+  .meter .shaft { display: block; overflow: hidden; white-space: nowrap; width: calc(var(--p, 0) * (100% - 40px)); }
+  .meter .shaft::before { content: '================================================================================================================================================================================================================'; }
 
   main {
     position: relative; z-index: 1; /* искры — под текстом */
-    width: min(560px, 100%);
+    width: min(1160px, 100%);
     margin: 0 auto;
-    padding: max(48px, 8svh) 20px 40px;
-    display: flex; flex-direction: column; gap: 28px;
+    padding: 0 20px;
   }
-  .logo { font-weight: 800; font-size: clamp(32px, 12vw, 70px); white-space: nowrap; line-height: 1; letter-spacing: -.01em; }
-  h1 { font-weight: 800; font-size: clamp(26px, 7.4vw, 40px); line-height: 1.12; }
-  .lead { font-weight: 500; font-size: clamp(16px, 4.3vw, 19px); line-height: 1.45; opacity: .95; }
-  .lead b { font-weight: 800; }
+  section { padding: 64px 0; }
+  h2 { font: 800 clamp(26px, 6.6vw, 44px)/1.1 var(--display); max-width: 20ch; }
+  .sub { font-size: clamp(17px, 4.4vw, 19px); line-height: 1.5; max-width: 34em; margin-top: 14px; opacity: .92; }
+
+  /* Первый экран */
+  .hero { padding-top: max(56px, 8svh); display: grid; gap: 40px; align-items: center; }
+  .copy { display: flex; flex-direction: column; gap: 22px; }
+  .logo { font: 800 clamp(34px, 12vw, 64px)/1 var(--display); white-space: nowrap; letter-spacing: -.01em; }
+  h1 { font: 800 clamp(25px, 7vw, 38px)/1.12 var(--display); max-width: 19ch; }
+  .lead { font-size: clamp(17px, 4.5vw, 20px); line-height: 1.5; max-width: 30em; }
+  .lead b { font-weight: 600; }
+
   .count[hidden] { display: none; }
-  .count { display: flex; flex-direction: column; gap: 10px; font-weight: 500; font-size: 15px; }
-  .count b { font-weight: 800; font-size: 22px; }
+  .count { display: flex; flex-direction: column; gap: 10px; font-size: 16px; max-width: 30em; }
+  .count b { font: 800 22px var(--display); }
   .bar { height: 12px; border-radius: 99px; background: rgba(255,255,255,.22); overflow: hidden; }
   .bar i { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--ink); transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
+
   .cta {
     display: flex; align-items: center; justify-content: center; gap: 12px;
-    padding: 22px 28px; border-radius: 99px;
+    max-width: 30em;
+    padding: 21px 22px; border-radius: 99px;
     background: var(--ink); color: var(--on-button);
-    font-weight: 800; font-size: clamp(18px, 5vw, 22px); text-decoration: none;
+    font: 800 clamp(15px, 4.2vw, 21px) var(--display); text-decoration: none; white-space: nowrap;
     box-shadow: 0 0 0 0 rgba(255,255,255,.6), 0 14px 34px rgba(0,0,0,.28);
     animation: pulse 2.2s ease-out infinite;
   }
   .cta svg { width: 28px; height: 28px; flex: none; }
   .cta:active { transform: scale(.98); }
   @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,.55), 0 14px 34px rgba(0,0,0,.28); } 70%, 100% { box-shadow: 0 0 0 22px rgba(255,255,255,0), 0 14px 34px rgba(0,0,0,.28); } }
-  .hint { font-weight: 500; font-size: 14px; line-height: 1.45; opacity: .85; margin-top: -14px; }
-  ul { list-style: none; padding: 0; display: grid; gap: 12px; font-weight: 500; font-size: 16px; line-height: 1.4; }
-  li { display: flex; gap: 12px; align-items: baseline; }
-  li::before { content: '='; font-weight: 800; }
-  footer { display: flex; flex-wrap: wrap; gap: 10px 20px; font-weight: 500; font-size: 14px; padding-top: 8px; }
-  footer a { color: var(--ink); text-underline-offset: 4px; }
+  .hint { font-size: 15px; line-height: 1.45; opacity: .85; margin-top: -8px; max-width: 30em; }
+
+  /* Комната: телевизор и телефон. Размеры — в долях ширины сцены (cqw) */
+  .stage {
+    --tw: 88cqw; --pw: 31cqw; --pt: 27cqw;
+    container-type: inline-size;
+    position: relative; width: 100%; aspect-ratio: 100 / 94;
+  }
+  .stage-wrap { margin: 0 -10px; }
+  .tv { position: absolute; left: 0; top: 0; width: var(--tw); }
+  .tv-body {
+    padding: 1.3cqw; border-radius: 2.2cqw;
+    background: var(--bezel);
+    box-shadow: inset 0 0 0 .3cqw var(--bezel-edge), 0 4cqw 8cqw rgba(15,6,50,.45);
+  }
+  .tv::after { /* подставка */
+    content: ''; display: block; width: 22cqw; height: 2.6cqw; margin: 0 auto;
+    background: var(--bezel); clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%);
+  }
+  .screen {
+    container-type: inline-size;
+    position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 1cqw;
+    background:
+      radial-gradient(90% 90% at 100% 0%, rgba(53,208,218,.55), transparent 60%),
+      linear-gradient(200deg, #3A86C8 0%, #2A1A6E 75%);
+    display: grid; grid-template-rows: auto 1fr auto; gap: 2.4cqw;
+    padding: 3.6cqw 4.4cqw 3.8cqw;
+  }
+  .scr-top { display: flex; justify-content: space-between; align-items: center; }
+  .scr-logo { font: 800 3.6cqw/1 var(--display); }
+  .scr-status { position: relative; font: 600 2.6cqw/1 var(--text); padding: 1.2cqw 2cqw; border-radius: 99px; background: rgba(255,255,255,.16); }
+  .scr-status .ready { position: absolute; inset: 0; display: grid; place-items: center; border-radius: inherit; background: #fff; color: var(--low); font-weight: 600; }
+  .scr-mid { display: flex; gap: 4cqw; align-items: center; }
+  .qr { display: block; flex: none; width: 21cqw; aspect-ratio: 1; padding: 1.3cqw; border-radius: 1.6cqw; background: #fff; }
+  .qr svg { display: block; width: 100%; height: 100%; }
+  .join { display: flex; flex-direction: column; gap: 1.6cqw; }
+  .join p { font: 600 3cqw/1.3 var(--text); opacity: .92; }
+  .code { display: flex; gap: 1.2cqw; }
+  .code span {
+    display: grid; place-items: center; width: 9.4cqw; aspect-ratio: 1; border-radius: 1.6cqw;
+    background: #fff; color: var(--low); font: 800 5.6cqw/1 var(--display);
+    box-shadow: 0 .8cqw 0 rgba(20,8,70,.35);
+  }
+  .players { display: flex; gap: 2.6cqw; }
+  .player { display: flex; flex-direction: column; align-items: center; gap: .9cqw; width: 11cqw; }
+  .ava {
+    position: relative; display: grid; place-items: center; width: 7.6cqw; aspect-ratio: 1; border-radius: 50%;
+    border: .3cqw dashed rgba(255,255,255,.4);
+  }
+  .ava b {
+    position: absolute; inset: -.3cqw; display: grid; place-items: center; border-radius: 50%;
+    background: linear-gradient(200deg, var(--h), var(--l)); color: var(--k);
+    font: 800 3.3cqw/1 var(--display);
+  }
+  .ava b.me { box-shadow: 0 0 0 .6cqw #fff; }
+  .player small { font: 600 2.8cqw/1.1 var(--text); white-space: nowrap; }
+
+  .phone {
+    position: absolute; right: 0; top: var(--pt); width: var(--pw);
+    padding: 1cqw; border-radius: 4cqw;
+    background: var(--bezel);
+    box-shadow: inset 0 0 0 .3cqw var(--bezel-edge), 0 4cqw 8cqw rgba(15,6,50,.5);
+  }
+  .ph-screen {
+    container-type: inline-size;
+    position: relative; aspect-ratio: 9 / 18.5; overflow: hidden; border-radius: 3.2cqw;
+    background: linear-gradient(200deg, #35D0DA 0%, #3A86C8 45%, #2A1A6E 100%);
+  }
+  .ph-page { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 4cqw; padding: 18cqw 9cqw 10cqw; }
+  .ph-screen::before { /* вырез камеры */
+    content: ''; position: absolute; z-index: 2; top: 4cqw; left: 50%; width: 24cqw; height: 6cqw; translate: -50% 0;
+    border-radius: 99px; background: var(--bezel);
+  }
+  .ph-logo { font: 800 10cqw/1 var(--display); margin-bottom: 4cqw; }
+  .ph-page label { font: 600 7.4cqw/1 var(--text); opacity: .9; }
+  .field {
+    display: flex; align-items: center; height: 17cqw; padding: 0 5cqw; border-radius: 5cqw;
+    background: #fff; color: var(--low); font: 800 9.6cqw/1 var(--display); letter-spacing: .04em;
+  }
+  .field.name { font: 600 9.6cqw/1 var(--text); letter-spacing: 0; }
+  .ph-btn {
+    margin-top: auto; height: 18cqw; display: grid; place-items: center; border-radius: 99px;
+    background: var(--low); font: 800 8.4cqw/1 var(--display);
+    box-shadow: inset 0 0 0 .8cqw rgba(255,255,255,.5);
+  }
+  .ph-done { justify-content: center; align-items: flex-start; background: linear-gradient(200deg, #35D0DA 0%, #3A86C8 45%, #2A1A6E 100%); }
+  .ph-done .tick { display: grid; place-items: center; width: 30cqw; aspect-ratio: 1; border-radius: 50%; background: #fff; color: var(--low); font: 800 16cqw/1 var(--display); margin-bottom: 4cqw; }
+  .ph-done strong { font: 800 11cqw/1.15 var(--display); }
+  .ph-done p { font: 600 8.4cqw/1.3 var(--text); }
+
+  .stage-note { position: absolute; left: 10px; bottom: 0; width: 60cqw; font-size: clamp(13px, 2.6cqw, 16px); line-height: 1.45; opacity: .9; }
+  .stage-note .wide { display: none; }
+
+  /* Сцена проигрывается один раз, когда видна: друзья заходят в комнату, Саня — с телефона */
+  .js .stage:not(.play) .anim { visibility: hidden; }
+  .js .stage:not(.play) .ph-done { visibility: hidden; }
+  .stage.play .anim { animation: pop .45s cubic-bezier(.3,1.6,.5,1) var(--t) both; }
+  .stage.play .code-in .anim, .stage.play .name-in .anim { animation: type .01s var(--t) both; }
+  .stage.play .ph-btn { animation: press .3s ease var(--t) both; }
+  .stage.play .ph-done { animation: slide .4s cubic-bezier(.2,.8,.2,1) var(--t) both; }
+  .stage.play .ready { animation: pop .45s cubic-bezier(.3,1.6,.5,1) var(--t) both, glow 1.8s ease-out calc(var(--t) + .5s) infinite; }
+  .caret { display: inline-block; width: .6cqw; height: 9cqw; margin-left: 1cqw; background: var(--low); animation: blink 1s steps(1) infinite; }
+  @keyframes pop { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: none; } }
+  @keyframes type { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes press { 50% { transform: scale(.92); background: #fff; color: var(--low); } }
+  @keyframes slide { from { transform: translateX(100%); } to { transform: none; } }
+  @keyframes blink { 50% { opacity: 0; } }
+  @keyframes glow { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,.7); } 80%, 100% { box-shadow: 0 0 0 2cqw rgba(255,255,255,0); } }
+
+  /* Как это будет */
+  .steps { list-style: none; padding: 0; margin-top: 36px; display: grid; gap: 28px; counter-reset: step; }
+  .steps li { display: grid; grid-template-columns: 52px 1fr; gap: 4px 16px; align-items: start; counter-increment: step; }
+  .steps li::before {
+    content: counter(step); grid-row: span 2;
+    display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%;
+    background: #fff; color: var(--low); font: 800 22px/1 var(--display);
+  }
+  .steps h3 { font: 800 clamp(18px, 4.8vw, 21px)/1.25 var(--display); padding-top: 4px; }
+  .steps p { font-size: 17px; line-height: 1.5; opacity: .92; max-width: 30em; }
+  .where { margin-top: 40px; font: 600 clamp(18px, 4.8vw, 22px)/1.45 var(--text); max-width: 32em; padding-left: 20px; border-left: 4px solid #fff; }
+
+  /* Примеры вопросов — как кадры рилсов: палитра из src/brand.ts, тег, вопрос, картинка из игры; после ответа — кадр-ответ */
+  .qs {
+    display: grid; grid-auto-flow: column; grid-auto-columns: min(86%, 380px); gap: 14px;
+    margin: 32px -20px 0; padding: 4px 20px 24px; align-items: start;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 20px;
+    scrollbar-width: none;
+  }
+  .qs::-webkit-scrollbar { display: none; }
+  .swipe { font-size: 15px; opacity: .8; margin-top: 10px; }
+  .q {
+    --glass: rgba(255,255,255,.5); --on-ink: var(--high);
+    scroll-snap-align: start;
+    display: flex; flex-direction: column; gap: 14px;
+    padding: 20px 18px 18px; border-radius: 28px;
+    color: var(--ink);
+    background:
+      radial-gradient(80% 50% at 100% 0%, rgba(255,255,255,.45), transparent 70%),
+      linear-gradient(205deg, var(--high) 0%, var(--mid) 58%, var(--low) 130%);
+    box-shadow: 0 22px 48px rgba(20,8,70,.35);
+  }
+  .q.dark { --glass: rgba(255,255,255,.16); --on-ink: var(--low); }
+  .tag { align-self: flex-start; padding: 7px 12px; border-radius: 99px; background: var(--ink); color: var(--on-ink); font: 600 11px/1.15 var(--display); text-transform: uppercase; letter-spacing: .03em; }
+  .q h3 { font: 800 19px/1.25 var(--display); }
+  .pic { margin: 0; border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 14px 30px rgba(20,8,40,.28); }
+  .pic img { display: block; width: 100%; height: auto; }
+  .pic img.swap { animation: show .4s ease both; }
+  @keyframes show { from { opacity: 0; transform: scale(.96); } }
+  .rebus { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .rebus figure { margin: 0; display: grid; gap: 6px; }
+  .rebus span { display: block; aspect-ratio: 4 / 3; padding: 8px; border-radius: 16px; background: #fff; box-shadow: 0 8px 18px rgba(20,8,40,.22); }
+  .rebus img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .rebus figcaption { font: 800 13px/1.2 var(--display); text-align: center; visibility: hidden; }
+  .done .rebus figcaption { visibility: visible; animation: show .4s ease both; }
+  .opts { display: grid; gap: 8px; }
+  .opt {
+    display: flex; justify-content: space-between; gap: 10px; text-align: left;
+    padding: 13px 16px; border: 0; border-radius: 16px; cursor: pointer;
+    background: var(--glass); color: var(--ink); font-size: 16px; font-weight: 600; line-height: 1.3;
+    transition: background .2s, opacity .2s;
+  }
+  .opt:hover:not(:disabled) { background: color-mix(in srgb, var(--glass), #fff 25%); }
+  .opt:disabled { cursor: default; }
+  .done .opt { opacity: .5; }
+  .done .answer .opt { display: none; }
+  .done .opt.is-picked { opacity: 1; background: var(--ink); color: var(--on-ink); }
+  .done .opt.is-picked:not(.is-right) { text-decoration: line-through; }
+  .done .opt.is-right { opacity: 1; }
+  .done .opt.is-right::after { content: '✓'; font-family: var(--display); font-weight: 800; }
+  .answer { display: grid; gap: 8px; }
+  .answer input[type=text] { width: 100%; padding: 14px 16px; border: 0; border-radius: 16px; background: rgba(255,255,255,.7); color: var(--ink); font-size: 16px; font-weight: 600; }
+  .answer input[type=text]::placeholder { color: var(--ink); opacity: .55; }
+  .done .answer input:placeholder-shown { display: none; }
+  .row { display: flex; gap: 8px; }
+  .row .opt { flex: 1; justify-content: center; text-align: center; }
+  .replay { align-self: flex-start; border: 0; border-radius: 99px; padding: 10px 16px; cursor: pointer; background: var(--ink); color: var(--on-ink); font-size: 15px; font-weight: 600; }
+  .replay[hidden] { display: none; }
+  .go { justify-content: center !important; background: var(--ink) !important; color: var(--on-ink) !important; }
+  .guess { font: 800 34px/1 var(--display); }
+  .guess small { display: block; margin-top: 6px; font: 600 15px var(--text); opacity: .8; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 36px; background: transparent; cursor: pointer; }
+  input[type=range]::-webkit-slider-runnable-track { height: 10px; border-radius: 99px; background: var(--glass); }
+  input[type=range]::-moz-range-track { height: 10px; border-radius: 99px; background: var(--glass); }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 30px; height: 30px; margin-top: -10px; border-radius: 50%; background: var(--ink); border: 4px solid #fff; }
+  input[type=range]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); border: 4px solid #fff; }
+  .scale { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; opacity: .7; margin-top: -4px; }
+  .reveal { padding: 13px 16px; border-radius: 16px; background: var(--glass); font-size: 16px; font-weight: 600; line-height: 1.4; }
+  .reveal[hidden] { display: none; }
+
+  /* Запись */
+  .final { display: flex; flex-direction: column; gap: 22px; padding-bottom: 40px; }
+  footer { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 8px 0 48px; font-size: 15px; }
+  footer span { margin-right: 4px; opacity: .85; }
+  footer a { color: var(--ink); font-weight: 600; padding: 9px 16px; border-radius: 99px; background: rgba(255,255,255,.14); text-decoration: none; }
+  footer a:hover { background: rgba(255,255,255,.26); }
+
+  @media (min-width: 900px) {
+    main { padding: 0 40px; }
+    section { padding: 88px 0; }
+    .hero { grid-template-columns: minmax(0, 6fr) minmax(0, 7fr); gap: 48px; padding-top: 96px; min-height: 92svh; }
+    .stage-wrap { margin: 0; }
+    .stage { --pw: 26cqw; --pt: 22cqw; aspect-ratio: 100 / 80; }
+    .stage-note { left: 0; }
+    .stage-note .wide { display: inline; }
+    .steps { grid-template-columns: repeat(4, 1fr); gap: 32px; }
+    .steps li { grid-template-columns: 1fr; gap: 14px; }
+    .steps li::before { grid-row: auto; }
+    .qs { grid-auto-flow: row; grid-template-columns: repeat(2, 1fr); grid-auto-columns: auto; margin: 36px 0 0; padding: 0; overflow: visible; gap: 20px; align-items: stretch; max-width: 1000px; }
+    .q { padding: 26px 26px 24px; }
+    .q h3 { font-size: 20px; }
+    .swipe { display: none; }
+    .final { align-items: flex-start; }
+    .final .cta { min-width: 26em; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .bg, .bg::before, .spark, .cta, .caret { animation: none; }
+    .js .stage:not(.play) .anim { visibility: visible; }
+    .stage.play * { animation: none !important; }
+    .pic img.swap, .done .rebus figcaption { animation: none; }
+  }
 </style>
 </head>
 <body>
 <div class="bg" aria-hidden="true"></div>
+<div class="meter" aria-hidden="true"><span>8</span><span class="shaft"></span><span>D</span></div>
 <main>
-  <div class="logo">Dикторина</div>
-  <h1>Поиграл бы в такую викторину?</h1>
-  <p class="lead">Квиз не про знания, а про чёрный юмор, шутки ниже пояса и песни, которые стыдно знать. <b>Наберём 1000 игроков — сделаем игру</b> и позовём тебя первым.</p>
+  <section class="hero">
+    <div class="copy">
+      <div class="logo">Dикторина</div>
+      <h1>Поиграл бы в такую викторину?</h1>
+      <p class="lead">Квиз не про знания, а про чёрный юмор, шутки ниже пояса и песни, которые стыдно знать. Вопросы — на телевизоре, ответы — с телефонов. <b>Наберём 5000 игроков — сделаем игру</b> и позовём тебя первым.</p>
+      <a class="cta" href="https://t.me/Dicktorinabot?start=site">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 3.2 2.9 10.4c-1.3.5-1.3 1.2-.2 1.6l4.8 1.5 1.8 5.6c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.3 4.8 3.6c.9.5 1.5.2 1.7-.8l3.2-15c.3-1.3-.5-1.9-1.5-1.4ZM8.4 13.2l10.4-6.6c.5-.3.9-.1.5.2l-8.9 8-.3 3.7-1.7-5.3Z"/></svg>
+        Записаться в Telegram
+      </a>
+      <p class="hint">Откроется бот @Dicktorinabot — нажми «Старт». Мы напишем, когда игра будет готова.</p>
+      <div class="count" hidden>
+        <span>Уже записались: <b class="n">0</b> из <span class="goal">5000</span></span>
+        <div class="bar"><i></i></div>
+      </div>
+    </div>
 
-  <div class="count" id="count" hidden>
-    <span>Уже записались: <b id="n">0</b> из <span id="goal">1000</span></span>
-    <div class="bar"><i id="bar"></i></div>
-  </div>
+    <div class="stage-wrap">
+      <div class="stage" role="img" aria-label="Телевизор показывает комнату: QR-код и код комнаты BAZA, друзья по одному появляются на экране. Рядом телефон: в нём набирают код BAZA и имя Саня — и Саня появляется на телевизоре.">
+        <div class="tv">
+          <div class="tv-body">
+            <div class="screen">
+              <div class="scr-top">
+                <span class="scr-logo">Dикторина</span>
+                <span class="scr-status">Ждём всех…<span class="ready anim" style="--t:5.4s">Все в сборе!</span></span>
+              </div>
+              <div class="scr-mid">
+                <a class="qr" id="qr" href="https://t.me/Dicktorinabot?start=site" tabindex="-1"></a>
+                <div class="join">
+                  <p>Заходите с телефона.<br>Код комнаты:</p>
+                  <div class="code"><span>B</span><span>A</span><span>Z</span><span>A</span></div>
+                  <p>или наведи камеру на QR</p>
+                </div>
+              </div>
+              <div class="players">
+                <div class="player"><span class="ava"><b class="anim" style="--t:.2s;--l:#3E17A8;--h:#F255A8;--k:#fff">Л</b></span><small class="anim" style="--t:.2s">Лёха</small></div>
+                <div class="player"><span class="ava"><b class="anim" style="--t:.8s;--l:#FF3D7F;--h:#FFB547;--k:#1C0A12">К</b></span><small class="anim" style="--t:.8s">Катя</small></div>
+                <div class="player"><span class="ava"><b class="anim" style="--t:1.4s;--l:#0B7A4B;--h:#F6C945;--k:#0B1A12">Б</b></span><small class="anim" style="--t:1.4s">Босс</small></div>
+                <div class="player"><span class="ava"><b class="anim me" style="--t:4.1s;--l:#2643E9;--h:#B5EEFF;--k:#071B40">С</b></span><small class="anim" style="--t:4.1s">Саня</small></div>
+                <div class="player"><span class="ava"><b class="anim" style="--t:4.8s;--l:#6E4208;--h:#FFE07A;--k:#1F1300">Т</b></span><small class="anim" style="--t:4.8s">Тёща</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <a class="cta" id="cta" href="https://t.me/Dicktorinabot?start=site">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 3.2 2.9 10.4c-1.3.5-1.3 1.2-.2 1.6l4.8 1.5 1.8 5.6c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.3 4.8 3.6c.9.5 1.5.2 1.7-.8l3.2-15c.3-1.3-.5-1.9-1.5-1.4ZM8.4 13.2l10.4-6.6c.5-.3.9-.1.5.2l-8.9 8-.3 3.7-1.7-5.3Z"/></svg>
-    Записаться в Telegram
-  </a>
-  <p class="hint">Откроется бот @Dicktorinabot — нажми «Старт». Мы напишем, когда игра будет готова.</p>
+        <div class="phone">
+          <div class="ph-screen">
+            <div class="ph-page">
+              <div class="ph-logo">Dикторина</div>
+              <label>Код комнаты</label>
+              <div class="field code-in"><span class="anim" style="--t:1.9s">B</span><span class="anim" style="--t:2.1s">A</span><span class="anim" style="--t:2.3s">Z</span><span class="anim" style="--t:2.5s">A</span></div>
+              <label>Твоё имя</label>
+              <div class="field name name-in"><span class="anim" style="--t:2.9s">С</span><span class="anim" style="--t:3.05s">а</span><span class="anim" style="--t:3.2s">н</span><span class="anim" style="--t:3.35s">я</span><i class="caret"></i></div>
+              <div class="ph-btn" style="--t:3.6s">Войти</div>
+            </div>
+            <div class="ph-page ph-done" style="--t:3.9s">
+              <span class="tick">✓</span>
+              <strong>Саня, ты в игре!</strong>
+              <p>Смотри на телевизор</p>
+            </div>
+          </div>
+        </div>
 
-  <ul>
-    <li>Песни, картинки, видео — и вопросы, за которые стыдно</li>
-    <li>Играть компанией: телевизор — экран, телефоны — пульты</li>
-    <li>Новые вопросы — в TikTok, Reels и Shorts</li>
-  </ul>
+        <p class="stage-note">Так выглядит комната. Друзья заходят с телефонов — по QR или коду. <span class="wide">QR настоящий: наведи камеру — откроется запись в Telegram.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2>Как это будет</h2>
+    <ol class="steps">
+      <li><h3>Открываешь комнату на телевизоре</h3><p>Или на ноутбуке. На экране — QR-код и код комнаты из четырёх букв.</p></li>
+      <li><h3>Друзья заходят с телефонов</h3><p>Наводят камеру на QR или вводят код. Ничего не скачивают: пишут имя — и появляются на экране.</p></li>
+      <li><h3>Вопрос — на экране, ответ — в телефоне</h3><p>Песни, картинки и видео смотрите вместе, а отвечает каждый у себя. Подсмотреть не выйдет.</p></li>
+      <li><h3>Очки — на общий экран</h3><p>После раунда — правильные ответы и таблица. Кто знает все песни Ваенги, видно сразу.</p></li>
+    </ol>
+    <p class="where">День рождения, корпоратив или просто собрались у кого-то дома: нужен экран побольше и телефоны.</p>
+  </section>
+
+  <section id="questions">
+    <h2>Вопросы — вот такие</h2>
+    <p class="sub">Из настоящей игры. Ответь прямо здесь — в игре так же, только с телефона.</p>
+    <p class="swipe">Листай вбок — их четыре.</p>
+    <div class="qs">
+
+      <article class="q" data-kind="author" style="--low:#FF3D7F;--mid:#FF7A63;--high:#FFB547;--ink:#1C0A12"
+        data-yes="Засчитано! Гио Пика — «Фонтанчик с чёрным дельфином». Знаешь — значит, стыдно."
+        data-no="Мимо. Это Гио Пика — «Фонтанчик с чёрным дельфином». Не знал — и хорошо."
+        data-show="Гио Пика — «Фонтанчик с чёрным дельфином». Оренбург + фонтанчик + с чёрным + дельфином.">
+        <span class="tag">Угадай песню по картинкам</span>
+        <h3>Песня зашифрована картинками. Кто её поёт?</h3>
+        <div class="rebus">
+          <figure><span><img src="q/song-1.webp" alt="Герб Оренбурга" width="293" height="360" loading="lazy"></span><figcaption>Оренбург</figcaption></figure>
+          <figure><span><img src="q/song-2.webp" alt="Мужчина пускает изо рта струю воды" width="360" height="243" loading="lazy"></span><figcaption>фонтанчик</figcaption></figure>
+          <figure><span><img src="q/song-3.webp" alt="Чёрный холодильник" width="140" height="360" loading="lazy"></span><figcaption>с чёрным</figcaption></figure>
+          <figure><span><img src="q/song-4.webp" alt="Человек в костюме дельфина" width="147" height="360" loading="lazy"></span><figcaption>дельфином</figcaption></figure>
+        </div>
+        <form class="answer">
+          <input type="text" name="a" placeholder="Исполнитель" autocomplete="off" aria-label="Исполнитель песни">
+          <div class="row"><button class="opt go" type="submit">Ответить</button><button class="opt" type="button" data-show>Посмотреть ответ</button></div>
+        </form>
+        <p class="reveal" aria-live="polite" hidden></p>
+        <button class="replay" type="button" hidden>▶ Послушать ещё раз</button>
+        <audio src="q/fontan.mp3" preload="none"></audio>
+      </article>
+
+      <article class="q" data-kind="number" data-answer="5406" data-fork="500" data-reveal="q/post-answer.webp" style="--low:#0B7A4B;--mid:#B5DB6A;--high:#F6C945;--ink:#0B1A12">
+        <span class="tag">Плюс-минус</span>
+        <h3>Сколько человек поставили класс, чтобы найти эту мразь?</h3>
+        <figure class="pic"><img src="q/post.webp" alt="Пост в «Одноклассниках»: «Внимание! Пропал ребёнок! Ставим класс! Найдём эту мразь!!!»" width="720" height="462" loading="lazy"></figure>
+        <form class="answer">
+          <div class="guess"><output>7 500</output><small>Засчитаем ±500</small></div>
+          <input type="range" min="0" max="15000" step="50" value="7500" aria-label="Сколько классов">
+          <div class="scale"><span>0</span><span>15 000</span></div>
+          <button class="opt go" type="submit">Ответить</button>
+        </form>
+        <p class="reveal" aria-live="polite" hidden></p>
+      </article>
+
+      <article class="q" data-kind="choice" data-answer="3" data-reveal="q/pdd-answer.webp" style="--low:#2643E9;--mid:#4AA8F7;--high:#B5EEFF;--ink:#071B40"
+        data-yes="Конечно, плотный салам. Это любой водитель знает."
+        data-no="Мимо. Водитель кидает плотный салам мотоциклисту — смотри билет.">
+        <span class="tag">Билет ПДД</span>
+        <h3>О каком намерении информирует нас водитель?</h3>
+        <figure class="pic"><img src="q/pdd.webp" alt="Билет ПДД: вид из машины, впереди водитель высунул руку вверх. «Поднятая вверх рука водителя легкового автомобиля является сигналом, информирующим вас о его намерении»" width="720" height="363" loading="lazy"></figure>
+        <div class="opts">
+          <button class="opt" type="button">Повернуть направо</button>
+          <button class="opt" type="button">Повернуть налево</button>
+          <button class="opt" type="button" data-no="По ПДД — да. Но в нашем билете он кидает плотный салам мотоциклисту.">Снизить скорость, чтобы уступить дорогу мотоциклисту</button>
+          <button class="opt" type="button">Кидает плотный салам водителю мотоцикла</button>
+        </div>
+        <p class="reveal" aria-live="polite" hidden></p>
+      </article>
+
+      <article class="q dark" data-kind="choice" data-answer="3" data-reveal="q/cap-answer.webp" style="--low:#3E17A8;--mid:#8B32D6;--high:#F255A8;--ink:#FFFFFF"
+        data-yes="Да! Angry Birds, «Маша и Медведь» — и всё это «Бейсболка смешарики»."
+        data-no="Нет — «Бейсболка смешарики». Angry Birds и «Маша и Медведь» продавца не смутили.">
+        <span class="tag">Как называется на Авито</span>
+        <h3>Этот стильный аксессуар можно купить на Авито всего за 4 сотки. Как он называется?</h3>
+        <figure class="pic"><img src="q/cap.webp" alt="Детская кепка: на ней Angry Birds, на козырьке надпись «Маша и Медведь»" width="640" height="640" loading="lazy"></figure>
+        <div class="opts">
+          <button class="opt" type="button">Кепка Фиксики</button>
+          <button class="opt" type="button">Фуражка Колобок</button>
+          <button class="opt" type="button">Кепарь Свинка Пеппа</button>
+          <button class="opt" type="button">Бейсболка Смешарики</button>
+        </div>
+        <p class="reveal" aria-live="polite" hidden></p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="final" id="join">
+    <h2>Наберём 5000 игроков — сделаем игру</h2>
+    <p class="sub">Запишись в боте — напишем, когда откроем первые комнаты. Позови друзей: вместе наберём быстрее.</p>
+    <div class="count" hidden>
+      <span>Уже записались: <b class="n">0</b> из <span class="goal">5000</span></span>
+      <div class="bar"><i></i></div>
+    </div>
+    <a class="cta" href="https://t.me/Dicktorinabot?start=site">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 3.2 2.9 10.4c-1.3.5-1.3 1.2-.2 1.6l4.8 1.5 1.8 5.6c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.3 4.8 3.6c.9.5 1.5.2 1.7-.8l3.2-15c.3-1.3-.5-1.9-1.5-1.4ZM8.4 13.2l10.4-6.6c.5-.3.9-.1.5.2l-8.9 8-.3 3.7-1.7-5.3Z"/></svg>
+      Записаться в Telegram
+    </a>
+    <p class="hint">Откроется бот @Dicktorinabot — нажми «Старт».</p>
+  </section>
 
   <footer>
+    <span>Новые вопросы — каждый день:</span>
     <a href="https://www.tiktok.com/@dictor_inna">TikTok</a>
     <a href="https://www.instagram.com/dictor_inna/">Instagram</a>
     <a href="https://www.youtube.com/channel/UCQ3SV7YPvIounF1oOhLwRlg">YouTube</a>
@@ -136,7 +526,15 @@
   // Метка площадки: ссылка в профиле ?s=tt / ig / yt → бот получит start=tt…
   const s = new URLSearchParams(location.search).get('s');
   const source = s && /^[a-z0-9_]{1,32}$/i.test(s) ? s.toLowerCase() : 'site';
-  document.getElementById('cta').href = 'https://t.me/Dicktorinabot?start=' + source;
+  const bot = 'https://t.me/Dicktorinabot?start=' + source;
+  document.querySelectorAll('.cta').forEach((a) => (a.href = bot));
+
+  // QR на телевизоре — настоящий, ведёт в бота с той же меткой (собран заранее: segno, уровень M)
+  const QR = {"site":{"n":29,"d":"M0 0h7v1h-7zM12 0h1v1h-1zM16 0h1v1h-1zM18 0h3v1h-3zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h4v1h-4zM14 1h2v1h-2zM18 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM12 2h1v1h-1zM14 2h3v1h-3zM19 2h2v1h-2zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h2v1h-2zM15 3h3v1h-3zM19 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h2v1h-2zM12 4h1v1h-1zM16 4h1v1h-1zM18 4h3v1h-3zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM10 5h1v1h-1zM15 5h4v1h-4zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM8 7h3v1h-3zM15 7h1v1h-1zM18 7h1v1h-1zM0 8h1v1h-1zM2 8h5v1h-5zM10 8h1v1h-1zM12 8h1v1h-1zM17 8h1v1h-1zM19 8h1v1h-1zM22 8h5v1h-5zM1 9h3v1h-3zM5 9h1v1h-1zM7 9h5v1h-5zM13 9h1v1h-1zM16 9h7v1h-7zM24 9h1v1h-1zM28 9h1v1h-1zM0 10h2v1h-2zM3 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM10 10h1v1h-1zM13 10h5v1h-5zM22 10h3v1h-3zM0 11h1v1h-1zM2 11h4v1h-4zM8 11h2v1h-2zM12 11h2v1h-2zM19 11h1v1h-1zM22 11h4v1h-4zM27 11h1v1h-1zM0 12h1v1h-1zM2 12h3v1h-3zM6 12h2v1h-2zM11 12h2v1h-2zM14 12h4v1h-4zM20 12h1v1h-1zM25 12h2v1h-2zM0 13h1v1h-1zM2 13h1v1h-1zM4 13h2v1h-2zM7 13h1v1h-1zM10 13h1v1h-1zM16 13h1v1h-1zM19 13h3v1h-3zM23 13h2v1h-2zM28 13h1v1h-1zM1 14h4v1h-4zM6 14h4v1h-4zM11 14h2v1h-2zM15 14h2v1h-2zM20 14h1v1h-1zM23 14h4v1h-4zM3 15h2v1h-2zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h1v1h-1zM14 15h3v1h-3zM18 15h4v1h-4zM23 15h1v1h-1zM27 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM4 16h3v1h-3zM16 16h4v1h-4zM25 16h2v1h-2zM0 17h3v1h-3zM4 17h2v1h-2zM7 17h2v1h-2zM12 17h3v1h-3zM17 17h1v1h-1zM19 17h6v1h-6zM26 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM3 18h2v1h-2zM6 18h3v1h-3zM10 18h1v1h-1zM12 18h4v1h-4zM17 18h1v1h-1zM21 18h2v1h-2zM26 18h1v1h-1zM0 19h1v1h-1zM2 19h2v1h-2zM5 19h1v1h-1zM8 19h1v1h-1zM10 19h1v1h-1zM12 19h2v1h-2zM15 19h2v1h-2zM20 19h1v1h-1zM23 19h1v1h-1zM27 19h1v1h-1zM0 20h1v1h-1zM3 20h2v1h-2zM6 20h2v1h-2zM9 20h2v1h-2zM12 20h1v1h-1zM14 20h4v1h-4zM20 20h5v1h-5zM26 20h3v1h-3zM8 21h5v1h-5zM16 21h1v1h-1zM19 21h2v1h-2zM24 21h5v1h-5zM0 22h7v1h-7zM10 22h1v1h-1zM12 22h1v1h-1zM15 22h1v1h-1zM17 22h4v1h-4zM22 22h1v1h-1zM24 22h3v1h-3zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h1v1h-1zM12 23h1v1h-1zM14 23h1v1h-1zM19 23h2v1h-2zM24 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h1v1h-1zM11 24h2v1h-2zM15 24h3v1h-3zM20 24h5v1h-5zM26 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h1v1h-1zM10 25h3v1h-3zM14 25h1v1h-1zM16 25h1v1h-1zM19 25h2v1h-2zM25 25h4v1h-4zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h1v1h-1zM10 26h3v1h-3zM15 26h2v1h-2zM20 26h3v1h-3zM24 26h4v1h-4zM0 27h1v1h-1zM6 27h1v1h-1zM9 27h2v1h-2zM12 27h1v1h-1zM14 27h2v1h-2zM18 27h1v1h-1zM20 27h2v1h-2zM24 27h2v1h-2zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h4v1h-4zM13 28h1v1h-1zM15 28h1v1h-1zM17 28h1v1h-1zM19 28h1v1h-1zM22 28h5v1h-5z"},"tt":{"n":29,"d":"M0 0h7v1h-7zM11 0h1v1h-1zM13 0h1v1h-1zM15 0h1v1h-1zM18 0h3v1h-3zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM13 1h3v1h-3zM18 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h3v1h-3zM12 2h2v1h-2zM15 2h1v1h-1zM19 2h2v1h-2zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h3v1h-3zM14 3h2v1h-2zM17 3h1v1h-1zM19 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h3v1h-3zM15 4h1v1h-1zM18 4h3v1h-3zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h4v1h-4zM15 5h1v1h-1zM17 5h2v1h-2zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM8 7h1v1h-1zM10 7h2v1h-2zM14 7h3v1h-3zM18 7h1v1h-1zM0 8h1v1h-1zM2 8h5v1h-5zM9 8h1v1h-1zM12 8h1v1h-1zM15 8h3v1h-3zM19 8h1v1h-1zM22 8h5v1h-5zM1 9h1v1h-1zM3 9h1v1h-1zM7 9h1v1h-1zM10 9h1v1h-1zM12 9h3v1h-3zM16 9h7v1h-7zM24 9h1v1h-1zM28 9h1v1h-1zM0 10h2v1h-2zM3 10h4v1h-4zM9 10h2v1h-2zM13 10h3v1h-3zM17 10h1v1h-1zM22 10h3v1h-3zM0 11h1v1h-1zM2 11h4v1h-4zM7 11h3v1h-3zM11 11h1v1h-1zM13 11h1v1h-1zM15 11h2v1h-2zM19 11h1v1h-1zM22 11h4v1h-4zM27 11h1v1h-1zM0 12h1v1h-1zM2 12h1v1h-1zM6 12h1v1h-1zM9 12h1v1h-1zM14 12h4v1h-4zM20 12h1v1h-1zM25 12h2v1h-2zM0 13h1v1h-1zM2 13h2v1h-2zM8 13h4v1h-4zM16 13h1v1h-1zM19 13h3v1h-3zM23 13h2v1h-2zM28 13h1v1h-1zM1 14h1v1h-1zM4 14h3v1h-3zM9 14h1v1h-1zM12 14h1v1h-1zM15 14h2v1h-2zM20 14h1v1h-1zM23 14h4v1h-4zM1 15h3v1h-3zM5 15h1v1h-1zM8 15h3v1h-3zM12 15h1v1h-1zM14 15h3v1h-3zM18 15h4v1h-4zM23 15h1v1h-1zM27 15h1v1h-1zM2 16h7v1h-7zM10 16h2v1h-2zM16 16h4v1h-4zM25 16h2v1h-2zM0 17h1v1h-1zM4 17h2v1h-2zM7 17h1v1h-1zM10 17h1v1h-1zM13 17h2v1h-2zM17 17h1v1h-1zM19 17h6v1h-6zM26 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM3 18h2v1h-2zM6 18h1v1h-1zM9 18h2v1h-2zM13 18h3v1h-3zM17 18h1v1h-1zM21 18h2v1h-2zM26 18h1v1h-1zM0 19h1v1h-1zM7 19h2v1h-2zM12 19h2v1h-2zM15 19h2v1h-2zM20 19h1v1h-1zM23 19h1v1h-1zM27 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM6 20h2v1h-2zM9 20h2v1h-2zM14 20h4v1h-4zM20 20h5v1h-5zM26 20h3v1h-3zM8 21h1v1h-1zM10 21h1v1h-1zM16 21h1v1h-1zM19 21h2v1h-2zM24 21h5v1h-5zM0 22h7v1h-7zM10 22h3v1h-3zM15 22h1v1h-1zM17 22h4v1h-4zM22 22h1v1h-1zM24 22h3v1h-3zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h4v1h-4zM14 23h1v1h-1zM19 23h2v1h-2zM24 23h1v1h-1zM28 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h1v1h-1zM10 24h3v1h-3zM15 24h3v1h-3zM20 24h5v1h-5zM26 24h2v1h-2zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h1v1h-1zM14 25h1v1h-1zM16 25h1v1h-1zM19 25h2v1h-2zM25 25h4v1h-4zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h2v1h-2zM14 26h3v1h-3zM20 26h3v1h-3zM24 26h4v1h-4zM0 27h1v1h-1zM6 27h1v1h-1zM9 27h1v1h-1zM11 27h1v1h-1zM13 27h1v1h-1zM15 27h1v1h-1zM18 27h1v1h-1zM20 27h2v1h-2zM24 27h2v1h-2zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h6v1h-6zM15 28h1v1h-1zM17 28h1v1h-1zM19 28h1v1h-1zM22 28h5v1h-5z"},"ig":{"n":29,"d":"M0 0h7v1h-7zM9 0h1v1h-1zM11 0h1v1h-1zM13 0h2v1h-2zM16 0h1v1h-1zM18 0h2v1h-2zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h5v1h-5zM14 1h2v1h-2zM17 1h1v1h-1zM19 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM9 2h1v1h-1zM12 2h3v1h-3zM16 2h1v1h-1zM19 2h1v1h-1zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM9 3h2v1h-2zM13 3h3v1h-3zM18 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM12 4h1v1h-1zM14 4h1v1h-1zM16 4h1v1h-1zM18 4h2v1h-2zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM13 5h1v1h-1zM15 5h2v1h-2zM19 5h2v1h-2zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM13 7h2v1h-2zM16 7h2v1h-2zM19 7h1v1h-1zM0 8h1v1h-1zM2 8h1v1h-1zM4 8h1v1h-1zM6 8h1v1h-1zM9 8h1v1h-1zM11 8h2v1h-2zM14 8h1v1h-1zM16 8h2v1h-2zM19 8h2v1h-2zM24 8h1v1h-1zM27 8h1v1h-1zM1 9h1v1h-1zM3 9h1v1h-1zM7 9h2v1h-2zM10 9h1v1h-1zM14 9h1v1h-1zM16 9h1v1h-1zM20 9h4v1h-4zM25 9h1v1h-1zM28 9h1v1h-1zM3 10h1v1h-1zM5 10h4v1h-4zM10 10h2v1h-2zM13 10h1v1h-1zM17 10h1v1h-1zM20 10h2v1h-2zM23 10h2v1h-2zM26 10h3v1h-3zM0 11h1v1h-1zM2 11h3v1h-3zM8 11h4v1h-4zM15 11h1v1h-1zM17 11h2v1h-2zM22 11h1v1h-1zM27 11h1v1h-1zM0 12h2v1h-2zM3 12h1v1h-1zM6 12h2v1h-2zM9 12h1v1h-1zM12 12h1v1h-1zM15 12h3v1h-3zM21 12h2v1h-2zM25 12h1v1h-1zM27 12h2v1h-2zM0 13h1v1h-1zM3 13h1v1h-1zM8 13h3v1h-3zM13 13h1v1h-1zM16 13h3v1h-3zM20 13h2v1h-2zM25 13h1v1h-1zM28 13h1v1h-1zM0 14h5v1h-5zM6 14h2v1h-2zM10 14h3v1h-3zM14 14h1v1h-1zM21 14h5v1h-5zM27 14h2v1h-2zM0 15h1v1h-1zM3 15h2v1h-2zM7 15h1v1h-1zM11 15h7v1h-7zM20 15h2v1h-2zM24 15h2v1h-2zM27 15h1v1h-1zM3 16h1v1h-1zM5 16h2v1h-2zM12 16h1v1h-1zM14 16h2v1h-2zM17 16h6v1h-6zM25 16h1v1h-1zM27 16h2v1h-2zM3 17h1v1h-1zM5 17h1v1h-1zM7 17h2v1h-2zM11 17h1v1h-1zM14 17h1v1h-1zM18 17h1v1h-1zM20 17h3v1h-3zM25 17h2v1h-2zM28 17h1v1h-1zM0 18h1v1h-1zM4 18h1v1h-1zM6 18h1v1h-1zM9 18h2v1h-2zM12 18h2v1h-2zM16 18h2v1h-2zM20 18h1v1h-1zM27 18h2v1h-2zM1 19h1v1h-1zM3 19h2v1h-2zM8 19h5v1h-5zM15 19h6v1h-6zM24 19h2v1h-2zM27 19h1v1h-1zM0 20h1v1h-1zM3 20h2v1h-2zM6 20h1v1h-1zM10 20h3v1h-3zM17 20h1v1h-1zM20 20h5v1h-5zM8 21h4v1h-4zM13 21h1v1h-1zM16 21h3v1h-3zM20 21h1v1h-1zM24 21h1v1h-1zM26 21h3v1h-3zM0 22h7v1h-7zM10 22h3v1h-3zM14 22h1v1h-1zM16 22h5v1h-5zM22 22h1v1h-1zM24 22h2v1h-2zM27 22h2v1h-2zM0 23h1v1h-1zM6 23h1v1h-1zM11 23h4v1h-4zM17 23h2v1h-2zM20 23h1v1h-1zM24 23h2v1h-2zM28 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h3v1h-3zM12 24h1v1h-1zM14 24h1v1h-1zM17 24h1v1h-1zM20 24h5v1h-5zM28 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM10 25h1v1h-1zM14 25h1v1h-1zM16 25h3v1h-3zM20 25h1v1h-1zM23 25h2v1h-2zM26 25h3v1h-3zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h2v1h-2zM12 26h1v1h-1zM14 26h1v1h-1zM24 26h2v1h-2zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM9 27h1v1h-1zM11 27h5v1h-5zM17 27h1v1h-1zM19 27h3v1h-3zM23 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h1v1h-1zM12 28h1v1h-1zM14 28h1v1h-1zM16 28h2v1h-2zM19 28h3v1h-3zM23 28h3v1h-3zM27 28h2v1h-2z"},"yt":{"n":29,"d":"M0 0h7v1h-7zM13 0h2v1h-2zM16 0h1v1h-1zM18 0h2v1h-2zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM10 1h2v1h-2zM14 1h2v1h-2zM17 1h1v1h-1zM19 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM10 2h5v1h-5zM16 2h1v1h-1zM19 2h1v1h-1zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM9 3h1v1h-1zM12 3h4v1h-4zM18 3h1v1h-1zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM11 4h1v1h-1zM14 4h1v1h-1zM16 4h1v1h-1zM18 4h2v1h-2zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM13 5h1v1h-1zM15 5h1v1h-1zM19 5h2v1h-2zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM10 7h1v1h-1zM13 7h5v1h-5zM19 7h1v1h-1zM0 8h1v1h-1zM2 8h1v1h-1zM4 8h1v1h-1zM6 8h1v1h-1zM9 8h1v1h-1zM11 8h1v1h-1zM14 8h1v1h-1zM17 8h1v1h-1zM19 8h2v1h-2zM24 8h1v1h-1zM27 8h1v1h-1zM0 9h2v1h-2zM3 9h1v1h-1zM5 9h1v1h-1zM9 9h1v1h-1zM14 9h1v1h-1zM16 9h1v1h-1zM20 9h4v1h-4zM25 9h1v1h-1zM28 9h1v1h-1zM0 10h1v1h-1zM2 10h2v1h-2zM5 10h3v1h-3zM10 10h4v1h-4zM17 10h1v1h-1zM20 10h2v1h-2zM23 10h2v1h-2zM26 10h3v1h-3zM1 11h2v1h-2zM4 11h2v1h-2zM8 11h3v1h-3zM12 11h1v1h-1zM15 11h1v1h-1zM17 11h2v1h-2zM22 11h1v1h-1zM27 11h1v1h-1zM1 12h1v1h-1zM3 12h2v1h-2zM6 12h1v1h-1zM8 12h1v1h-1zM10 12h1v1h-1zM15 12h1v1h-1zM17 12h1v1h-1zM21 12h2v1h-2zM25 12h1v1h-1zM27 12h2v1h-2zM0 13h2v1h-2zM3 13h1v1h-1zM7 13h1v1h-1zM9 13h2v1h-2zM12 13h2v1h-2zM16 13h3v1h-3zM20 13h2v1h-2zM25 13h1v1h-1zM28 13h1v1h-1zM0 14h1v1h-1zM2 14h1v1h-1zM5 14h2v1h-2zM8 14h2v1h-2zM11 14h1v1h-1zM14 14h1v1h-1zM21 14h5v1h-5zM27 14h2v1h-2zM0 15h3v1h-3zM11 15h7v1h-7zM20 15h2v1h-2zM24 15h2v1h-2zM27 15h1v1h-1zM1 16h1v1h-1zM6 16h1v1h-1zM9 16h1v1h-1zM11 16h2v1h-2zM14 16h2v1h-2zM17 16h6v1h-6zM25 16h1v1h-1zM27 16h2v1h-2zM3 17h1v1h-1zM5 17h1v1h-1zM11 17h2v1h-2zM14 17h1v1h-1zM18 17h1v1h-1zM20 17h3v1h-3zM25 17h2v1h-2zM28 17h1v1h-1zM0 18h1v1h-1zM4 18h5v1h-5zM10 18h2v1h-2zM13 18h1v1h-1zM16 18h2v1h-2zM20 18h1v1h-1zM27 18h2v1h-2zM1 19h2v1h-2zM7 19h1v1h-1zM11 19h1v1h-1zM15 19h6v1h-6zM24 19h2v1h-2zM27 19h1v1h-1zM0 20h1v1h-1zM4 20h3v1h-3zM9 20h1v1h-1zM11 20h2v1h-2zM17 20h1v1h-1zM20 20h5v1h-5zM8 21h1v1h-1zM12 21h2v1h-2zM16 21h3v1h-3zM20 21h1v1h-1zM24 21h1v1h-1zM26 21h3v1h-3zM0 22h7v1h-7zM9 22h1v1h-1zM12 22h1v1h-1zM14 22h1v1h-1zM16 22h5v1h-5zM22 22h1v1h-1zM24 22h2v1h-2zM27 22h2v1h-2zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h1v1h-1zM11 23h1v1h-1zM13 23h2v1h-2zM17 23h2v1h-2zM20 23h1v1h-1zM24 23h2v1h-2zM28 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h3v1h-3zM14 24h1v1h-1zM17 24h1v1h-1zM20 24h5v1h-5zM28 24h1v1h-1zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM9 25h2v1h-2zM14 25h1v1h-1zM16 25h3v1h-3zM20 25h1v1h-1zM23 25h2v1h-2zM26 25h3v1h-3zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM8 26h3v1h-3zM14 26h1v1h-1zM24 26h2v1h-2zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM13 27h3v1h-3zM17 27h1v1h-1zM19 27h3v1h-3zM23 27h1v1h-1zM27 27h1v1h-1zM0 28h7v1h-7zM8 28h4v1h-4zM14 28h1v1h-1zM16 28h2v1h-2zM19 28h3v1h-3zM23 28h3v1h-3zM27 28h2v1h-2z"}};
+  const code = QR[source] || QR.site;
+  const qr = document.getElementById('qr');
+  qr.href = QR[source] ? bot : 'https://t.me/Dicktorinabot?start=site';
+  qr.innerHTML = `<svg viewBox="0 0 ${code.n} ${code.n}" shape-rendering="crispEdges" aria-hidden="true"><path fill="#2A1A6E" d="${code.d}"/></svg>`;
 
   // Искры: гуще вверху
   for (let i = 0; i < 18; i++) {
@@ -146,15 +544,97 @@
     document.body.appendChild(el);
   }
 
-  // Счётчик записавшихся — от бота; не ответил — блок не показываем
+  // 8=====D растёт, пока листаешь
+  const meter = document.querySelector('.meter');
+  const measure = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    meter.style.setProperty('--p', max > 0 ? Math.min(1, scrollY / max).toFixed(4) : 0);
+  };
+  addEventListener('scroll', measure, {passive: true});
+  addEventListener('resize', measure);
+  measure();
+
+  // Комната проигрывается, когда её видно
+  const stage = document.querySelector('.stage');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { stage.classList.add('play'); io.disconnect(); }
+    }, {threshold: .45});
+    io.observe(stage);
+  } else stage.classList.add('play');
+
+  // Вопросы: ответ → подсветка, пояснение и кадр-ответ вместо картинки, как в рилсе
+  const finish = (card, text) => {
+    card.classList.add('done');
+    card.querySelectorAll('button:not(.replay), input').forEach((el) => (el.disabled = true));
+    const r = card.querySelector('.reveal');
+    r.textContent = text;
+    r.hidden = false;
+    const img = card.querySelector('.pic img');
+    if (img && card.dataset.reveal) {
+      const next = new Image();
+      next.onload = () => {
+        img.width = next.naturalWidth;
+        img.height = next.naturalHeight;
+        img.src = next.src;
+        img.classList.add('swap');
+      };
+      next.src = card.dataset.reveal;
+    }
+  };
+  document.querySelectorAll('.q[data-kind="choice"]').forEach((card) => {
+    const opts = [...card.querySelectorAll('.opt')];
+    const right = +card.dataset.answer;
+    opts.forEach((b, i) => b.addEventListener('click', () => {
+      opts[right].classList.add('is-right');
+      b.classList.add('is-picked');
+      finish(card, i === right ? card.dataset.yes : b.dataset.no || card.dataset.no);
+    }));
+  });
+  // Песня: вписать исполнителя или «Посмотреть ответ» — в обоих случаях звучит строчка из песни (docs/q/fontan.mp3, 25,74–29,60 с трека)
+  document.querySelectorAll('.q[data-kind="author"]').forEach((card) => {
+    const form = card.querySelector('form');
+    const audio = card.querySelector('audio');
+    const replay = card.querySelector('.replay');
+    const play = () => { audio.currentTime = 0; audio.play().catch(() => {}); };
+    const reveal = (text) => { finish(card, text); replay.hidden = false; play(); };
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const v = form.a.value.toLowerCase().replace(/ё/g, 'е');
+      if (!v.trim()) return form.a.focus();
+      reveal(/гио|пик[аи]|gio|pika/.test(v) ? card.dataset.yes : card.dataset.no);
+    });
+    card.querySelector('[data-show]').addEventListener('click', () => reveal(card.dataset.show));
+    replay.addEventListener('click', play);
+  });
+  document.querySelectorAll('.q[data-kind="number"]').forEach((card) => {
+    const form = card.querySelector('form');
+    const range = form.querySelector('input[type=range]');
+    const out = form.querySelector('output');
+    const fmt = (n) => n.toLocaleString('ru-RU');
+    range.addEventListener('input', () => (out.textContent = fmt(+range.value)));
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const answer = +card.dataset.answer, fork = +card.dataset.fork, off = Math.abs(+range.value - answer);
+      const span = `засчитали бы от ${fmt(answer - fork)} до ${fmt(answer + fork)}`;
+      finish(card, off <= fork
+        ? `Попал! ${fmt(answer)} классов — ${span}.`
+        : `Мимо на ${fmt(off)}. Было ${fmt(answer)} классов — ${span}.`);
+    });
+  });
+
+  // Счётчик записавшихся — от бота; не ответил — блоки не показываем. Цель — 5000 (решающий, 2026-11-07), не из бота
+  const goal = 5000;
   fetch('https://dicktorina-bot.dicktorina-bot.workers.dev/count')
     .then((r) => r.json())
-    .then(({n, goal}) => {
+    .then(({n}) => {
       if (!(n > 0)) return;
-      document.getElementById('n').textContent = n;
-      document.getElementById('goal').textContent = goal;
-      document.getElementById('count').hidden = false;
-      requestAnimationFrame(() => (document.getElementById('bar').style.width = Math.min(100, (n / goal) * 100) + '%'));
+      document.querySelectorAll('.count').forEach((c) => {
+        c.querySelector('.n').textContent = n;
+        c.querySelector('.goal').textContent = goal;
+        c.hidden = false;
+        requestAnimationFrame(() => (c.querySelector('.bar i').style.width = Math.min(100, (n / goal) * 100) + '%'));
+      });
     })
     .catch(() => {});
 </script>
