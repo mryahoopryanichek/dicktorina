@@ -8,7 +8,7 @@
   "observability": {"enabled": true},
   "d1_databases": [
     // database_id — после `wrangler d1 create dicktorina`
-    {"binding": "DB", "database_name": "dicktorina", "database_id": "00000000-0000-0000-0000-000000000000"}
+    {"binding": "DB", "database_name": "dicktorina", "database_id": "5c9c3318-98e8-4760-b15c-2fb7b9857103"}
   ],
   "vars": {
     "BOT_USERNAME": "Dicktorinabot",

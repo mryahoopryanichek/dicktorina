@@ -1,6 +1,6 @@
 // Бот записи на Dикторину. Telegram шлёт сюда обновления (webhook), записи — в D1.
 // /start <метка> — записать: метка = площадка, откуда пришёл (tt, ig, yt, fr — по ссылке друга).
-// /stats — счётчик для решающего (только ADMIN_IDS). /whoami — свой id.
+// /stats — счётчик для решающего (только ADMIN_IDS). /whoami — свой id. GET /count — число для лендинга.
 
 type User = {id: number; is_bot?: boolean; username?: string; first_name?: string; last_name?: string; language_code?: string};
 type Message = {message_id: number; from?: User; chat: {id: number; type: string}; text?: string};
@@ -126,6 +126,13 @@ export default {
         console.error('update', update.update_id, e); // Telegram получит 200 и не будет слать то же снова
       }
       return new Response('ok');
+    }
+    // Счётчик для лендинга: только число записавшихся, без личного
+    if (req.method === 'GET' && url.pathname === '/count') {
+      return Response.json(
+        {n: await total(env), goal: Number(env.GOAL)},
+        {headers: {'Access-Control-Allow-Origin': '*', 'Cache-Control': 'public, max-age=60'}},
+      );
     }
     return new Response('Dикторина');
   },
