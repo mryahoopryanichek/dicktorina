@@ -554,14 +554,22 @@
   addEventListener('resize', measure);
   measure();
 
-  // Комната проигрывается, когда её видно
+  // Комната проигрывается, пока её видно: ≈5,9 с анимации (последнее — «Все в сборе!» на 5,4 с + 0,45 с),
+  // 5 с стоит готовая — и заново (решающий: «чтобы кто пролистает мог посмотреть»)
   const stage = document.querySelector('.stage');
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { stage.classList.add('play'); io.disconnect(); }
-    }, {threshold: .45});
-    io.observe(stage);
-  } else stage.classList.add('play');
+  const LOOP = 5900 + 5000;
+  let timer = 0;
+  const play = () => {
+    stage.classList.remove('play');
+    void stage.offsetWidth; // перезапуск CSS-анимаций
+    stage.classList.add('play');
+    timer = setTimeout(play, LOOP);
+  };
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) stage.classList.add('play');
+  else new IntersectionObserver(([e]) => {
+    if (e.isIntersecting && !timer) play();
+    if (!e.isIntersecting) { clearTimeout(timer); timer = 0; }
+  }, {threshold: .45}).observe(stage);
 
   // Вопросы: ответ → подсветка, пояснение и кадр-ответ вместо картинки, как в рилсе
   const finish = (card, text) => {
