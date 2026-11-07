@@ -5,6 +5,7 @@
   "scripts": {
     "studio": "remotion studio src/index.ts",
     "render:intro": "remotion render src/index.ts Intro out/intro.mp4",
+    "render:outro": "remotion render src/index.ts Outro out/outro.mp4",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

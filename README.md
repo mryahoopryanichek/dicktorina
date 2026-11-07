@@ -10,12 +10,15 @@
 npm ci
 npm run studio        # смотреть и крутить ролики в браузере
 npm run render:intro  # заставка → out/intro.mp4
+npm run render:outro  # концовка → out/outro.mp4
 ```
 
 | Что | Где |
 |---|---|
 | Цвета, шрифт, формат 1080×1920 | `src/brand.ts` |
 | Заставка: слово, пыль, линия, 8 | `src/intro/Intro.tsx` |
+| Концовка: заставка + кнопка «Регистрируйтесь» | `src/outro/Outro.tsx` |
+| Лист всех палитр | `src/Palettes.tsx` |
 | Список роликов | `src/Root.tsx` |
 
 ## Что не в git

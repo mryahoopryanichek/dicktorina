@@ -35,7 +35,7 @@ const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
 const ASH_RGB = rgb(ASH);
 
-function buildLayout(width: number, height: number): Layout {
+function buildLayout(width: number, cy: number): Layout {
   const ctx = document.createElement('canvas').getContext('2d')!;
   const font = (s: number) => `800 ${s}px "${FONT.fontFamily}"`;
   const word = WORD.head + WORD.tail;
@@ -46,8 +46,6 @@ function buildLayout(width: number, height: number): Layout {
   const wTail = ctx.measureText(WORD.tail).width;
   const x0 = (width - full) / 2;
   const xI = x0 + full - wTail;
-  const cy = Math.round(height / 2);
-
   // Каждый пиксель «икторина» становится пылинкой: на месте она рисует ровно этот пиксель.
   // Буквы рисуются с той же дробной долей x, что и в кадре, а пылинки стоят на целых пикселях — без мути.
   const pad = Math.ceil(size * 0.1);
@@ -160,12 +158,11 @@ function draw(ctx: CanvasRenderingContext2D, L: Layout, t: number, width: number
   ctx.restore();
 }
 
-export type IntroProps = {palette: PaletteId};
-
-export const Intro = ({palette}: IntroProps) => {
-  const ink = PALETTES[palette].ink;
+// Заставка без фона: рисуется поверх любого кадра. y — середина слова, доля высоты кадра.
+export const IntroLayer = ({ink, y = 0.5}: {ink: string; y?: number}) => {
   const frame = useCurrentFrame();
   const {fps, width, height} = useVideoConfig();
+  const cy = Math.round(height * y);
   const ref = useRef<HTMLCanvasElement>(null);
   const [layout, setLayout] = useState<Layout | null>(null);
   const [handle] = useState(() => delayRender('Шрифт и пиксели заставки'));
@@ -174,12 +171,12 @@ export const Intro = ({palette}: IntroProps) => {
   useLayoutEffect(() => {
     let alive = true;
     FONT.waitUntilDone().then(() => {
-      if (alive) setLayout(buildLayout(width, height));
+      if (alive) setLayout(buildLayout(width, cy));
     });
     return () => {
       alive = false;
     };
-  }, [width, height]);
+  }, [width, cy]);
 
   useLayoutEffect(() => {
     const c = ref.current;
@@ -191,10 +188,15 @@ export const Intro = ({palette}: IntroProps) => {
     }
   }, [layout, frame, fps, width, ink, handle]);
 
-  return (
-    <AbsoluteFill>
-      <Background palette={PALETTES[palette]} />
-      <canvas ref={ref} width={width} height={height} style={{position: 'absolute', inset: 0}} />
-    </AbsoluteFill>
-  );
+  return <canvas ref={ref} width={width} height={height} style={{position: 'absolute', inset: 0}} />;
 };
+
+export type IntroProps = {palette: PaletteId};
+
+// Заставка отдельным роликом: фон + слово посередине кадра
+export const Intro = ({palette}: IntroProps) => (
+  <AbsoluteFill>
+    <Background palette={PALETTES[palette]} />
+    <IntroLayer ink={PALETTES[palette].ink} />
+  </AbsoluteFill>
+);
