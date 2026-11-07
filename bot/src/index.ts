@@ -5,8 +5,24 @@
 type User = {id: number; is_bot?: boolean; username?: string; first_name?: string; last_name?: string; language_code?: string};
 type Message = {message_id: number; from?: User; chat: {id: number; type: string}; text?: string};
 type ChatMemberUpdated = {chat: {id: number; type: string}; from: User; new_chat_member: {status: string}};
-type Update = {update_id: number; message?: Message; my_chat_member?: ChatMemberUpdated};
-type Button = {text: string; url: string};
+type CallbackQuery = {id: string; from: User; data?: string; message?: {message_id: number; chat: {id: number}}};
+type Update = {update_id: number; message?: Message; my_chat_member?: ChatMemberUpdated; callback_query?: CallbackQuery};
+type Button = {text: string; url: string} | {text: string; callback_data: string};
+
+// Пришёл без метки (нашёл бота по нику, например из профиля TikTok) — спросим, откуда
+const ASK_SOURCE: {text: string; callback_data: string}[][] = [
+  [{text: 'TikTok', callback_data: 'src:tt'}, {text: 'Instagram', callback_data: 'src:ig'}, {text: 'YouTube', callback_data: 'src:yt'}],
+  [{text: 'Друг позвал', callback_data: 'src:fr'}, {text: 'Другое', callback_data: 'src:other'}],
+];
+const SOURCE_NAMES: Record<string, string> = {
+  tt: 'TikTok',
+  ig: 'Instagram',
+  yt: 'YouTube',
+  fr: 'по ссылке друга',
+  site: 'сайт без метки',
+  other: 'другое',
+  none: 'без метки, не ответил',
+};
 
 const now = () => new Date().toISOString();
 
@@ -66,13 +82,12 @@ async function stats(env: Env) {
   const by = await env.DB.prepare(
     `SELECT COALESCE(source, 'без метки') AS s, COUNT(*) AS n FROM users GROUP BY s ORDER BY n DESC`,
   ).all<{s: string; n: number}>();
-  const names: Record<string, string> = {tt: 'TikTok', ig: 'Instagram', yt: 'YouTube', fr: 'по ссылке друга'};
   return [
     `Записалось: ${row?.n ?? 0} из ${env.GOAL}`,
     `За сутки: ${row?.d1 ?? 0}, за неделю: ${row?.d7 ?? 0}`,
     '',
     'Откуда:',
-    ...by.results.map((r) => `${names[r.s] ?? r.s} — ${r.n}`),
+    ...by.results.map((r) => `${SOURCE_NAMES[r.s] ?? r.s} — ${r.n}`),
     '',
     `Заблокировали бота: ${row?.b ?? 0}`,
   ].join('\n');
@@ -94,14 +109,29 @@ async function onMessage(env: Env, m: Message) {
     return;
   }
 
-  const source = cmd === '/start' && arg && /^[a-z0-9_]{1,32}$/i.test(arg) ? arg.toLowerCase() : null;
-  const fresh = await upsert(env, u, cmd === '/start' ? source ?? 'none' : null);
+  const source = cmd === '/start' && arg && /^[a-z0-9_]{1,32}$/i.test(arg) ? arg.toLowerCase() : 'none';
+  const fresh = await upsert(env, u, source);
   const n = await total(env);
   const text1 = fresh
     ? `Ты в списке — №${n} из ${env.GOAL}! 🙌\n\nКогда наберём ${env.GOAL} игроков, сделаем Dикторину и позовём тебя первым.` +
       (env.GROUP_LINK ? '\n\nА пока заходи в группу: там анонсы и вопросы из игры.' : '')
     : `Ты уже в списке. Нас ${n} из ${env.GOAL} — зови друзей, так быстрее 😉`;
   await send(env, m.chat.id, text1, buttons(env));
+  if (fresh && source === 'none') await send(env, m.chat.id, 'Откуда ты о нас узнал?', ASK_SOURCE);
+}
+
+// Ответ на «Откуда узнал?»: пишем площадку, если её ещё нет
+async function onCallback(env: Env, q: CallbackQuery) {
+  const src = q.data?.startsWith('src:') ? q.data.slice(4) : null;
+  if (src && /^[a-z]{2,8}$/.test(src)) {
+    await env.DB.prepare(`UPDATE users SET source = ?, last_seen = ? WHERE id = ? AND (source IS NULL OR source = 'none')`)
+      .bind(src, now(), q.from.id)
+      .run();
+  }
+  await tg(env, 'answerCallbackQuery', {callback_query_id: q.id, text: 'Спасибо!'});
+  if (q.message) {
+    await tg(env, 'editMessageText', {chat_id: q.message.chat.id, message_id: q.message.message_id, text: 'Спасибо! 🙌'});
+  }
 }
 
 // Человек заблокировал бота или разблокировал — рассылке надо знать
@@ -121,6 +151,7 @@ export default {
       const update = await req.json<Update>();
       try {
         if (update.message) await onMessage(env, update.message);
+        else if (update.callback_query) await onCallback(env, update.callback_query);
         else if (update.my_chat_member) await onMember(env, update.my_chat_member);
       } catch (e) {
         console.error('update', update.update_id, e); // Telegram получит 200 и не будет слать то же снова

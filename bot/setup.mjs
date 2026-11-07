@@ -43,7 +43,7 @@ async function tg(method, body) {
 await tg('setWebhook', {
   url: `${env.WEBHOOK_URL.replace(/\/$/, '')}/webhook`,
   secret_token: env.WEBHOOK_SECRET,
-  allowed_updates: ['message', 'my_chat_member'],
+  allowed_updates: ['message', 'callback_query', 'my_chat_member'],
 });
 await tg('setMyDescription', {
   description:

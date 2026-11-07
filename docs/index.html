@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dикторина — квиз для компании</title>
+<meta name="description" content="Квиз для компании: угадай песню, картинку, видео. Наберём 1000 игроков — сделаем игру и позовём тебя первым.">
+<meta property="og:title" content="Dикторина — квиз для компании">
+<meta property="og:description" content="Наберём 1000 игроков — сделаем игру. Записывайся — позовём первым.">
+<meta property="og:image" content="https://mryahoopryanichek.github.io/dicktorina/og.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#2A1A6E">
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
+<style>
+  /* Палитра night из src/brand.ts — та же, что у аватара и шапки */
+  :root {
+    --low: #2A1A6E;
+    --mid: #3A86C8;
+    --high: #35D0DA;
+    --ink: #FFFFFF;
+    --on-button: #2A1A6E;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { min-height: 100%; }
+  body {
+    min-height: 100svh;
+    font-family: 'Unbounded', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--low);
+    overflow-x: hidden;
+  }
+  /* Фон: градиент снизу-слева к верху, медленно переливается; блик, искры, зерно */
+  .bg, .bg::before, .bg::after { position: fixed; inset: 0; pointer-events: none; }
+  .bg {
+    background:
+      radial-gradient(130% 85% at 8% 98%, var(--low) 0%, transparent 62%),
+      radial-gradient(120% 80% at 72% 2%, var(--high) 0%, transparent 64%),
+      linear-gradient(205deg, var(--high) 0%, var(--mid) 50%, var(--low) 100%);
+    background-size: 140% 140%;
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+  .bg::before {
+    content: '';
+    background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.35) 50%, transparent 60%);
+    background-size: 300% 100%;
+    mix-blend-mode: soft-light;
+    animation: sweep 6s linear infinite;
+  }
+  .bg::after {
+    content: '';
+    opacity: .09;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+  @keyframes drift { from { background-position: 0% 100%; } to { background-position: 100% 0%; } }
+  @keyframes sweep { from { background-position: 150% 0; } to { background-position: -150% 0; } }
+  .spark {
+    position: fixed; z-index: 0; width: var(--s); height: var(--s); pointer-events: none;
+    background: #fff;
+    clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%);
+    filter: drop-shadow(0 0 6px #fff);
+    opacity: 0; animation: twinkle var(--d) ease-in-out var(--delay) infinite;
+  }
+  @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.4) rotate(0); } 50% { opacity: 1; transform: scale(1) rotate(45deg); } }
+  @media (prefers-reduced-motion: reduce) { .bg, .bg::before, .spark { animation: none; } }
+
+  main {
+    position: relative; z-index: 1; /* искры — под текстом */
+    width: min(560px, 100%);
+    margin: 0 auto;
+    padding: max(48px, 8svh) 20px 40px;
+    display: flex; flex-direction: column; gap: 28px;
+  }
+  .logo { font-weight: 800; font-size: clamp(32px, 12vw, 70px); white-space: nowrap; line-height: 1; letter-spacing: -.01em; }
+  h1 { font-weight: 800; font-size: clamp(26px, 7.4vw, 40px); line-height: 1.12; }
+  .lead { font-weight: 500; font-size: clamp(16px, 4.3vw, 19px); line-height: 1.45; opacity: .95; }
+  .lead b { font-weight: 800; }
+  .count[hidden] { display: none; }
+  .count { display: flex; flex-direction: column; gap: 10px; font-weight: 500; font-size: 15px; }
+  .count b { font-weight: 800; font-size: 22px; }
+  .bar { height: 12px; border-radius: 99px; background: rgba(255,255,255,.22); overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--ink); transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
+  .cta {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    padding: 22px 28px; border-radius: 99px;
+    background: var(--ink); color: var(--on-button);
+    font-weight: 800; font-size: clamp(18px, 5vw, 22px); text-decoration: none;
+    box-shadow: 0 0 0 0 rgba(255,255,255,.6), 0 14px 34px rgba(0,0,0,.28);
+    animation: pulse 2.2s ease-out infinite;
+  }
+  .cta svg { width: 28px; height: 28px; flex: none; }
+  .cta:active { transform: scale(.98); }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,.55), 0 14px 34px rgba(0,0,0,.28); } 70%, 100% { box-shadow: 0 0 0 22px rgba(255,255,255,0), 0 14px 34px rgba(0,0,0,.28); } }
+  .hint { font-weight: 500; font-size: 14px; line-height: 1.45; opacity: .85; margin-top: -14px; }
+  ul { list-style: none; padding: 0; display: grid; gap: 12px; font-weight: 500; font-size: 16px; line-height: 1.4; }
+  li { display: flex; gap: 12px; align-items: baseline; }
+  li::before { content: '='; font-weight: 800; }
+  footer { display: flex; flex-wrap: wrap; gap: 10px 20px; font-weight: 500; font-size: 14px; padding-top: 8px; }
+  footer a { color: var(--ink); text-underline-offset: 4px; }
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+<main>
+  <div class="logo">Dикторина</div>
+  <h1>Поиграл бы в такую викторину?</h1>
+  <p class="lead">Квиз для компании: угадай песню, картинку, видео. <b>Наберём 1000 игроков — сделаем игру</b> и позовём тебя первым.</p>
+
+  <div class="count" id="count" hidden>
+    <span>Уже записались: <b id="n">0</b> из <span id="goal">1000</span></span>
+    <div class="bar"><i id="bar"></i></div>
+  </div>
+
+  <a class="cta" id="cta" href="https://t.me/Dicktorinabot?start=site">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 3.2 2.9 10.4c-1.3.5-1.3 1.2-.2 1.6l4.8 1.5 1.8 5.6c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.3 4.8 3.6c.9.5 1.5.2 1.7-.8l3.2-15c.3-1.3-.5-1.9-1.5-1.4ZM8.4 13.2l10.4-6.6c.5-.3.9-.1.5.2l-8.9 8-.3 3.7-1.7-5.3Z"/></svg>
+    Записаться в Telegram
+  </a>
+  <p class="hint">Откроется бот @Dicktorinabot — нажми «Старт». Мы напишем, когда игра будет готова.</p>
+
+  <ul>
+    <li>Раунды с песнями, картинками и видео</li>
+    <li>Играть компанией: телевизор — экран, телефоны — пульты</li>
+    <li>Новые вопросы — в TikTok, Reels и Shorts</li>
+  </ul>
+
+  <footer>
+    <a href="https://www.tiktok.com/@dictor_inna">TikTok</a>
+    <a href="https://www.instagram.com/dictor_inna/">Instagram</a>
+    <a href="https://www.youtube.com/channel/UCQ3SV7YPvIounF1oOhLwRlg">YouTube</a>
+  </footer>
+</main>
+<script>
+  // Метка площадки: ссылка в профиле ?s=tt / ig / yt → бот получит start=tt…
+  const s = new URLSearchParams(location.search).get('s');
+  const source = s && /^[a-z0-9_]{1,32}$/i.test(s) ? s.toLowerCase() : 'site';
+  document.getElementById('cta').href = 'https://t.me/Dicktorinabot?start=' + source;
+
+  // Искры: гуще вверху
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('i');
+    el.className = 'spark';
+    el.style.cssText = `left:${Math.random() * 100}%;top:${Math.pow(Math.random(), 1.6) * 60}%;--s:${10 + Math.random() * 22}px;--d:${2.5 + Math.random() * 3}s;--delay:${-Math.random() * 5}s`;
+    document.body.appendChild(el);
+  }
+
+  // Счётчик записавшихся — от бота; не ответил — блок не показываем
+  fetch('https://dicktorina-bot.dicktorina-bot.workers.dev/count')
+    .then((r) => r.json())
+    .then(({n, goal}) => {
+      if (!(n > 0)) return;
+      document.getElementById('n').textContent = n;
+      document.getElementById('goal').textContent = goal;
+      document.getElementById('count').hidden = false;
+      requestAnimationFrame(() => (document.getElementById('bar').style.width = Math.min(100, (n / goal) * 100) + '%'));
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>
