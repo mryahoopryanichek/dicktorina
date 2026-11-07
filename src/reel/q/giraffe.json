@@ -32,5 +32,9 @@
   "music": {
     "src": "r7-smeshariki.mp3",
     "from": 17.4
+  },
+  "render": {
+    "palette": "emerald",
+    "voice": "vivienne"
   }
 }

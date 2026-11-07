@@ -14,5 +14,9 @@
   "music": {
     "src": "r2-clown-song.mp3",
     "from": 6.2
+  },
+  "render": {
+    "palette": "sunset",
+    "voice": "andrew"
   }
 }

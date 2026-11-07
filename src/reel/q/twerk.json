@@ -17,5 +17,9 @@
     "stopAt": 25.5,
     "revealFor": 5,
     "fit": "contain"
+  },
+  "render": {
+    "palette": "candy",
+    "voice": "svetlana"
   }
 }

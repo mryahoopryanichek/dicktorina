@@ -28,5 +28,9 @@
   "revealAudio": {
     "src": "r5-fontan-song.mp3",
     "from": 25
+  },
+  "render": {
+    "palette": "night",
+    "voice": "remy"
   }
 }

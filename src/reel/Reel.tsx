@@ -31,7 +31,7 @@ import {LINES} from './questions';
 export type Media =
   // revealSrc — картинка на ответе; hide — [x, y, w, h] долями картинки: размыто до ответа (нужен aspect = ширина/высота)
   | {kind: 'image'; src: string; revealSrc?: string; fit?: 'cover' | 'contain'; aspect?: number; hide?: number[]; revealZoom?: number[]} // revealZoom — [x, y, во сколько раз] наезд на ответе
-  | {kind: 'grid'; srcs: string[]} // ребус: картинки плитками 2×2
+  | {kind: 'grid'; srcs: string[]} // картинки плитками по 2 в ряд: ребус 2×2, «лефт/райт» — 2
   // видео: на весь экран играет from…stopAt, на вопросе стоп-кадр, на ответе досматриваем revealFor секунд
   | {kind: 'video'; src: string; from?: number; stopAt?: number; revealFor?: number; muted?: boolean; fit?: 'cover' | 'contain'}
   | {kind: 'audio'; src: string; from?: number};
@@ -418,7 +418,7 @@ export const Reel = ({q: id, palette, voice}: ReelProps) => {
                 style={{
                   display: 'grid',
                   gridTemplateColumns: '1fr 1fr',
-                  gridTemplateRows: '1fr 1fr',
+                  gridTemplateRows: `repeat(${Math.ceil(m.srcs.length / 2)}, minmax(0, 1fr))`,
                   gap: 18,
                   padding: 22,
                   width: '100%',
