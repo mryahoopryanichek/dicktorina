@@ -1,0 +1,38 @@
+{
+  "vivienne": {
+    "name": "fr-FR-VivienneMultilingualNeural",
+    "rate": "+43%",
+    "len": 7.57,
+    "tv": 3.88,
+    "room": 4.84,
+    "join": 5.82,
+    "go": 7.01
+  },
+  "andrew": {
+    "name": "en-US-AndrewMultilingualNeural",
+    "rate": "+58%",
+    "len": 7.51,
+    "tv": 3.95,
+    "room": 4.91,
+    "join": 5.88,
+    "go": 7.0
+  },
+  "remy": {
+    "name": "fr-FR-RemyMultilingualNeural",
+    "rate": "+48%",
+    "len": 7.57,
+    "tv": 3.94,
+    "room": 4.93,
+    "join": 5.86,
+    "go": 7.06
+  },
+  "svetlana": {
+    "name": "ru-RU-SvetlanaNeural",
+    "rate": "+40%",
+    "len": 7.5,
+    "tv": 3.93,
+    "room": 4.78,
+    "join": 5.65,
+    "go": 6.88
+  }
+}

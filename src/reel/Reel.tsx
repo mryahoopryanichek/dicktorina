@@ -27,6 +27,7 @@ import {FONT, PALETTES, REEL, chipColors, textWidth, useFontReady, type Palette,
 import {Outro, outroSeconds, type VoiceId} from '../outro/Outro';
 import {QUESTIONS, type QuestionId} from './questions';
 import {LINES} from './questions';
+import {EXPLAIN_LINES, EXPLAIN_VOICE_AT, Explainer, explainSeconds} from './Explainer';
 
 export type Media =
   // revealSrc — картинка на ответе; hide — [x, y, w, h] долями картинки: размыто до ответа (нужен aspect = ширина/высота)
@@ -48,10 +49,12 @@ export type Question = {
   revealAudio?: {src: string; from?: number}; // звук на ответе — например, сама песня
   hook?: string; // входящий хук: «ВНИМАНИЕ!» + эта строка крупно и голосом, например «Вопрос на знание Авито»
   hookSay?: string; // голосом, если отличается от «Внимание! {hook}!»
-  music?: {src: string; from?: number}; // музыка, что играла на этом вопросе в игре — под всем роликом
+  // музыка, что играла на этом вопросе в игре — под всем роликом; mute — [от, до] секунды трека, где заглушить (мат)
+  music?: {src: string; from?: number; mute?: number[][]};
 };
 
-export type ReelProps = {q: QuestionId; palette: PaletteId; voice: VoiceId}; // q — id из questions.json
+// q — id вопроса (src/reel/q/<id>.json); explain — блок «как играть» после ответа (тестируем: с ним и без)
+export type ReelProps = {q: QuestionId; palette: PaletteId; voice: VoiceId; explain?: boolean};
 
 const W = REEL.width;
 const H = REEL.height;
@@ -64,7 +67,7 @@ const THINK = 5; // таймер, с — ровно 5
 const C = {full: 1.6, shrink: 0.55, step: 0.12, fade: 0.35};
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 
-export const reelTiming = (id: QuestionId, voice: VoiceId) => {
+export const reelTiming = (id: QuestionId, voice: VoiceId, explain = false) => {
   const q = QUESTIONS[id];
   const lines = LINES[id]?.[voice];
   const hookAt = 0.05;
@@ -92,13 +95,18 @@ export const reelTiming = (id: QuestionId, voice: VoiceId) => {
   const answerLen = lines?.a.len ?? 1.5;
   const revealFor = m?.kind === 'video' ? (m.revealFor ?? 0) : 0;
   const hold = Math.max(2, 0.15 + answerLen + 0.6, revealFor, q.revealAudio ? 4 : 0);
-  const outroAt = reveal + hold - C.fade;
-  return {lines, hookAt, hookEnd, hookVoice: lines?.h?.len ?? 0, full, sayAt, sayLen, optsAt, thinkAt, reveal, answerAt, answerLen, outroAt, total: outroAt + outroSeconds(voice)};
+  const uiEnd = reveal + hold - C.fade; // вопрос гаснет
+  const explainAt = uiEnd;
+  const explainLen = explain ? explainSeconds(voice) : 0;
+  const explainVoice = explain ? {at: explainAt + EXPLAIN_VOICE_AT, len: EXPLAIN_LINES[voice].len} : null;
+  const outroAt = explain ? explainAt + explainLen - C.fade : uiEnd;
+  return {lines, hookAt, hookEnd, hookVoice: lines?.h?.len ?? 0, full, sayAt, sayLen, optsAt, thinkAt, reveal, answerAt, answerLen,
+    uiEnd, explain, explainAt, explainLen, explainVoice, outroAt, total: outroAt + outroSeconds(voice)};
 };
 type Timing = ReturnType<typeof reelTiming>;
 
 export const reelMetadata: CalculateMetadataFunction<ReelProps> = ({props}) => ({
-  durationInFrames: Math.round(reelTiming(props.q, props.voice).total * REEL.fps),
+  durationInFrames: Math.round(reelTiming(props.q, props.voice, props.explain).total * REEL.fps),
 });
 
 // Перенос по словам шрифтом бренда; самый крупный размер, при котором текст влезает в maxH
@@ -142,7 +150,7 @@ function mediaVolume(t: number, s: Timing) {
   const under = (a: number, b: number) => interpolate(t, [a - 0.15, a, b, b + 0.15], [0, 1, 1, 0], clamp);
   const duck = Math.max(under(s.hookAt, s.hookAt + s.hookVoice), under(s.sayAt, s.sayAt + s.sayLen), under(s.answerAt, s.answerAt + s.answerLen));
   const base = t < s.thinkAt ? 1 : 0.75;
-  const end = interpolate(t, [s.outroAt - 0.3, s.outroAt + C.fade], [1, 0], clamp);
+  const end = interpolate(t, [s.uiEnd - 0.3, s.uiEnd + C.fade], [1, 0], clamp);
   return base * (1 - 0.78 * duck) * end;
 }
 
@@ -197,13 +205,19 @@ const VideoPhases = ({m, s}: {m: Extract<Media, {kind: 'video'}>; s: Timing}) =>
 
 function musicVolume(t: number, s: Timing, q: Question) {
   const under = (a: number, b: number) => interpolate(t, [a - 0.15, a, b, b + 0.15], [0, 1, 1, 0], clamp);
-  const duck = Math.max(under(s.hookAt, s.hookAt + s.hookVoice), under(s.sayAt, s.sayAt + s.sayLen), under(s.answerAt, s.answerAt + s.answerLen));
+  const ex = s.explainVoice ? under(s.explainVoice.at, s.explainVoice.at + s.explainVoice.len) : 0;
+  const duck = Math.max(under(s.hookAt, s.hookAt + s.hookVoice), under(s.sayAt, s.sayAt + s.sayLen), under(s.answerAt, s.answerAt + s.answerLen), ex);
   const m = q.media;
   const quietAfterReveal = q.revealAudio || (m?.kind === 'video' && (m.revealFor ?? 0) > 0);
-  const afterReveal = quietAfterReveal ? interpolate(t, [s.reveal - 0.1, s.reveal + 0.3], [1, 0], clamp) : 1;
+  // после развязки видео или песни-ответа музыка возвращается только под блок «как играть»
+  const afterReveal = quietAfterReveal
+    ? Math.max(interpolate(t, [s.reveal - 0.1, s.reveal + 0.3], [1, 0], clamp), s.explain ? interpolate(t, [s.explainAt, s.explainAt + 0.4], [0, 1], clamp) : 0)
+    : 1;
   const start = m?.kind === 'video' ? interpolate(t, [s.full, s.full + 0.4], [0, 1], clamp) : interpolate(t, [0, 0.3], [0, 1], clamp);
   const end = interpolate(t, [s.outroAt - 0.3, s.outroAt + C.fade], [1, 0], clamp);
-  return 0.55 * (1 - 0.75 * duck) * afterReveal * start * end;
+  const pos = (q.music?.from ?? 0) + t; // секунда трека
+  const muted = (q.music?.mute ?? []).some(([a, b]) => pos > a - 0.05 && pos < b + 0.05) ? 0 : 1;
+  return 0.55 * (1 - 0.75 * duck) * afterReveal * start * end * muted;
 }
 
 // Входящий хук: затемнение медиа, мигающее «ВНИМАНИЕ!» и строка крупно со штампом
@@ -294,7 +308,7 @@ const Options = ({q, p, t, at, reveal}: {q: Question; p: Palette; t: number; at:
   );
 };
 
-export const Reel = ({q: id, palette, voice}: ReelProps) => {
+export const Reel = ({q: id, palette, voice, explain = false}: ReelProps) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const ready = useFontReady();
@@ -302,7 +316,7 @@ export const Reel = ({q: id, palette, voice}: ReelProps) => {
   const q = QUESTIONS[id];
   const p = PALETTES[palette];
   const {fill, label} = chipColors(p);
-  const s = reelTiming(id, voice);
+  const s = reelTiming(id, voice, explain);
   const m = q.media;
 
   // Раскладка сверху вниз: плашка, вопрос, рамка медиа, варианты, таймер
@@ -324,7 +338,7 @@ export const Reel = ({q: id, palette, voice}: ReelProps) => {
     height: interpolate(k, [0, 1], [H, boxH]),
   };
   const radius = interpolate(k, [0, 1], [0, 34]);
-  const ui = interpolate(t, [s.outroAt, s.outroAt + C.fade], [1, 0], clamp);
+  const ui = interpolate(t, [s.uiEnd, s.uiEnd + C.fade], [1, 0], clamp);
   const revealed = t >= s.reveal;
   const swap = m?.kind === 'image' && revealed && m.revealSrc;
   const pop = spring({frame: Math.round((t - s.reveal) * fps), fps, config: {damping: 11, stiffness: 150}});
@@ -558,6 +572,14 @@ export const Reel = ({q: id, palette, voice}: ReelProps) => {
             <Html5Audio src={staticFile(`voices/${s.lines.a.file}`)} />
           </Sequence>
         </>
+      )}
+
+      {s.explain && (
+        <Sequence from={Math.round(s.explainAt * fps)} durationInFrames={Math.round((s.explainLen + C.fade) * fps)} layout="none">
+          <AbsoluteFill style={{opacity: interpolate(t, [s.explainAt, s.explainAt + C.fade], [0, 1], clamp)}}>
+            <Explainer palette={palette} voice={voice} />
+          </AbsoluteFill>
+        </Sequence>
       )}
 
       <Sequence from={Math.round(s.outroAt * fps)} layout="none">

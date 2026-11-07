@@ -124,28 +124,43 @@ def say(text, voice, rate, pitch, label):
     sys.exit(f"{label}: голос не отдаёт звук")
 
 
-def build(vid, voice, pitch, tmp):
+def build(vid, voice, pitch, tmp, text=TEXT, target=TARGET, marks_of=MARKS, out_name=None):
     rate = 0.2
     for _ in range(6):
         r = f"{round(rate * 100):+d}%"
-        audio, words = say(TEXT, voice, r, pitch, vid)
+        audio, words = say(text, voice, r, pitch, vid)
         raw = os.path.join(tmp, f"{vid}.raw.mp3")
         with open(raw, "wb") as f:
             f.write(audio)
         segs = speech_segments(raw)
-        dst = os.path.join(ROOT, "public", "voices", f"{vid}.mp3")
+        dst = os.path.join(ROOT, "public", "voices", out_name or f"{vid}.mp3")
         starts, length = squeeze(raw, dst, segs)
-        if TARGET - 0.35 <= length <= TARGET:
+        if target - 0.35 <= length <= target:
             break
-        rate = (1 + rate) * length / TARGET - 1 + (0.01 if length > TARGET else 0)
+        rate = (1 + rate) * length / target - 1 + (0.01 if length > target else 0)
     marks = {}
-    for name, word in MARKS.items():
+    for name, word in marks_of.items():
         hit = next((t for t, w in words if w.strip(",.!?—").lower() == word.lower()), None)
         if hit is None:
             sys.exit(f"{vid}: нет слова «{word}» в границах слов: {[w for _, w in words]}")
         marks[name] = round(remap(hit, segs, starts), 2)
     print(f"{vid}: скорость {r}, {length:.2f} с, {marks}")
     return {"name": voice, "rate": r, "len": round(length, 2), **marks}
+
+
+# Блок «как играть» после ответа (решающий, 2026-11-07): его текст слово в слово, голос подогнан под длину
+EXPLAIN = ("Мы хотим сделать Дикторину, в которую вы с друзьями будете играть, когда собираетесь вместе. "
+           "Включите телевизор, создайте комнату, подключитесь с телефонов — и начинайте!")
+EXPLAIN_MARKS = {"tv": "Включите", "room": "создайте", "join": "подключитесь", "go": "начинайте"}
+EXPLAIN_TARGET = 7.6
+
+
+def explain():
+    """Блок «как играть» каждым голосом → public/voices/explain-<id>.mp3 и src/reel/explain.json."""
+    with tempfile.TemporaryDirectory() as tmp:
+        out = {vid: build(vid, v, p, tmp, EXPLAIN, EXPLAIN_TARGET, EXPLAIN_MARKS, f"explain-{vid}.mp3") for vid, (v, p) in VOICES.items()}
+    with open(os.path.join(ROOT, "src", "reel", "explain.json"), "w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(out, ensure_ascii=False, indent=2) + "\n")
 
 
 def main():
@@ -211,5 +226,7 @@ def questions(only):
 
 if len(sys.argv) > 1 and sys.argv[1] == "questions":
     questions(sys.argv[2:])
+elif len(sys.argv) > 1 and sys.argv[1] == "explain":
+    explain()
 else:
     main()

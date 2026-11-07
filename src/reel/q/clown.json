@@ -17,6 +17,7 @@
   },
   "render": {
     "palette": "sunset",
-    "voice": "andrew"
+    "voice": "andrew",
+    "explain": true
   }
 }
