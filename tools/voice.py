@@ -192,7 +192,8 @@ def questions(only):
     qdir = os.path.join(ROOT, "public", "voices", "q")
     os.makedirs(qdir, exist_ok=True)
     os.makedirs(ldir, exist_ok=True)
-    ids = only or list(qs)
+    # без id — только то, что идёт в ролики: «готов» и «черновик» (не заготовки и не «не брать»)
+    ids = only or [k for k, v in qs.items() if v.get("status") in ("готов", "черновик")]
     voices = "|".join(VOICES)
     for n, qid in enumerate(ids, 1):
         q = qs[qid]
