@@ -1,0 +1,17 @@
+// Бот Dикторины на Cloudflare Workers. Секреты — BOT_TOKEN, WEBHOOK_SECRET, GROUP_LINK (приглашение в группу),
+// ADMIN_IDS (кому отвечает /stats) — через setup.mjs из ../.env, не здесь: репо публичный.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dicktorina-bot",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-20",
+  "observability": {"enabled": true},
+  "d1_databases": [
+    // database_id — после `wrangler d1 create dicktorina`
+    {"binding": "DB", "database_name": "dicktorina", "database_id": "00000000-0000-0000-0000-000000000000"}
+  ],
+  "vars": {
+    "BOT_USERNAME": "Dicktorinabot",
+    "GOAL": "1000"
+  }
+}
