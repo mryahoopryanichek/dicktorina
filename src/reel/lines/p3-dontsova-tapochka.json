@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-dontsova-tapochka-q-vivienne.mp3",
+      "len": 2.56,
+      "text": "Дарья Донцова. Девочка Красная… что?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-tapochka-a-vivienne.mp3",
+      "len": 2.16,
+      "text": "Тапочка! Вон она, у неё в руке."
+    },
+    "h": {
+      "file": "q/p3-dontsova-tapochka-h-vivienne.mp3",
+      "len": 2.22,
+      "text": "Внимание! Вопрос по детской литературе!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-dontsova-tapochka-q-andrew.mp3",
+      "len": 2.35,
+      "text": "Дарья Донцова. Девочка Красная… что?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-tapochka-a-andrew.mp3",
+      "len": 1.93,
+      "text": "Тапочка! Вон она, у неё в руке."
+    },
+    "h": {
+      "file": "q/p3-dontsova-tapochka-h-andrew.mp3",
+      "len": 2.34,
+      "text": "Внимание! Вопрос по детской литературе!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-dontsova-tapochka-q-remy.mp3",
+      "len": 2.59,
+      "text": "Дарья Донцова. Девочка Красная… что?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-tapochka-a-remy.mp3",
+      "len": 2.11,
+      "text": "Тапочка! Вон она, у неё в руке."
+    },
+    "h": {
+      "file": "q/p3-dontsova-tapochka-h-remy.mp3",
+      "len": 2.32,
+      "text": "Внимание! Вопрос по детской литературе!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-dontsova-tapochka-q-svetlana.mp3",
+      "len": 2.66,
+      "text": "Дарья Донцова. Девочка Красная… что?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-tapochka-a-svetlana.mp3",
+      "len": 2.03,
+      "text": "Тапочка! Вон она, у неё в руке."
+    },
+    "h": {
+      "file": "q/p3-dontsova-tapochka-h-svetlana.mp3",
+      "len": 2.38,
+      "text": "Внимание! Вопрос по детской литературе!"
+    }
+  }
+}

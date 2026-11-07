@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p1-tinder-q-vivienne.mp3",
+      "len": 2.73,
+      "text": "Что получится после сложения гитары и сноубординга?"
+    },
+    "a": {
+      "file": "q/p1-tinder-a-vivienne.mp3",
+      "len": 1.98,
+      "text": "Страстный… ну, вы сами поняли!"
+    },
+    "h": {
+      "file": "q/p1-tinder-h-vivienne.mp3",
+      "len": 1.86,
+      "text": "Внимание! Вопрос по алгебре!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p1-tinder-q-andrew.mp3",
+      "len": 2.61,
+      "text": "Что получится после сложения гитары и сноубординга?"
+    },
+    "a": {
+      "file": "q/p1-tinder-a-andrew.mp3",
+      "len": 1.85,
+      "text": "Страстный… ну, вы сами поняли!"
+    },
+    "h": {
+      "file": "q/p1-tinder-h-andrew.mp3",
+      "len": 1.81,
+      "text": "Внимание! Вопрос по алгебре!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p1-tinder-q-remy.mp3",
+      "len": 2.68,
+      "text": "Что получится после сложения гитары и сноубординга?"
+    },
+    "a": {
+      "file": "q/p1-tinder-a-remy.mp3",
+      "len": 1.96,
+      "text": "Страстный… ну, вы сами поняли!"
+    },
+    "h": {
+      "file": "q/p1-tinder-h-remy.mp3",
+      "len": 1.93,
+      "text": "Внимание! Вопрос по алгебре!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p1-tinder-q-svetlana.mp3",
+      "len": 2.75,
+      "text": "Что получится после сложения гитары и сноубординга?"
+    },
+    "a": {
+      "file": "q/p1-tinder-a-svetlana.mp3",
+      "len": 1.93,
+      "text": "Страстный… ну, вы сами поняли!"
+    },
+    "h": {
+      "file": "q/p1-tinder-h-svetlana.mp3",
+      "len": 2.0,
+      "text": "Внимание! Вопрос по алгебре!"
+    }
+  }
+}

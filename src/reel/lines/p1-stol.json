@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p1-stol-q-vivienne.mp3",
+      "len": 1.6,
+      "text": "Из чего не делают столы в Европе?"
+    },
+    "a": {
+      "file": "q/p1-stol-a-vivienne.mp3",
+      "len": 1.28,
+      "text": "Из друга семьи! Хрю."
+    },
+    "h": {
+      "file": "q/p1-stol-h-vivienne.mp3",
+      "len": 2.03,
+      "text": "Внимание! Вопрос на знание мебели!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p1-stol-q-andrew.mp3",
+      "len": 1.57,
+      "text": "Из чего не делают столы в Европе?"
+    },
+    "a": {
+      "file": "q/p1-stol-a-andrew.mp3",
+      "len": 1.18,
+      "text": "Из друга семьи! Хрю."
+    },
+    "h": {
+      "file": "q/p1-stol-h-andrew.mp3",
+      "len": 2.09,
+      "text": "Внимание! Вопрос на знание мебели!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p1-stol-q-remy.mp3",
+      "len": 1.64,
+      "text": "Из чего не делают столы в Европе?"
+    },
+    "a": {
+      "file": "q/p1-stol-a-remy.mp3",
+      "len": 1.37,
+      "text": "Из друга семьи! Хрю."
+    },
+    "h": {
+      "file": "q/p1-stol-h-remy.mp3",
+      "len": 2.18,
+      "text": "Внимание! Вопрос на знание мебели!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p1-stol-q-svetlana.mp3",
+      "len": 1.72,
+      "text": "Из чего не делают столы в Европе?"
+    },
+    "a": {
+      "file": "q/p1-stol-a-svetlana.mp3",
+      "len": 1.29,
+      "text": "Из друга семьи! Хрю."
+    },
+    "h": {
+      "file": "q/p1-stol-h-svetlana.mp3",
+      "len": 2.22,
+      "text": "Внимание! Вопрос на знание мебели!"
+    }
+  }
+}

@@ -183,45 +183,57 @@ def main():
 
 
 def questions(only):
-    """Озвучка вопросов src/reel/q/<id>.json → public/voices/q/*.mp3 и src/reel/lines/<id>.json.
-    only — список id; пусто — все вопросы."""
-    qsrc = os.path.join(ROOT, "src", "reel", "q")
+    """Озвучка вопросов из questions.json (корень репо) — строго по очереди: вопрос за вопросом, по 4 голоса.
+    Файлы: public/voices/q/<id>-<часть>-<голос>.mp3 (часть: h — хук, q — вопрос, a — ответ).
+    Длины и тексты — src/reel/lines/<id>.json, пишется сразу после каждого вопроса: упало — запусти снова,
+    продолжит с того же места. Озвученное с тем же текстом не трогает. only — список id; пусто — все."""
+    qs = json.load(open(os.path.join(ROOT, "questions.json"), encoding="utf-8"))
     ldir = os.path.join(ROOT, "src", "reel", "lines")
     qdir = os.path.join(ROOT, "public", "voices", "q")
     os.makedirs(qdir, exist_ok=True)
     os.makedirs(ldir, exist_ok=True)
-    ids = only or sorted(f[:-5] for f in os.listdir(qsrc) if f.endswith(".json"))
-    with tempfile.TemporaryDirectory() as tmp:
-        for qid in ids:
-            q = json.load(open(os.path.join(qsrc, f"{qid}.json"), encoding="utf-8"))
-            answer = q["options"][q["answer"]] if isinstance(q["answer"], int) else q["answer"]
-            texts = {"q": q.get("say") or q["text"], "a": q.get("answerSay") or f"Правильный ответ — {answer}!"}
-            if q.get("hook"):  # хук в начале ролика
-                texts["h"] = q.get("hookSay") or f"Внимание! {q['hook']}!"
-            out, keep = {}, set()
+    ids = only or list(qs)
+    voices = "|".join(VOICES)
+    for n, qid in enumerate(ids, 1):
+        q = qs[qid]
+        answer = q["options"][q["answer"]] if isinstance(q["answer"], int) else q["answer"]
+        texts = {"q": q.get("say") or q["text"], "a": q.get("answerSay") or f"Правильный ответ — {answer}!"}
+        if q.get("hook"):  # хук в начале ролика
+            texts["h"] = q.get("hookSay") or f"Внимание! {q['hook']}!"
+        lpath = os.path.join(ldir, f"{qid}.json")
+        old = json.load(open(lpath, encoding="utf-8")) if os.path.exists(lpath) else {}
+        out, keep, made = {}, set(), 0
+        with tempfile.TemporaryDirectory() as tmp:
             for vid, (voice, pitch) in VOICES.items():
                 rate = QRATE[vid]
                 out[vid] = {}
                 for kind, text in texts.items():
-                    h = hashlib.sha1(f"{text}|{voice}|{rate}|{pitch}".encode()).hexdigest()[:8]
-                    name = f"{qid}-{vid}-{kind}-{h}.mp3"
+                    name = f"{qid}-{kind}-{vid}.mp3"
                     dst = os.path.join(qdir, name)
                     keep.add(name)
-                    if not os.path.exists(dst):
-                        audio, _ = say(text, voice, rate, pitch, f"{qid}/{vid}/{kind}")
-                        raw = os.path.join(tmp, "raw.mp3")
-                        with open(raw, "wb") as f:
-                            f.write(audio)
-                        squeeze(raw, dst, speech_segments(raw))
+                    if not (os.path.exists(dst) and old.get(vid, {}).get(kind, {}).get("text") == text):
+                        # озвучка того же текста со старым именем (с хешем) — переименовать, не генерировать заново
+                        h = hashlib.sha1(f"{text}|{voice}|{rate}|{pitch}".encode()).hexdigest()[:8]
+                        legacy = os.path.join(qdir, f"{qid}-{vid}-{kind}-{h}.mp3")
+                        if os.path.exists(legacy):
+                            os.replace(legacy, dst)
+                        else:
+                            audio, _ = say(text, voice, rate, pitch, f"{qid}/{vid}/{kind}")
+                            raw = os.path.join(tmp, "raw.mp3")
+                            with open(raw, "wb") as f:
+                                f.write(audio)
+                            squeeze(raw, dst, speech_segments(raw))
+                            made += 1
                     err = subprocess.run([FF, "-i", dst], capture_output=True, text=True, encoding="utf-8", errors="replace").stderr
                     h_, m_, s_ = re.search(r"Duration: (\d+):(\d+):([\d.]+)", err).groups()
-                    out[vid][kind] = {"file": f"q/{name}", "len": round(int(h_) * 3600 + int(m_) * 60 + float(s_), 2)}
-            print(qid, {v: {k: x["len"] for k, x in d.items()} for v, d in out.items()})
-            for f in os.listdir(qdir):  # старые озвучки этого вопроса, если поменялся текст
-                if f.startswith(f"{qid}-") and f.endswith(".mp3") and f not in keep:
-                    os.remove(os.path.join(qdir, f))
-            with open(os.path.join(ldir, f"{qid}.json"), "w", encoding="utf-8", newline="\n") as f:
-                f.write(json.dumps(out, ensure_ascii=False, indent=2) + "\n")
+                    out[vid][kind] = {"file": f"q/{name}", "len": round(int(h_) * 3600 + int(m_) * 60 + float(s_), 2), "text": text}
+        with open(lpath, "w", encoding="utf-8", newline="\n") as f:
+            f.write(json.dumps(out, ensure_ascii=False, indent=2) + "\n")
+        mine = re.compile(rf"^{re.escape(qid)}-(?:(?:h|q|a)-(?:{voices})|(?:{voices})-(?:h|q|a)-[0-9a-f]{{8}})\.mp3$")
+        for f in os.listdir(qdir):  # старые файлы этого вопроса: прежние имена, поменявшиеся тексты
+            if mine.match(f) and f not in keep:
+                os.remove(os.path.join(qdir, f))
+        print(f"[{n}/{len(ids)}] {qid}: сгенерировано {made}, всего {sum(len(v) for v in out.values())}", flush=True)
 
 
 if len(sys.argv) > 1 and sys.argv[1] == "questions":

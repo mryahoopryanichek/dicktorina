@@ -1,58 +1,70 @@
 {
   "vivienne": {
     "q": {
-      "file": "q/giraffe-vivienne-q-7a04025b.mp3",
-      "len": 2.68
+      "file": "q/giraffe-q-vivienne.mp3",
+      "len": 2.68,
+      "text": "Дарья Донцова. Жираф — гроза… кого?"
     },
     "a": {
-      "file": "q/giraffe-vivienne-a-dd3b8e99.mp3",
-      "len": 3.67
+      "file": "q/giraffe-a-vivienne.mp3",
+      "len": 3.67,
+      "text": "Пингвинов! Ну вот же он, пингвинёнок, — ответ же был очевиден!"
     },
     "h": {
-      "file": "q/giraffe-vivienne-h-f98196ec.mp3",
-      "len": 2.44
+      "file": "q/giraffe-h-vivienne.mp3",
+      "len": 2.44,
+      "text": "Внимание! Вопрос на классическое образование!"
     }
   },
   "andrew": {
     "q": {
-      "file": "q/giraffe-andrew-q-6a1f32fd.mp3",
-      "len": 2.51
+      "file": "q/giraffe-q-andrew.mp3",
+      "len": 2.51,
+      "text": "Дарья Донцова. Жираф — гроза… кого?"
     },
     "a": {
-      "file": "q/giraffe-andrew-a-6edef85d.mp3",
-      "len": 3.63
+      "file": "q/giraffe-a-andrew.mp3",
+      "len": 3.63,
+      "text": "Пингвинов! Ну вот же он, пингвинёнок, — ответ же был очевиден!"
     },
     "h": {
-      "file": "q/giraffe-andrew-h-3c8371fb.mp3",
-      "len": 2.65
+      "file": "q/giraffe-h-andrew.mp3",
+      "len": 2.65,
+      "text": "Внимание! Вопрос на классическое образование!"
     }
   },
   "remy": {
     "q": {
-      "file": "q/giraffe-remy-q-012c2a4d.mp3",
-      "len": 2.74
+      "file": "q/giraffe-q-remy.mp3",
+      "len": 2.74,
+      "text": "Дарья Донцова. Жираф — гроза… кого?"
     },
     "a": {
-      "file": "q/giraffe-remy-a-9159f404.mp3",
-      "len": 3.47
+      "file": "q/giraffe-a-remy.mp3",
+      "len": 3.47,
+      "text": "Пингвинов! Ну вот же он, пингвинёнок, — ответ же был очевиден!"
     },
     "h": {
-      "file": "q/giraffe-remy-h-4c0975cb.mp3",
-      "len": 2.67
+      "file": "q/giraffe-h-remy.mp3",
+      "len": 2.67,
+      "text": "Внимание! Вопрос на классическое образование!"
     }
   },
   "svetlana": {
     "q": {
-      "file": "q/giraffe-svetlana-q-df160649.mp3",
-      "len": 2.9
+      "file": "q/giraffe-q-svetlana.mp3",
+      "len": 2.9,
+      "text": "Дарья Донцова. Жираф — гроза… кого?"
     },
     "a": {
-      "file": "q/giraffe-svetlana-a-c62ee0d2.mp3",
-      "len": 3.34
+      "file": "q/giraffe-a-svetlana.mp3",
+      "len": 3.34,
+      "text": "Пингвинов! Ну вот же он, пингвинёнок, — ответ же был очевиден!"
     },
     "h": {
-      "file": "q/giraffe-svetlana-h-7457c36a.mp3",
-      "len": 2.84
+      "file": "q/giraffe-h-svetlana.mp3",
+      "len": 2.84,
+      "text": "Внимание! Вопрос на классическое образование!"
     }
   }
 }

@@ -9,3 +9,6 @@ node_modules/
 
 # Медиа для роликов — копии из materials/, в git не идут
 public/media/
+
+# Озвучка вопросов — генерируется: python tools/voice.py questions (длины и тексты — src/reel/lines/)
+public/voices/q/

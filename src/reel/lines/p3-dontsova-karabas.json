@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-dontsova-karabas-q-vivienne.mp3",
+      "len": 2.52,
+      "text": "Дарья Донцова. Дерзкие надежды… кого?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-karabas-a-vivienne.mp3",
+      "len": 3.14,
+      "text": "Карабаса-Барабаса! Вон он, справа, с бородой."
+    },
+    "h": {
+      "file": "q/p3-dontsova-karabas-h-vivienne.mp3",
+      "len": 2.57,
+      "text": "Внимание! Вопрос на знание Золотого ключика!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-dontsova-karabas-q-andrew.mp3",
+      "len": 2.28,
+      "text": "Дарья Донцова. Дерзкие надежды… кого?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-karabas-a-andrew.mp3",
+      "len": 2.98,
+      "text": "Карабаса-Барабаса! Вон он, справа, с бородой."
+    },
+    "h": {
+      "file": "q/p3-dontsova-karabas-h-andrew.mp3",
+      "len": 2.72,
+      "text": "Внимание! Вопрос на знание Золотого ключика!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-dontsova-karabas-q-remy.mp3",
+      "len": 2.56,
+      "text": "Дарья Донцова. Дерзкие надежды… кого?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-karabas-a-remy.mp3",
+      "len": 3.05,
+      "text": "Карабаса-Барабаса! Вон он, справа, с бородой."
+    },
+    "h": {
+      "file": "q/p3-dontsova-karabas-h-remy.mp3",
+      "len": 2.67,
+      "text": "Внимание! Вопрос на знание Золотого ключика!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-dontsova-karabas-q-svetlana.mp3",
+      "len": 2.61,
+      "text": "Дарья Донцова. Дерзкие надежды… кого?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-karabas-a-svetlana.mp3",
+      "len": 2.82,
+      "text": "Карабаса-Барабаса! Вон он, справа, с бородой."
+    },
+    "h": {
+      "file": "q/p3-dontsova-karabas-h-svetlana.mp3",
+      "len": 2.72,
+      "text": "Внимание! Вопрос на знание Золотого ключика!"
+    }
+  }
+}

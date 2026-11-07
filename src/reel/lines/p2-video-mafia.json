@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p2-video-mafia-q-vivienne.mp3",
+      "len": 2.0,
+      "text": "Что будет, если сломаешь грузовик?"
+    },
+    "a": {
+      "file": "q/p2-video-mafia-a-vivienne.mp3",
+      "len": 1.87,
+      "text": "Получишь ящики! Логично же."
+    },
+    "h": {
+      "file": "q/p2-video-mafia-h-vivienne.mp3",
+      "len": 1.86,
+      "text": "Внимание! Вопрос по логистике!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p2-video-mafia-q-andrew.mp3",
+      "len": 1.78,
+      "text": "Что будет, если сломаешь грузовик?"
+    },
+    "a": {
+      "file": "q/p2-video-mafia-a-andrew.mp3",
+      "len": 1.82,
+      "text": "Получишь ящики! Логично же."
+    },
+    "h": {
+      "file": "q/p2-video-mafia-h-andrew.mp3",
+      "len": 1.88,
+      "text": "Внимание! Вопрос по логистике!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p2-video-mafia-q-remy.mp3",
+      "len": 1.89,
+      "text": "Что будет, если сломаешь грузовик?"
+    },
+    "a": {
+      "file": "q/p2-video-mafia-a-remy.mp3",
+      "len": 1.95,
+      "text": "Получишь ящики! Логично же."
+    },
+    "h": {
+      "file": "q/p2-video-mafia-h-remy.mp3",
+      "len": 1.96,
+      "text": "Внимание! Вопрос по логистике!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p2-video-mafia-q-svetlana.mp3",
+      "len": 1.93,
+      "text": "Что будет, если сломаешь грузовик?"
+    },
+    "a": {
+      "file": "q/p2-video-mafia-a-svetlana.mp3",
+      "len": 1.84,
+      "text": "Получишь ящики! Логично же."
+    },
+    "h": {
+      "file": "q/p2-video-mafia-h-svetlana.mp3",
+      "len": 2.08,
+      "text": "Внимание! Вопрос по логистике!"
+    }
+  }
+}

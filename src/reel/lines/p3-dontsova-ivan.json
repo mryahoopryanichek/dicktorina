@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-dontsova-ivan-q-vivienne.mp3",
+      "len": 2.47,
+      "text": "Дарья Донцова. Иван Грозный на… где?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-ivan-a-vivienne.mp3",
+      "len": 2.16,
+      "text": "На Мальдивах! Царю тоже нужен отпуск."
+    },
+    "h": {
+      "file": "q/p3-dontsova-ivan-h-vivienne.mp3",
+      "len": 2.04,
+      "text": "Внимание! Вопрос по истории России!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-dontsova-ivan-q-andrew.mp3",
+      "len": 2.39,
+      "text": "Дарья Донцова. Иван Грозный на… где?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-ivan-a-andrew.mp3",
+      "len": 2.06,
+      "text": "На Мальдивах! Царю тоже нужен отпуск."
+    },
+    "h": {
+      "file": "q/p3-dontsova-ivan-h-andrew.mp3",
+      "len": 2.22,
+      "text": "Внимание! Вопрос по истории России!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-dontsova-ivan-q-remy.mp3",
+      "len": 2.65,
+      "text": "Дарья Донцова. Иван Грозный на… где?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-ivan-a-remy.mp3",
+      "len": 2.19,
+      "text": "На Мальдивах! Царю тоже нужен отпуск."
+    },
+    "h": {
+      "file": "q/p3-dontsova-ivan-h-remy.mp3",
+      "len": 2.19,
+      "text": "Внимание! Вопрос по истории России!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-dontsova-ivan-q-svetlana.mp3",
+      "len": 2.4,
+      "text": "Дарья Донцова. Иван Грозный на… где?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-ivan-a-svetlana.mp3",
+      "len": 2.19,
+      "text": "На Мальдивах! Царю тоже нужен отпуск."
+    },
+    "h": {
+      "file": "q/p3-dontsova-ivan-h-svetlana.mp3",
+      "len": 2.2,
+      "text": "Внимание! Вопрос по истории России!"
+    }
+  }
+}

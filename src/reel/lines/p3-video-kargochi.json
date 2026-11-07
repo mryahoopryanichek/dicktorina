@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-video-kargochi-q-vivienne.mp3",
+      "len": 1.25,
+      "text": "Сколько стоят каргочи?"
+    },
+    "a": {
+      "file": "q/p3-video-kargochi-a-vivienne.mp3",
+      "len": 2.04,
+      "text": "Шестьдесят пять! Белорусских рублей."
+    },
+    "h": {
+      "file": "q/p3-video-kargochi-h-vivienne.mp3",
+      "len": 2.48,
+      "text": "Внимание! Вопрос на знание белорусской моды!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-video-kargochi-q-andrew.mp3",
+      "len": 1.18,
+      "text": "Сколько стоят каргочи?"
+    },
+    "a": {
+      "file": "q/p3-video-kargochi-a-andrew.mp3",
+      "len": 1.93,
+      "text": "Шестьдесят пять! Белорусских рублей."
+    },
+    "h": {
+      "file": "q/p3-video-kargochi-h-andrew.mp3",
+      "len": 2.41,
+      "text": "Внимание! Вопрос на знание белорусской моды!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-video-kargochi-q-remy.mp3",
+      "len": 1.27,
+      "text": "Сколько стоят каргочи?"
+    },
+    "a": {
+      "file": "q/p3-video-kargochi-a-remy.mp3",
+      "len": 2.08,
+      "text": "Шестьдесят пять! Белорусских рублей."
+    },
+    "h": {
+      "file": "q/p3-video-kargochi-h-remy.mp3",
+      "len": 2.56,
+      "text": "Внимание! Вопрос на знание белорусской моды!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-video-kargochi-q-svetlana.mp3",
+      "len": 1.22,
+      "text": "Сколько стоят каргочи?"
+    },
+    "a": {
+      "file": "q/p3-video-kargochi-a-svetlana.mp3",
+      "len": 2.04,
+      "text": "Шестьдесят пять! Белорусских рублей."
+    },
+    "h": {
+      "file": "q/p3-video-kargochi-h-svetlana.mp3",
+      "len": 2.54,
+      "text": "Внимание! Вопрос на знание белорусской моды!"
+    }
+  }
+}

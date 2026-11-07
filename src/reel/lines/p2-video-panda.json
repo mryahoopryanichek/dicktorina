@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p2-video-panda-q-vivienne.mp3",
+      "len": 2.77,
+      "text": "Что ещё она себе позволит на свою нищенскую зарплату?"
+    },
+    "a": {
+      "file": "q/p2-video-panda-a-vivienne.mp3",
+      "len": 0.63,
+      "text": "Виноград!"
+    },
+    "h": {
+      "file": "q/p2-video-panda-h-vivienne.mp3",
+      "len": 1.84,
+      "text": "Внимание! Вопрос по финансам!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p2-video-panda-q-andrew.mp3",
+      "len": 2.91,
+      "text": "Что ещё она себе позволит на свою нищенскую зарплату?"
+    },
+    "a": {
+      "file": "q/p2-video-panda-a-andrew.mp3",
+      "len": 0.52,
+      "text": "Виноград!"
+    },
+    "h": {
+      "file": "q/p2-video-panda-h-andrew.mp3",
+      "len": 1.78,
+      "text": "Внимание! Вопрос по финансам!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p2-video-panda-q-remy.mp3",
+      "len": 2.72,
+      "text": "Что ещё она себе позволит на свою нищенскую зарплату?"
+    },
+    "a": {
+      "file": "q/p2-video-panda-a-remy.mp3",
+      "len": 0.67,
+      "text": "Виноград!"
+    },
+    "h": {
+      "file": "q/p2-video-panda-h-remy.mp3",
+      "len": 2.01,
+      "text": "Внимание! Вопрос по финансам!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p2-video-panda-q-svetlana.mp3",
+      "len": 2.46,
+      "text": "Что ещё она себе позволит на свою нищенскую зарплату?"
+    },
+    "a": {
+      "file": "q/p2-video-panda-a-svetlana.mp3",
+      "len": 0.62,
+      "text": "Виноград!"
+    },
+    "h": {
+      "file": "q/p2-video-panda-h-svetlana.mp3",
+      "len": 2.02,
+      "text": "Внимание! Вопрос по финансам!"
+    }
+  }
+}

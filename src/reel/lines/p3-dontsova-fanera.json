@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-dontsova-fanera-q-vivienne.mp3",
+      "len": 2.65,
+      "text": "Дарья Донцова. Кто-то там Милосская. Кто?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-fanera-a-vivienne.mp3",
+      "len": 3.55,
+      "text": "Фанера Милосская! А Венера — вон она, скромно стоит в углу."
+    },
+    "h": {
+      "file": "q/p3-dontsova-fanera-h-vivienne.mp3",
+      "len": 2.27,
+      "text": "Внимание! Вопрос по античному искусству!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-dontsova-fanera-q-andrew.mp3",
+      "len": 2.42,
+      "text": "Дарья Донцова. Кто-то там Милосская. Кто?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-fanera-a-andrew.mp3",
+      "len": 3.38,
+      "text": "Фанера Милосская! А Венера — вон она, скромно стоит в углу."
+    },
+    "h": {
+      "file": "q/p3-dontsova-fanera-h-andrew.mp3",
+      "len": 2.49,
+      "text": "Внимание! Вопрос по античному искусству!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-dontsova-fanera-q-remy.mp3",
+      "len": 2.71,
+      "text": "Дарья Донцова. Кто-то там Милосская. Кто?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-fanera-a-remy.mp3",
+      "len": 3.53,
+      "text": "Фанера Милосская! А Венера — вон она, скромно стоит в углу."
+    },
+    "h": {
+      "file": "q/p3-dontsova-fanera-h-remy.mp3",
+      "len": 2.42,
+      "text": "Внимание! Вопрос по античному искусству!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-dontsova-fanera-q-svetlana.mp3",
+      "len": 2.74,
+      "text": "Дарья Донцова. Кто-то там Милосская. Кто?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-fanera-a-svetlana.mp3",
+      "len": 3.38,
+      "text": "Фанера Милосская! А Венера — вон она, скромно стоит в углу."
+    },
+    "h": {
+      "file": "q/p3-dontsova-fanera-h-svetlana.mp3",
+      "len": 2.46,
+      "text": "Внимание! Вопрос по античному искусству!"
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-song-yalrs-q-vivienne.mp3",
+      "len": 1.95,
+      "text": "Строчки из какой песни здесь загаданы?"
+    },
+    "a": {
+      "file": "q/p3-song-yalrs-a-vivienne.mp3",
+      "len": 1.67,
+      "text": "Сода Лав, «Я Эл Эр Эс»!"
+    },
+    "h": {
+      "file": "q/p3-song-yalrs-h-vivienne.mp3",
+      "len": 2.29,
+      "text": "Внимание! Вопрос на знание кинологии!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-song-yalrs-q-andrew.mp3",
+      "len": 2.06,
+      "text": "Строчки из какой песни здесь загаданы?"
+    },
+    "a": {
+      "file": "q/p3-song-yalrs-a-andrew.mp3",
+      "len": 1.68,
+      "text": "Сода Лав, «Я Эл Эр Эс»!"
+    },
+    "h": {
+      "file": "q/p3-song-yalrs-h-andrew.mp3",
+      "len": 2.21,
+      "text": "Внимание! Вопрос на знание кинологии!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-song-yalrs-q-remy.mp3",
+      "len": 2.03,
+      "text": "Строчки из какой песни здесь загаданы?"
+    },
+    "a": {
+      "file": "q/p3-song-yalrs-a-remy.mp3",
+      "len": 1.48,
+      "text": "Сода Лав, «Я Эл Эр Эс»!"
+    },
+    "h": {
+      "file": "q/p3-song-yalrs-h-remy.mp3",
+      "len": 2.39,
+      "text": "Внимание! Вопрос на знание кинологии!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-song-yalrs-q-svetlana.mp3",
+      "len": 1.86,
+      "text": "Строчки из какой песни здесь загаданы?"
+    },
+    "a": {
+      "file": "q/p3-song-yalrs-a-svetlana.mp3",
+      "len": 1.71,
+      "text": "Сода Лав, «Я Эл Эр Эс»!"
+    },
+    "h": {
+      "file": "q/p3-song-yalrs-h-svetlana.mp3",
+      "len": 2.4,
+      "text": "Внимание! Вопрос на знание кинологии!"
+    }
+  }
+}

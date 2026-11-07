@@ -1,58 +1,70 @@
 {
   "vivienne": {
     "q": {
-      "file": "q/fontan-vivienne-q-3c4daf4a.mp3",
-      "len": 1.67
+      "file": "q/fontan-q-vivienne.mp3",
+      "len": 1.67,
+      "text": "Что за песня здесь зашифрована?"
     },
     "a": {
-      "file": "q/fontan-vivienne-a-81a042d2.mp3",
-      "len": 2.24
+      "file": "q/fontan-a-vivienne.mp3",
+      "len": 2.24,
+      "text": "Гио Пика, «Фонтанчик с чёрным дельфином»!"
     },
     "h": {
-      "file": "q/fontan-vivienne-h-274ad7c7.mp3",
-      "len": 2.32
+      "file": "q/fontan-h-vivienne.mp3",
+      "len": 2.32,
+      "text": "Внимание! Вопрос об эпохе классицизма!"
     }
   },
   "andrew": {
     "q": {
-      "file": "q/fontan-andrew-q-ea824633.mp3",
-      "len": 1.68
+      "file": "q/fontan-q-andrew.mp3",
+      "len": 1.68,
+      "text": "Что за песня здесь зашифрована?"
     },
     "a": {
-      "file": "q/fontan-andrew-a-d9aa734f.mp3",
-      "len": 2.26
+      "file": "q/fontan-a-andrew.mp3",
+      "len": 2.26,
+      "text": "Гио Пика, «Фонтанчик с чёрным дельфином»!"
     },
     "h": {
-      "file": "q/fontan-andrew-h-a05c8445.mp3",
-      "len": 2.47
+      "file": "q/fontan-h-andrew.mp3",
+      "len": 2.47,
+      "text": "Внимание! Вопрос об эпохе классицизма!"
     }
   },
   "remy": {
     "q": {
-      "file": "q/fontan-remy-q-4630d4a6.mp3",
-      "len": 1.79
+      "file": "q/fontan-q-remy.mp3",
+      "len": 1.79,
+      "text": "Что за песня здесь зашифрована?"
     },
     "a": {
-      "file": "q/fontan-remy-a-2d3dc2ea.mp3",
-      "len": 2.24
+      "file": "q/fontan-a-remy.mp3",
+      "len": 2.24,
+      "text": "Гио Пика, «Фонтанчик с чёрным дельфином»!"
     },
     "h": {
-      "file": "q/fontan-remy-h-17a268c1.mp3",
-      "len": 2.46
+      "file": "q/fontan-h-remy.mp3",
+      "len": 2.46,
+      "text": "Внимание! Вопрос об эпохе классицизма!"
     }
   },
   "svetlana": {
     "q": {
-      "file": "q/fontan-svetlana-q-c5722d04.mp3",
-      "len": 1.6
+      "file": "q/fontan-q-svetlana.mp3",
+      "len": 1.6,
+      "text": "Что за песня здесь зашифрована?"
     },
     "a": {
-      "file": "q/fontan-svetlana-a-20c101eb.mp3",
-      "len": 2.28
+      "file": "q/fontan-a-svetlana.mp3",
+      "len": 2.28,
+      "text": "Гио Пика, «Фонтанчик с чёрным дельфином»!"
     },
     "h": {
-      "file": "q/fontan-svetlana-h-7cf9e12a.mp3",
-      "len": 2.42
+      "file": "q/fontan-h-svetlana.mp3",
+      "len": 2.42,
+      "text": "Внимание! Вопрос об эпохе классицизма!"
     }
   }
 }

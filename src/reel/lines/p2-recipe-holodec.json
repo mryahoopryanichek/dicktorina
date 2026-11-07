@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p2-recipe-holodec-q-vivienne.mp3",
+      "len": 4.9,
+      "text": "Что в составе — не знаем, мы ещё не в том возрасте. Но это холодец. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-holodec-a-vivienne.mp3",
+      "len": 3.01,
+      "text": "Таких свиней сплошь и рядом, фу! Но зацените фон."
+    },
+    "h": {
+      "file": "q/p2-recipe-holodec-h-vivienne.mp3",
+      "len": 1.98,
+      "text": "Внимание! Вопрос по русской кухне!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p2-recipe-holodec-q-andrew.mp3",
+      "len": 4.69,
+      "text": "Что в составе — не знаем, мы ещё не в том возрасте. Но это холодец. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-holodec-a-andrew.mp3",
+      "len": 3.13,
+      "text": "Таких свиней сплошь и рядом, фу! Но зацените фон."
+    },
+    "h": {
+      "file": "q/p2-recipe-holodec-h-andrew.mp3",
+      "len": 1.89,
+      "text": "Внимание! Вопрос по русской кухне!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p2-recipe-holodec-q-remy.mp3",
+      "len": 4.93,
+      "text": "Что в составе — не знаем, мы ещё не в том возрасте. Но это холодец. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-holodec-a-remy.mp3",
+      "len": 3.05,
+      "text": "Таких свиней сплошь и рядом, фу! Но зацените фон."
+    },
+    "h": {
+      "file": "q/p2-recipe-holodec-h-remy.mp3",
+      "len": 2.08,
+      "text": "Внимание! Вопрос по русской кухне!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p2-recipe-holodec-q-svetlana.mp3",
+      "len": 4.61,
+      "text": "Что в составе — не знаем, мы ещё не в том возрасте. Но это холодец. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-holodec-a-svetlana.mp3",
+      "len": 2.94,
+      "text": "Таких свиней сплошь и рядом, фу! Но зацените фон."
+    },
+    "h": {
+      "file": "q/p2-recipe-holodec-h-svetlana.mp3",
+      "len": 2.18,
+      "text": "Внимание! Вопрос по русской кухне!"
+    }
+  }
+}

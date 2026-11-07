@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-video-ded-q-vivienne.mp3",
+      "len": 1.9,
+      "text": "Какие плавки он наденет следующими?"
+    },
+    "a": {
+      "file": "q/p3-video-ded-a-vivienne.mp3",
+      "len": 2.28,
+      "text": "Красные! Дед знает толк в фотосессиях."
+    },
+    "h": {
+      "file": "q/p3-video-ded-h-vivienne.mp3",
+      "len": 2.32,
+      "text": "Внимание! Вопрос на знание пляжной моды!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-video-ded-q-andrew.mp3",
+      "len": 2.04,
+      "text": "Какие плавки он наденет следующими?"
+    },
+    "a": {
+      "file": "q/p3-video-ded-a-andrew.mp3",
+      "len": 2.21,
+      "text": "Красные! Дед знает толк в фотосессиях."
+    },
+    "h": {
+      "file": "q/p3-video-ded-h-andrew.mp3",
+      "len": 2.37,
+      "text": "Внимание! Вопрос на знание пляжной моды!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-video-ded-q-remy.mp3",
+      "len": 1.91,
+      "text": "Какие плавки он наденет следующими?"
+    },
+    "a": {
+      "file": "q/p3-video-ded-a-remy.mp3",
+      "len": 2.39,
+      "text": "Красные! Дед знает толк в фотосессиях."
+    },
+    "h": {
+      "file": "q/p3-video-ded-h-remy.mp3",
+      "len": 2.45,
+      "text": "Внимание! Вопрос на знание пляжной моды!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-video-ded-q-svetlana.mp3",
+      "len": 2.01,
+      "text": "Какие плавки он наденет следующими?"
+    },
+    "a": {
+      "file": "q/p3-video-ded-a-svetlana.mp3",
+      "len": 2.33,
+      "text": "Красные! Дед знает толк в фотосессиях."
+    },
+    "h": {
+      "file": "q/p3-video-ded-h-svetlana.mp3",
+      "len": 2.46,
+      "text": "Внимание! Вопрос на знание пляжной моды!"
+    }
+  }
+}

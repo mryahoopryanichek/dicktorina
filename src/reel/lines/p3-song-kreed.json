@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-song-kreed-q-vivienne.mp3",
+      "len": 1.63,
+      "text": "Чья песня загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-kreed-a-vivienne.mp3",
+      "len": 0.8,
+      "text": "Егор Крид!"
+    },
+    "h": {
+      "file": "q/p3-song-kreed-h-vivienne.mp3",
+      "len": 2.35,
+      "text": "Внимание! Вопрос на знание акушерства!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-song-kreed-q-andrew.mp3",
+      "len": 1.65,
+      "text": "Чья песня загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-kreed-a-andrew.mp3",
+      "len": 0.74,
+      "text": "Егор Крид!"
+    },
+    "h": {
+      "file": "q/p3-song-kreed-h-andrew.mp3",
+      "len": 2.44,
+      "text": "Внимание! Вопрос на знание акушерства!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-song-kreed-q-remy.mp3",
+      "len": 1.68,
+      "text": "Чья песня загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-kreed-a-remy.mp3",
+      "len": 0.76,
+      "text": "Егор Крид!"
+    },
+    "h": {
+      "file": "q/p3-song-kreed-h-remy.mp3",
+      "len": 2.48,
+      "text": "Внимание! Вопрос на знание акушерства!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-song-kreed-q-svetlana.mp3",
+      "len": 1.81,
+      "text": "Чья песня загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-kreed-a-svetlana.mp3",
+      "len": 0.83,
+      "text": "Егор Крид!"
+    },
+    "h": {
+      "file": "q/p3-song-kreed-h-svetlana.mp3",
+      "len": 2.6,
+      "text": "Внимание! Вопрос на знание акушерства!"
+    }
+  }
+}

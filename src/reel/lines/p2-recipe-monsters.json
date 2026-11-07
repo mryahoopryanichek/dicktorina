@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p2-recipe-monsters-q-vivienne.mp3",
+      "len": 4.84,
+      "text": "Куриные бёдра, салат, кетчунез, маслины и яичный белок. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-monsters-a-vivienne.mp3",
+      "len": 3.2,
+      "text": "Неведомая... хреновина! Гурманша выразилась покрепче."
+    },
+    "h": {
+      "file": "q/p2-recipe-monsters-h-vivienne.mp3",
+      "len": 1.9,
+      "text": "Внимание! Вопрос уровня Мишлен!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p2-recipe-monsters-q-andrew.mp3",
+      "len": 4.57,
+      "text": "Куриные бёдра, салат, кетчунез, маслины и яичный белок. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-monsters-a-andrew.mp3",
+      "len": 3.2,
+      "text": "Неведомая... хреновина! Гурманша выразилась покрепче."
+    },
+    "h": {
+      "file": "q/p2-recipe-monsters-h-andrew.mp3",
+      "len": 1.9,
+      "text": "Внимание! Вопрос уровня Мишлен!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p2-recipe-monsters-q-remy.mp3",
+      "len": 4.59,
+      "text": "Куриные бёдра, салат, кетчунез, маслины и яичный белок. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-monsters-a-remy.mp3",
+      "len": 3.38,
+      "text": "Неведомая... хреновина! Гурманша выразилась покрепче."
+    },
+    "h": {
+      "file": "q/p2-recipe-monsters-h-remy.mp3",
+      "len": 2.02,
+      "text": "Внимание! Вопрос уровня Мишлен!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p2-recipe-monsters-q-svetlana.mp3",
+      "len": 4.63,
+      "text": "Куриные бёдра, салат, кетчунез, маслины и яичный белок. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-monsters-a-svetlana.mp3",
+      "len": 3.23,
+      "text": "Неведомая... хреновина! Гурманша выразилась покрепче."
+    },
+    "h": {
+      "file": "q/p2-recipe-monsters-h-svetlana.mp3",
+      "len": 2.07,
+      "text": "Внимание! Вопрос уровня Мишлен!"
+    }
+  }
+}

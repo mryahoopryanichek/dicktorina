@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p1-riders-q-vivienne.mp3",
+      "len": 1.28,
+      "text": "На чём мчатся наездники?"
+    },
+    "a": {
+      "file": "q/p1-riders-a-vivienne.mp3",
+      "len": 1.6,
+      "text": "На коллегах из ПТУ! И-го-го!"
+    },
+    "h": {
+      "file": "q/p1-riders-h-vivienne.mp3",
+      "len": 2.39,
+      "text": "Внимание! Вопрос на знание конного спорта!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p1-riders-q-andrew.mp3",
+      "len": 1.3,
+      "text": "На чём мчатся наездники?"
+    },
+    "a": {
+      "file": "q/p1-riders-a-andrew.mp3",
+      "len": 1.38,
+      "text": "На коллегах из ПТУ! И-го-го!"
+    },
+    "h": {
+      "file": "q/p1-riders-h-andrew.mp3",
+      "len": 2.43,
+      "text": "Внимание! Вопрос на знание конного спорта!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p1-riders-q-remy.mp3",
+      "len": 1.37,
+      "text": "На чём мчатся наездники?"
+    },
+    "a": {
+      "file": "q/p1-riders-a-remy.mp3",
+      "len": 1.73,
+      "text": "На коллегах из ПТУ! И-го-го!"
+    },
+    "h": {
+      "file": "q/p1-riders-h-remy.mp3",
+      "len": 2.55,
+      "text": "Внимание! Вопрос на знание конного спорта!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p1-riders-q-svetlana.mp3",
+      "len": 1.3,
+      "text": "На чём мчатся наездники?"
+    },
+    "a": {
+      "file": "q/p1-riders-a-svetlana.mp3",
+      "len": 1.61,
+      "text": "На коллегах из ПТУ! И-го-го!"
+    },
+    "h": {
+      "file": "q/p1-riders-h-svetlana.mp3",
+      "len": 2.68,
+      "text": "Внимание! Вопрос на знание конного спорта!"
+    }
+  }
+}

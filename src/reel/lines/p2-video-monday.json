@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p2-video-monday-q-vivienne.mp3",
+      "len": 1.81,
+      "text": "Что наш друг будет делать в пятницу?"
+    },
+    "a": {
+      "file": "q/p2-video-monday-a-vivienne.mp3",
+      "len": 1.02,
+      "text": "О субботе мечтать!"
+    },
+    "h": {
+      "file": "q/p2-video-monday-h-vivienne.mp3",
+      "len": 1.91,
+      "text": "Внимание! Вопрос по зоологии!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p2-video-monday-q-andrew.mp3",
+      "len": 1.9,
+      "text": "Что наш друг будет делать в пятницу?"
+    },
+    "a": {
+      "file": "q/p2-video-monday-a-andrew.mp3",
+      "len": 0.95,
+      "text": "О субботе мечтать!"
+    },
+    "h": {
+      "file": "q/p2-video-monday-h-andrew.mp3",
+      "len": 1.88,
+      "text": "Внимание! Вопрос по зоологии!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p2-video-monday-q-remy.mp3",
+      "len": 1.88,
+      "text": "Что наш друг будет делать в пятницу?"
+    },
+    "a": {
+      "file": "q/p2-video-monday-a-remy.mp3",
+      "len": 0.99,
+      "text": "О субботе мечтать!"
+    },
+    "h": {
+      "file": "q/p2-video-monday-h-remy.mp3",
+      "len": 1.94,
+      "text": "Внимание! Вопрос по зоологии!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p2-video-monday-q-svetlana.mp3",
+      "len": 1.81,
+      "text": "Что наш друг будет делать в пятницу?"
+    },
+    "a": {
+      "file": "q/p2-video-monday-a-svetlana.mp3",
+      "len": 1.01,
+      "text": "О субботе мечтать!"
+    },
+    "h": {
+      "file": "q/p2-video-monday-h-svetlana.mp3",
+      "len": 2.07,
+      "text": "Внимание! Вопрос по зоологии!"
+    }
+  }
+}

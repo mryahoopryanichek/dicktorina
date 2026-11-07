@@ -1,58 +1,70 @@
 {
   "vivienne": {
     "q": {
-      "file": "q/clown-vivienne-q-d2f93bff.mp3",
-      "len": 3.11
+      "file": "q/clown-q-vivienne.mp3",
+      "len": 3.11,
+      "text": "Сколько на Авито стоит клоун-пессимист, он же нудный пьяница?"
     },
     "a": {
-      "file": "q/clown-vivienne-a-ef435b0d.mp3",
-      "len": 1.35
+      "file": "q/clown-a-vivienne.mp3",
+      "len": 1.35,
+      "text": "Пятьдесят пять тысяч рублей!"
     },
     "h": {
-      "file": "q/clown-vivienne-h-afefec76.mp3",
-      "len": 2.11
+      "file": "q/clown-h-vivienne.mp3",
+      "len": 2.11,
+      "text": "Внимание! Вопрос на знание Авито!"
     }
   },
   "andrew": {
     "q": {
-      "file": "q/clown-andrew-q-e3d14fe9.mp3",
-      "len": 2.9
+      "file": "q/clown-q-andrew.mp3",
+      "len": 2.9,
+      "text": "Сколько на Авито стоит клоун-пессимист, он же нудный пьяница?"
     },
     "a": {
-      "file": "q/clown-andrew-a-59e35e96.mp3",
-      "len": 1.4
+      "file": "q/clown-a-andrew.mp3",
+      "len": 1.4,
+      "text": "Пятьдесят пять тысяч рублей!"
     },
     "h": {
-      "file": "q/clown-andrew-h-a89d944f.mp3",
-      "len": 2.19
+      "file": "q/clown-h-andrew.mp3",
+      "len": 2.19,
+      "text": "Внимание! Вопрос на знание Авито!"
     }
   },
   "remy": {
     "q": {
-      "file": "q/clown-remy-q-76a89a7e.mp3",
-      "len": 2.94
+      "file": "q/clown-q-remy.mp3",
+      "len": 2.94,
+      "text": "Сколько на Авито стоит клоун-пессимист, он же нудный пьяница?"
     },
     "a": {
-      "file": "q/clown-remy-a-8359c4d8.mp3",
-      "len": 1.41
+      "file": "q/clown-a-remy.mp3",
+      "len": 1.41,
+      "text": "Пятьдесят пять тысяч рублей!"
     },
     "h": {
-      "file": "q/clown-remy-h-69e254c2.mp3",
-      "len": 2.27
+      "file": "q/clown-h-remy.mp3",
+      "len": 2.27,
+      "text": "Внимание! Вопрос на знание Авито!"
     }
   },
   "svetlana": {
     "q": {
-      "file": "q/clown-svetlana-q-50bc9e75.mp3",
-      "len": 3.07
+      "file": "q/clown-q-svetlana.mp3",
+      "len": 3.07,
+      "text": "Сколько на Авито стоит клоун-пессимист, он же нудный пьяница?"
     },
     "a": {
-      "file": "q/clown-svetlana-a-2bcab43c.mp3",
-      "len": 1.38
+      "file": "q/clown-a-svetlana.mp3",
+      "len": 1.38,
+      "text": "Пятьдесят пять тысяч рублей!"
     },
     "h": {
-      "file": "q/clown-svetlana-h-e0004e6b.mp3",
-      "len": 2.35
+      "file": "q/clown-h-svetlana.mp3",
+      "len": 2.35,
+      "text": "Внимание! Вопрос на знание Авито!"
     }
   }
 }

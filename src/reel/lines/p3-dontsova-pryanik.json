@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-dontsova-pryanik-q-vivienne.mp3",
+      "len": 2.64,
+      "text": "Дарья Донцова. Архитектор… какого домика?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-pryanik-a-vivienne.mp3",
+      "len": 2.39,
+      "text": "Пряничного! Хотя второй вариант тоже бы купили."
+    },
+    "h": {
+      "file": "q/p3-dontsova-pryanik-h-vivienne.mp3",
+      "len": 2.18,
+      "text": "Внимание! Вопрос на знание зодчества!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-dontsova-pryanik-q-andrew.mp3",
+      "len": 2.51,
+      "text": "Дарья Донцова. Архитектор… какого домика?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-pryanik-a-andrew.mp3",
+      "len": 2.25,
+      "text": "Пряничного! Хотя второй вариант тоже бы купили."
+    },
+    "h": {
+      "file": "q/p3-dontsova-pryanik-h-andrew.mp3",
+      "len": 2.21,
+      "text": "Внимание! Вопрос на знание зодчества!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-dontsova-pryanik-q-remy.mp3",
+      "len": 2.71,
+      "text": "Дарья Донцова. Архитектор… какого домика?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-pryanik-a-remy.mp3",
+      "len": 2.54,
+      "text": "Пряничного! Хотя второй вариант тоже бы купили."
+    },
+    "h": {
+      "file": "q/p3-dontsova-pryanik-h-remy.mp3",
+      "len": 2.36,
+      "text": "Внимание! Вопрос на знание зодчества!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-dontsova-pryanik-q-svetlana.mp3",
+      "len": 2.69,
+      "text": "Дарья Донцова. Архитектор… какого домика?"
+    },
+    "a": {
+      "file": "q/p3-dontsova-pryanik-a-svetlana.mp3",
+      "len": 2.6,
+      "text": "Пряничного! Хотя второй вариант тоже бы купили."
+    },
+    "h": {
+      "file": "q/p3-dontsova-pryanik-h-svetlana.mp3",
+      "len": 2.39,
+      "text": "Внимание! Вопрос на знание зодчества!"
+    }
+  }
+}

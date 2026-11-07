@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-lr-morning-q-vivienne.mp3",
+      "len": 1.93,
+      "text": "Какая открытка желает нам доброго утра?"
+    },
+    "a": {
+      "file": "q/p3-lr-morning-a-vivienne.mp3",
+      "len": 3.45,
+      "text": "Нижняя! Верхняя желает доброго дня — читать надо внимательнее."
+    },
+    "h": {
+      "file": "q/p3-lr-morning-h-vivienne.mp3",
+      "len": 2.47,
+      "text": "Внимание! Вопрос на знание маминого WhatsApp!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-lr-morning-q-andrew.mp3",
+      "len": 2.38,
+      "text": "Какая открытка желает нам доброго утра?"
+    },
+    "a": {
+      "file": "q/p3-lr-morning-a-andrew.mp3",
+      "len": 3.56,
+      "text": "Нижняя! Верхняя желает доброго дня — читать надо внимательнее."
+    },
+    "h": {
+      "file": "q/p3-lr-morning-h-andrew.mp3",
+      "len": 2.5,
+      "text": "Внимание! Вопрос на знание маминого WhatsApp!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-lr-morning-q-remy.mp3",
+      "len": 1.96,
+      "text": "Какая открытка желает нам доброго утра?"
+    },
+    "a": {
+      "file": "q/p3-lr-morning-a-remy.mp3",
+      "len": 3.49,
+      "text": "Нижняя! Верхняя желает доброго дня — читать надо внимательнее."
+    },
+    "h": {
+      "file": "q/p3-lr-morning-h-remy.mp3",
+      "len": 2.59,
+      "text": "Внимание! Вопрос на знание маминого WhatsApp!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-lr-morning-q-svetlana.mp3",
+      "len": 1.98,
+      "text": "Какая открытка желает нам доброго утра?"
+    },
+    "a": {
+      "file": "q/p3-lr-morning-a-svetlana.mp3",
+      "len": 3.45,
+      "text": "Нижняя! Верхняя желает доброго дня — читать надо внимательнее."
+    },
+    "h": {
+      "file": "q/p3-lr-morning-h-svetlana.mp3",
+      "len": 2.68,
+      "text": "Внимание! Вопрос на знание маминого WhatsApp!"
+    }
+  }
+}

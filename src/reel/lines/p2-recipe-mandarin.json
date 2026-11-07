@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p2-recipe-mandarin-q-vivienne.mp3",
+      "len": 3.51,
+      "text": "Курица, кожура мандарина и грёбаная кинза. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-mandarin-a-vivienne.mp3",
+      "len": 2.09,
+      "text": "Да ёлки-палки! Гурманша сказала покрепче."
+    },
+    "h": {
+      "file": "q/p2-recipe-mandarin-h-vivienne.mp3",
+      "len": 1.83,
+      "text": "Внимание! Вопрос по этикету!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p2-recipe-mandarin-q-andrew.mp3",
+      "len": 3.44,
+      "text": "Курица, кожура мандарина и грёбаная кинза. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-mandarin-a-andrew.mp3",
+      "len": 1.84,
+      "text": "Да ёлки-палки! Гурманша сказала покрепче."
+    },
+    "h": {
+      "file": "q/p2-recipe-mandarin-h-andrew.mp3",
+      "len": 1.82,
+      "text": "Внимание! Вопрос по этикету!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p2-recipe-mandarin-q-remy.mp3",
+      "len": 3.46,
+      "text": "Курица, кожура мандарина и грёбаная кинза. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-mandarin-a-remy.mp3",
+      "len": 2.51,
+      "text": "Да ёлки-палки! Гурманша сказала покрепче."
+    },
+    "h": {
+      "file": "q/p2-recipe-mandarin-h-remy.mp3",
+      "len": 1.95,
+      "text": "Внимание! Вопрос по этикету!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p2-recipe-mandarin-q-svetlana.mp3",
+      "len": 3.47,
+      "text": "Курица, кожура мандарина и грёбаная кинза. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-mandarin-a-svetlana.mp3",
+      "len": 2.51,
+      "text": "Да ёлки-палки! Гурманша сказала покрепче."
+    },
+    "h": {
+      "file": "q/p2-recipe-mandarin-h-svetlana.mp3",
+      "len": 2.01,
+      "text": "Внимание! Вопрос по этикету!"
+    }
+  }
+}

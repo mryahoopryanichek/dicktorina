@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p2-recipe-hearts-q-vivienne.mp3",
+      "len": 4.33,
+      "text": "Свёкла, морковь, много майонеза, укроп и томат. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-hearts-a-vivienne.mp3",
+      "len": 2.55,
+      "text": "Ещё два... красавца! Гурманша сказала грубее."
+    },
+    "h": {
+      "file": "q/p2-recipe-hearts-h-vivienne.mp3",
+      "len": 1.9,
+      "text": "Внимание! Вопрос для гурманов!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p2-recipe-hearts-q-andrew.mp3",
+      "len": 3.91,
+      "text": "Свёкла, морковь, много майонеза, укроп и томат. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-hearts-a-andrew.mp3",
+      "len": 2.8,
+      "text": "Ещё два... красавца! Гурманша сказала грубее."
+    },
+    "h": {
+      "file": "q/p2-recipe-hearts-h-andrew.mp3",
+      "len": 1.84,
+      "text": "Внимание! Вопрос для гурманов!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p2-recipe-hearts-q-remy.mp3",
+      "len": 4.21,
+      "text": "Свёкла, морковь, много майонеза, укроп и томат. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-hearts-a-remy.mp3",
+      "len": 2.81,
+      "text": "Ещё два... красавца! Гурманша сказала грубее."
+    },
+    "h": {
+      "file": "q/p2-recipe-hearts-h-remy.mp3",
+      "len": 2.07,
+      "text": "Внимание! Вопрос для гурманов!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p2-recipe-hearts-q-svetlana.mp3",
+      "len": 4.13,
+      "text": "Свёкла, морковь, много майонеза, укроп и томат. Что получится?"
+    },
+    "a": {
+      "file": "q/p2-recipe-hearts-a-svetlana.mp3",
+      "len": 3.23,
+      "text": "Ещё два... красавца! Гурманша сказала грубее."
+    },
+    "h": {
+      "file": "q/p2-recipe-hearts-h-svetlana.mp3",
+      "len": 2.1,
+      "text": "Внимание! Вопрос для гурманов!"
+    }
+  }
+}
