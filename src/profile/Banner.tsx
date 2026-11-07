@@ -13,7 +13,8 @@ export const BANNER_VARIANTS = [
   {kind: 'word', palette: 'night'},
 ] as const satisfies readonly {kind: 'shaft' | 'word'; palette: PaletteId}[];
 
-const TAGLINE = 'Квиз для компании: песни, картинки, видео';
+// Тон — как в описании профиля (решающий, 2026-11-07)
+const TAGLINE = ['Квиз не про знания, а про чёрный юмор,', 'шутки ниже пояса и песни, которые стыдно знать'];
 
 export const Banner = ({kind, palette}: {kind: 'shaft' | 'word'; palette: PaletteId}) => {
   const ready = useFontReady();
@@ -22,9 +23,9 @@ export const Banner = ({kind, palette}: {kind: 'shaft' | 'word'; palette: Palett
   const size = ready ? Math.floor((100 * 1150) / textWidth(word, 100)) : 0;
   const wordW = ready ? textWidth(word, size) : 0;
   const left = (BANNER.width - wordW) / 2;
-  const tag = ready ? Math.min(46, Math.floor((100 * 1380) / textWidth(TAGLINE, 100))) : 0;
+  const tag = ready ? Math.min(44, Math.floor((100 * 1400) / Math.max(...TAGLINE.map((l) => textWidth(l, 100))))) : 0;
   const eq = ready ? Math.floor((left - 110 - textWidth('8', size)) / textWidth('=', size)) : 0;
-  const cy = BANNER.height / 2 - 40;
+  const cy = BANNER.height / 2 - 70; // слово и две строки подписи — в зоне телефона 1546×423
 
   return (
     <AbsoluteFill>
@@ -41,8 +42,10 @@ export const Banner = ({kind, palette}: {kind: 'shaft' | 'word'; palette: Palett
           <div style={{position: 'absolute', left, top: cy, transform: 'translateY(-50%)', fontSize: size, lineHeight: 1}}>
             {word}
           </div>
-          <div style={{position: 'absolute', left: 0, right: 0, top: cy + size * 0.62, textAlign: 'center', fontSize: tag}}>
-            {TAGLINE}
+          <div style={{position: 'absolute', left: 0, right: 0, top: cy + size * 0.6, textAlign: 'center', fontSize: tag, lineHeight: 1.3}}>
+            {TAGLINE.map((l) => (
+              <div key={l}>{l}</div>
+            ))}
           </div>
         </AbsoluteFill>
       )}

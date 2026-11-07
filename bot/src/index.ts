@@ -45,7 +45,7 @@ const send = (env: Env, chatId: number, text: string, buttons: Button[][] = []) 
 
 function buttons(env: Env): Button[][] {
   const invite = `https://t.me/${env.BOT_USERNAME}?start=fr`;
-  const pitch = 'Записываюсь на Dикторину — квиз для компании. Наберём 1000 игроков — сделают. Го со мной!';
+  const pitch = 'Записываюсь на Dикторину — квиз не про знания, а про чёрный юмор и шутки ниже пояса. Наберём 1000 игроков — сделают. Го со мной!';
   const share = `https://t.me/share/url?url=${encodeURIComponent(invite)}&text=${encodeURIComponent(pitch)}`;
   const rows: Button[][] = [];
   if (env.GROUP_LINK) rows.push([{text: 'Вступить в группу', url: env.GROUP_LINK}]);

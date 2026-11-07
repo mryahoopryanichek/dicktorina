@@ -47,10 +47,10 @@ await tg('setWebhook', {
 });
 await tg('setMyDescription', {
   description:
-    'Dикторина — квиз для компании: песни, картинки, видео.\n\n' +
+    'Dикторина — квиз не про знания, а про чёрный юмор, шутки ниже пояса и песни, которые стыдно знать.\n\n' +
     'Жми «Старт» — запишем тебя. Наберём 1000 игроков — сделаем игру и позовём тебя первым.',
 });
-await tg('setMyShortDescription', {short_description: 'Квиз для компании. Наберём 1000 игроков — сделаем игру.'});
+await tg('setMyShortDescription', {short_description: 'Квиз не про знания, а про чёрный юмор и шутки ниже пояса. 1000 игроков — делаем игру.'});
 await tg('setMyCommands', {commands: [{command: 'start', description: 'Записаться'}]});
 for (const id of (env.ADMIN_IDS ?? '').split(',').map((s) => s.trim()).filter(Boolean)) {
   await tg('setMyCommands', {
