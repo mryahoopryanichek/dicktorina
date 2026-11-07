@@ -25,6 +25,9 @@ const T = {
   away: [1.05, 2.4] as [number, number], // всё уезжает вправо, последней — 8
   ramp: 0.4, // в концовке: за сколько линия разгоняется до своей скорости
 };
+// Концовка, доли времени, пока звучит голос: первую половину видна D, потом весь экран — «=====»,
+// остаток — въезжает 8. Длина линии и скорость считаются из этого.
+const DRIFT = {dGone: 0.5, fullLine: 0.22};
 export const INTRO_SECONDS = 2.5;
 export const LINE_IN_END = T.line[1]; // линия доехала до D — дальше в концовке всё едет
 const LINE_EQ = 8; // сколько «=» в линии отдельной заставки
@@ -46,8 +49,8 @@ type Layout = {
   cy: number;
   cx: number; // середина слова — от неё слово проявляется
   line: string; // «8====…»
-  lineScale: number; // в концовке: поджать линию, чтобы 8=====D было ровно шириной слова
   lineW: number;
+  speed: number; // концовка: скорость линии, px/с
   dust: Dust[];
 };
 
@@ -55,19 +58,23 @@ const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
 const ASH_RGB = rgb(ASH);
 
-function buildLayout(width: number, cy: number, left: number | undefined, fit: boolean): Layout {
+function buildLayout(width: number, cy: number, left: number | undefined, span?: number): Layout {
   const {size, full, x0} = logoMetrics(width, left);
   const wTail = textWidth(WORD.tail, size);
   const xI = x0 + full - wTail;
 
-  // В концовке 8=====D к концу фразы доезжает до места слова: от 8 до D — ровно ширина «Dикторина»
-  const wD = textWidth(WORD.head, size);
+  // Концовка: D уезжает за правый край к доле dGone, потом fullLine времени весь экран — «=====»,
+  // потом въезжает 8. Отсюда скорость и сколько «=»
   const w8 = textWidth('8', size);
   const wEq = textWidth('=', size);
-  const eq = fit ? Math.max(LINE_EQ, Math.round((full - wD - w8) / wEq)) : LINE_EQ;
+  let eq = LINE_EQ;
+  let speed = 0;
+  if (span) {
+    const r = Math.min(T.ramp, span / 2);
+    speed = (width - x0) / (DRIFT.dGone * span - r / 2);
+    eq = Math.round((width + speed * DRIFT.fullLine * span) / wEq);
+  }
   const line = '8' + '='.repeat(eq);
-  const natural = textWidth(line, size);
-  const lineScale = fit ? (full - wD) / natural : 1;
 
   // Каждый пиксель «икторина» становится пылинкой: на месте она рисует ровно этот пиксель.
   // Буквы рисуются с той же дробной долей x, что и в кадре, а пылинки стоят на целых пикселях — без мути.
@@ -104,7 +111,7 @@ function buildLayout(width: number, cy: number, left: number | undefined, fit: b
       });
     }
   }
-  return {font: fontCss(size), x0, xI, cy, cx: x0 + full / 2, line, lineScale, lineW: natural * lineScale, dust};
+  return {font: fontCss(size), x0, xI, cy, cx: x0 + full / 2, line, lineW: textWidth(line, size), speed, dust};
 }
 
 const mix = (ink: number[], m: number) =>
@@ -136,8 +143,8 @@ function drawDust(ctx: CanvasRenderingContext2D, dust: Dust[], t: number, ink: n
   }
 }
 
-// Отдельная заставка: всё уезжает за away. Концовка: после линии всё ровно едет вправо, пока идёт голос,
-// к концу drift 8 встаёт на место D, потом за exit секунд всё улетает за правый край.
+// Отдельная заставка: всё уезжает за away. Концовка: после линии всё ровно едет вправо, пока идёт голос
+// (D уезжает, весь экран — «=====», въезжает 8), потом за exit секунд разгоняется и улетает за правый край.
 type Motion = {away: [number, number]} | {drift: [number, number]; exit: number};
 
 function shiftAt(t: number, M: Motion, L: Layout, width: number) {
@@ -147,15 +154,16 @@ function shiftAt(t: number, M: Motion, L: Layout, width: number) {
   }
   const span = M.drift[1] - M.drift[0];
   const r = Math.min(T.ramp, span / 2);
-  const v = L.lineW / (span - r / 2); // скорость, при которой 8 доедет до места D ровно к концу
+  const v = L.speed;
   const tau = t - M.drift[0];
   if (tau <= 0) return 0;
   if (tau < r) return (v * tau * tau) / (2 * r);
   if (tau < span) return v * (tau - r / 2);
   const e = tau - span;
-  const dist = width + 60 - L.x0; // 8 от места D за правый край
-  const a = (2 * (dist - v * M.exit)) / (M.exit * M.exit);
-  return L.lineW + v * e + (a * e * e) / 2;
+  const end = v * (span - r / 2);
+  const dist = width + 60 - (L.x0 + end - L.lineW); // 8 — за правый край
+  const a = Math.max(0, (2 * (dist - v * M.exit)) / (M.exit * M.exit));
+  return end + v * e + (a * e * e) / 2;
 }
 
 function draw(ctx: CanvasRenderingContext2D, L: Layout, t: number, width: number, ink: string, M: Motion) {
@@ -180,11 +188,9 @@ function draw(ctx: CanvasRenderingContext2D, L: Layout, t: number, width: number
   if (t >= T.line[0]) {
     const lineRight = interpolate(t, T.line, [-40, L.x0], {...clamp, easing: Easing.out(Easing.cubic)});
     ctx.save();
-    ctx.translate(lineRight + shift, L.cy);
-    ctx.scale(L.lineScale, 1);
     ctx.textAlign = 'right';
     ctx.fillStyle = ink;
-    ctx.fillText(L.line, 0, 0);
+    ctx.fillText(L.line, lineRight + shift, L.cy);
     ctx.restore();
   }
   ctx.textAlign = 'left';
@@ -203,7 +209,7 @@ export type IntroLayerProps = {
   ink: string;
   y?: number; // середина слова, доля высоты кадра
   left?: number; // левый край слова, px; без него — по центру
-  drift?: [number, number]; // концовка: 8=====D едет вправо в эти секунды, к концу 8 — на месте D
+  drift?: [number, number]; // концовка: линия едет вправо в эти секунды — D уезжает, экран из «=====», въезжает 8
   exit?: number; // и потом за столько секунд улетает
 };
 
@@ -212,7 +218,7 @@ export const IntroLayer = ({ink, y = 0.5, left, drift, exit = 0.5}: IntroLayerPr
   const frame = useCurrentFrame();
   const {fps, width, height} = useVideoConfig();
   const cy = Math.round(height * y);
-  const fit = Boolean(drift);
+  const span = drift ? drift[1] - drift[0] : undefined;
   const ref = useRef<HTMLCanvasElement>(null);
   const [layout, setLayout] = useState<Layout | null>(null);
   const [handle] = useState(() => delayRender('Шрифт и пиксели заставки'));
@@ -221,12 +227,12 @@ export const IntroLayer = ({ink, y = 0.5, left, drift, exit = 0.5}: IntroLayerPr
   useLayoutEffect(() => {
     let alive = true;
     FONT.waitUntilDone().then(() => {
-      if (alive) setLayout(buildLayout(width, cy, left, fit));
+      if (alive) setLayout(buildLayout(width, cy, left, span));
     });
     return () => {
       alive = false;
     };
-  }, [width, cy, left, fit]);
+  }, [width, cy, left, span]);
 
   const d0 = drift?.[0];
   const d1 = drift?.[1];

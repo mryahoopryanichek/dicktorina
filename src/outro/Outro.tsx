@@ -92,7 +92,7 @@ const Cta = ({palette, voice, t}: {palette: Palette; voice: VoiceId; t: number})
   const {v, end} = timing(voice);
   const at = (s: number) => VOICE_AT + s;
 
-  // Первая строка вопроса — ровно шириной слова: 8=====D над ней к концу фразы кончается там же
+  // Первая строка вопроса — ровно шириной слова «Dикторина» над ней
   const qSize = Math.floor((100 * full) / textWidth(CTA_TEXT.question[0], 100));
   // Строки короткие, чтобы шрифт был крупнее
   const widest = textWidth('игроков — сделаем!', 100);
