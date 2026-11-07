@@ -34,14 +34,14 @@
 | Шрифт | Unbounded 800 — тот же, что в игре |
 | Шаблоны роликов | отдельный шаг: 3–4 шаблона по типам вопросов (угадай песню, картинка, видео, да/нет) → превью решающему → потом пачкой |
 | Лендинг | одна страница на GitHub Pages из этого репо |
-| Запись | через Telegram-бота: кнопка на лендинге → бот с меткой площадки (ссылка в профиле `?s=tt`/`ig`/`yt` → `start=tt`…); бот сохраняет id, ник, имя, источник, шлёт приветствие со ссылкой в группу; потом рассылки о будущих играх; `/stats` — счётчик для решающего |
+| Запись | через Telegram-бота **@Dicktorinabot**: кнопка на лендинге → бот с меткой площадки (ссылка в профиле `?s=tt`/`ig`/`yt` → `start=tt`…). Бот (`bot/`) пишет id, ник, имя, площадку первого `/start` в базу, отвечает «ты №N из 1000», кнопки «Вступить в группу» и «Позвать друзей» (ссылка друга → метка `fr`); помечает, кто заблокировал бота; `/stats` — счётчик, только для `ADMIN_IDS`. Потом — рассылки о будущих играх. Хостинг — **Cloudflare Workers + D1** (решающий, 2026-11-07), бесплатно, круглосуточно |
 | Выкладка | выкладывает Claude: пачками раз в 3–7 дней с отложенной публикацией (YouTube Studio, TikTok Studio, Meta Business Suite), в своём браузере (`playwright-cli`, отдельный профиль). Решающий сам входит в аккаунты; капчи и коды — его. Расширение Claude in Chrome ставить не хочет |
 | Git | `github.com/mryahoopryanichek/dicktorina`, публичный, отдельный аккаунт. Коммиты — от `mryahoopryanichek <353759150+mryahoopryanichek@users.noreply.github.com>` (задано в config репо). Основной аккаунт решающего здесь не светить |
 
 ## Открытые вопросы
 
 - **12 палитр, светлая середина, крупные искры** — сделано и показано листом 2026-11-07, оценки нет.
-- **Хостинг бота:** предложен Cloudflare Workers + D1 (бесплатно, круглосуточно) — не подтверждён. Токен бота — только в `.env` (`BOT_TOKEN=…`), не в чат и не в git.
+- **Секреты бота** — только в `.env` (в git не идёт): `BOT_TOKEN`, `WEBHOOK_URL` (адрес воркера — в нём поддомен аккаунта Cloudflare, в репо не писать), `WEBHOOK_SECRET` (создаёт `setup.mjs`), `GROUP_LINK`, `ADMIN_IDS` (id решающего в Telegram). В чат не присылать.
 
 ## Материалы (в git не идут)
 
@@ -60,6 +60,8 @@
 | Фон-градиент с бликом и искрами | `src/Background.tsx` |
 | Заставка; `IntroLayer` — она же без фона, на любой высоте | `src/intro/Intro.tsx` |
 | Концовка: заставка + вопрос, призыв, стрелка на ник; длина — по голосу | `src/outro/Outro.tsx` |
+| Бот: обработка обновлений Telegram, база, `/stats` | `bot/src/index.ts`, `bot/schema.sql` |
+| Бот: секреты воркера, webhook, описание и меню — после деплоя | `bot/setup.mjs` |
 | Голос концовки: подбор скорости под 5 с, ужатые паузы, моменты слов → `public/voices/<id>.mp3` и `src/outro/voices.ts` | `tools/voice.py` |
 | Лист палитр: кадр n — концовка в палитре n, когда на экране всё | `src/Palettes.tsx` |
 | Аватар профиля 1080×1080 (TikTok, Instagram, YouTube), варианты для выбора | `src/profile/Avatar.tsx` |
@@ -85,6 +87,20 @@ npx remotion render src/index.ts Palettes out/check/palettes.mp4   # 12 кадр
 ffmpeg -y -v error -i out/check/palettes.mp4 -vf "scale=300:533,tile=6x2:padding=6:color=0x222222" -frames:v 1 out/check/palettes-sheet.png
 ```
 
+Бот — в `bot/`, свои пакеты (`cd bot && npm ci`):
+
+```bash
+npm run typecheck                    # wrangler types + tsc
+npm run db:local && npm run dev      # локально: база на диске, секреты-заглушки — bot/.dev.vars
+npx wrangler login                   # один раз: окно браузера, решающий жмёт Allow
+npx wrangler d1 create dicktorina    # один раз: database_id → bot/wrangler.jsonc
+npm run db:remote && npm run deploy  # схема базы и выкладка; адрес воркера → .env как WEBHOOK_URL
+npm run setup                        # секреты воркера из .env, webhook, описание, меню
+```
+
+- Локальная проверка: POST на `localhost:8787/webhook` с заголовком `X-Telegram-Bot-Api-Secret-Token: local`. Кириллицу в теле — из файла (`--data-binary @file`): curl в Windows портит её в аргументах.
+- До `setWebhook` бот отдаёт сообщения через `getUpdates` — так узнать id решающего для `ADMIN_IDS`: он жмёт «Старт», читаем `getUpdates`.
+
 - **Remotion** — ролик как React-компонент, кадр зависит только от времени (`useCurrentFrame`), случайность — только `random(seed)` из `remotion`. Версии пакетов — вышедшие не меньше 2 недель назад (сейчас 4.0.538), все `@remotion/*` одной версии.
 - **`<Freeze>` в 4.0.538 застывает не на том кадре.** Чтобы показать момент N, сдвигать начало: `<Sequence from={frame - N}>`.
 - **ffmpeg** 9.0.2 поставлен через winget; если не в PATH — `%LOCALAPPDATA%\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-9.0.2-full_build\bin\`.
@@ -99,7 +115,7 @@ ffmpeg -y -v error -i out/check/palettes.mp4 -vf "scale=300:533,tile=6x2:padding
 
 ## Дальше
 
-1. Решающий: загрузить аватар и шапку из `out/profile/upload/`; создать бота через @BotFather (инструкция дана в чате 2026-11-07), токен — в `.env`.
+1. Решающий: загрузить аватар и шапку из `out/profile/upload/`; заново скопировать токен @Dicktorinabot в `.env` (первый Telegram не принял — 401); создать группу и прислать ссылку; зарегистрироваться на Cloudflare. Потом: `wrangler login` → D1 → деплой → `setup.mjs` → `/stats`.
 3. Список вопросов из `out/slides/` и `materials/game1/`: какие идут в ролики, тип, время в записи.
 4. Шаблоны роликов по типам вопросов → превью → пачка.
 5. Лендинг и бот.
