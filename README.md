@@ -19,6 +19,7 @@ npm run render:outro  # концовка → out/outro.mp4
 | Заставка: слово, пыль, линия, 8 | `src/intro/Intro.tsx` |
 | Концовка: заставка, вопрос, стрелка на ник автора | `src/outro/Outro.tsx` |
 | Лист всех палитр | `src/Palettes.tsx` |
+| Голос концовки (edge-tts) → `public/voices/` | `tools/voice.py` |
 | Список роликов | `src/Root.tsx` |
 
 ## Что не в git

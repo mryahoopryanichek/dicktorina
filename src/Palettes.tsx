@@ -2,18 +2,18 @@
 // Подпись внизу, в зоне, которую на площадках всё равно закрывает интерфейс.
 import {AbsoluteFill, Sequence, useCurrentFrame, useVideoConfig} from 'remotion';
 import {FONT, PALETTES, PALETTE_IDS} from './brand';
-import {OUTRO_STILL_AT, Outro} from './outro/Outro';
+import {Outro, outroStillAt} from './outro/Outro';
 
 
 export const Palettes = () => {
   const frame = useCurrentFrame();
-  const at = Math.round(OUTRO_STILL_AT * useVideoConfig().fps);
+  const at = Math.round(outroStillAt('andrew') * useVideoConfig().fps);
   const id = PALETTE_IDS[frame % PALETTE_IDS.length];
   return (
     <AbsoluteFill>
       {/* Сдвиг начала: внутри всегда кадр at. <Freeze> в 4.0.538 тут застывал не на том кадре */}
       <Sequence from={frame - at} layout="none">
-        <Outro palette={id} />
+        <Outro palette={id} voice="andrew" silent />
       </Sequence>
       <div
         style={{
