@@ -1,0 +1,21 @@
+{
+  "name": "dicktorina",
+  "private": true,
+  "description": "Ролики, лендинг и бот Dикторины",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render:intro": "remotion render src/index.ts Intro out/intro.mp4",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.538",
+    "@remotion/google-fonts": "4.0.538",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.538"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "typescript": "5.9.3"
+  }
+}
