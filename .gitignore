@@ -3,3 +3,6 @@ materials/
 out/
 node_modules/
 .env
+
+# Передачи между сессиями — личное, в git не идут
+*.local.md

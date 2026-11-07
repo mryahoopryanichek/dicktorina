@@ -11,30 +11,29 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
-import {COLORS, FONT, WORD} from '../brand';
+import {ASH, FONT, PALETTES, WORD, type PaletteId} from '../brand';
+import {Background} from '../Background';
 
-// Моменты заставки, в секундах
+// Моменты заставки, в секундах. Заставка стоит в конце ролика и укладывается в 2,5 с.
 const T = {
-  inEnd: 0.45, // слово проявилось
-  snap: 0.85, // щелчок: «икторина» начинает рассыпаться
-  stagger: 0.8, // за сколько волна пыли проходит слово слева направо
-  jitter: 0.45, // разброс начала у соседних пылинок
-  darken: 0.3, // за сколько до своего начала пылинка темнеет — буква «пеплится» перед волной
-  dMove: [1.35, 1.85], // D переезжает в центр
-  line: [1.8, 2.3], // линия выезжает слева к D
-  away: [2.45, 4.0], // всё уезжает вправо, последней — 8
+  inEnd: 0.25, // слово проявилось
+  snap: 0.3, // щелчок: «икторина» начинает рассыпаться
+  stagger: 0.4, // за сколько волна пыли проходит слово слева направо
+  jitter: 0.2, // разброс начала у соседних пылинок; к 1 с букв уже нет
+  darken: 0.15, // за сколько до своего начала пылинка темнеет — буква «пеплится» перед волной
+  line: [0.8, 1.05], // линия выезжает слева к D, D стоит на месте
+  away: [1.05, 2.4], // всё уезжает вправо, последней — 8
 };
-export const INTRO_SECONDS = 4.15;
-const LINE_EQ = 12; // сколько «=» в линии
+export const INTRO_SECONDS = 2.5;
+const LINE_EQ = 8; // сколько «=» в линии
 const WORD_WIDTH = 0.84; // доля ширины кадра под слово
 
 type Dust = {x: number; y: number; a: number; start: number; life: number; vx: number; vy: number; wob: number};
-type Layout = {font: string; x0: number; xI: number; wD: number; cy: number; lineW: number; dust: Dust[]};
+type Layout = {font: string; x0: number; xI: number; cy: number; lineW: number; dust: Dust[]};
 
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
-const TEXT = rgb(COLORS.text);
-const ASH = rgb(COLORS.ash);
+const ASH_RGB = rgb(ASH);
 
 function buildLayout(width: number, height: number): Layout {
   const ctx = document.createElement('canvas').getContext('2d')!;
@@ -77,9 +76,9 @@ function buildLayout(width: number, height: number): Layout {
         y: cy - bh / 2 + y,
         a: a / 255,
         start: T.snap + (x / bw) * T.stagger + random('s' + k) * T.jitter,
-        life: longLived ? 0.9 + random('l' + k) * 0.9 : 0.2 + random('l' + k) * 0.25,
-        vx: 30 + random('x' + k) * 140,
-        vy: -(10 + random('y' + k) * 110) + (random('v' + k) - 0.5) * 40,
+        life: longLived ? 0.45 + random('l' + k) * 0.45 : 0.12 + random('l' + k) * 0.15,
+        vx: 60 + random('x' + k) * 220,
+        vy: -(20 + random('y' + k) * 150) + (random('v' + k) - 0.5) * 60,
         wob: random('w' + k) * Math.PI * 2,
       });
     }
@@ -88,16 +87,16 @@ function buildLayout(width: number, height: number): Layout {
     font: font(size),
     x0,
     xI,
-    wD: ctx.measureText(WORD.head).width,
     cy,
     lineW: ctx.measureText('8' + '='.repeat(LINE_EQ)).width,
     dust,
   };
 }
 
-const mix = (m: number) => `rgb(${TEXT.map((c, i) => Math.round(c + (ASH[i] - c) * m)).join(',')})`;
+const mix = (ink: number[], m: number) =>
+  `rgb(${ink.map((c, i) => Math.round(c + (ASH_RGB[i] - c) * m)).join(',')})`;
 
-function drawDust(ctx: CanvasRenderingContext2D, dust: Dust[], t: number) {
+function drawDust(ctx: CanvasRenderingContext2D, dust: Dust[], t: number, ink: number[]) {
   for (const p of dust) {
     let x = p.x;
     let y = p.y;
@@ -106,7 +105,7 @@ function drawDust(ctx: CanvasRenderingContext2D, dust: Dust[], t: number) {
     let col: string;
     if (t < p.start) {
       // Перед волной буква темнеет к пеплу
-      col = mix(0.55 * Math.max(0, 1 - (p.start - t) / T.darken));
+      col = mix(ink, 0.55 * Math.max(0, 1 - (p.start - t) / T.darken));
     } else {
       const dt = t - p.start;
       const k = dt / p.life;
@@ -115,7 +114,7 @@ function drawDust(ctx: CanvasRenderingContext2D, dust: Dust[], t: number) {
       y += p.vy * dt - 30 * dt * dt + Math.cos(dt * 4 + p.wob) * 14 * dt;
       a *= Math.pow(1 - k, 1.5);
       size = 1 + 1.5 * Math.min(1, k * 2);
-      col = mix(0.55 + 0.45 * Math.min(1, k * 2));
+      col = mix(ink, 0.55 + 0.45 * Math.min(1, k * 2));
     }
     ctx.globalAlpha = a;
     ctx.fillStyle = col;
@@ -123,7 +122,7 @@ function drawDust(ctx: CanvasRenderingContext2D, dust: Dust[], t: number) {
   }
 }
 
-function draw(ctx: CanvasRenderingContext2D, L: Layout, t: number, width: number) {
+function draw(ctx: CanvasRenderingContext2D, L: Layout, t: number, width: number, ink: string) {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   ctx.font = L.font;
   ctx.textBaseline = 'middle';
@@ -138,33 +137,33 @@ function draw(ctx: CanvasRenderingContext2D, L: Layout, t: number, width: number
   ctx.scale(s, s);
   ctx.translate(-cx, -L.cy);
 
-  // D едет в центр, потом всё вместе с линией уезжает вправо, пока 8 не скроется
-  const dCenter = cx - L.wD / 2;
-  const dMove = interpolate(t, T.dMove, [0, 1], {...clamp, easing: Easing.inOut(Easing.cubic)});
+  // D стоит на месте; линия доезжает до неё, потом всё вместе уезжает вправо, пока 8 не скроется
   const away = interpolate(t, T.away, [0, 1], {...clamp, easing: Easing.in(Easing.quad)});
-  const shift = away * (width - (dCenter - L.lineW) + 60);
-  const xD = L.x0 + (dCenter - L.x0) * dMove + shift;
+  const shift = away * (width - (L.x0 - L.lineW) + 60);
+  const xD = L.x0 + shift;
 
   if (t >= T.line[0]) {
-    const lineRight = interpolate(t, T.line, [-40, dCenter], {...clamp, easing: Easing.out(Easing.cubic)});
+    const lineRight = interpolate(t, T.line, [-40, L.x0], {...clamp, easing: Easing.out(Easing.cubic)});
     ctx.textAlign = 'right';
-    ctx.fillStyle = COLORS.accent;
+    ctx.fillStyle = ink;
     ctx.fillText('8' + '='.repeat(LINE_EQ), lineRight + shift, L.cy);
   }
   ctx.textAlign = 'left';
-  ctx.fillStyle = COLORS.accent;
+  ctx.fillStyle = ink;
   ctx.fillText(WORD.head, xD, L.cy);
 
   if (t < T.snap) {
-    ctx.fillStyle = COLORS.text;
     ctx.fillText(WORD.tail, L.xI, L.cy);
   } else {
-    drawDust(ctx, L.dust, t);
+    drawDust(ctx, L.dust, t, rgb(ink));
   }
   ctx.restore();
 }
 
-export const Intro = () => {
+export type IntroProps = {palette: PaletteId};
+
+export const Intro = ({palette}: IntroProps) => {
+  const ink = PALETTES[palette].ink;
   const frame = useCurrentFrame();
   const {fps, width, height} = useVideoConfig();
   const ref = useRef<HTMLCanvasElement>(null);
@@ -185,16 +184,17 @@ export const Intro = () => {
   useLayoutEffect(() => {
     const c = ref.current;
     if (!c || !layout) return;
-    draw(c.getContext('2d')!, layout, frame / fps, width);
+    draw(c.getContext('2d')!, layout, frame / fps, width, ink);
     if (!released.current) {
       released.current = true;
       continueRender(handle);
     }
-  }, [layout, frame, fps, width, handle]);
+  }, [layout, frame, fps, width, ink, handle]);
 
   return (
-    <AbsoluteFill style={{backgroundColor: COLORS.bg}}>
-      <canvas ref={ref} width={width} height={height} />
+    <AbsoluteFill>
+      <Background palette={PALETTES[palette]} />
+      <canvas ref={ref} width={width} height={height} style={{position: 'absolute', inset: 0}} />
     </AbsoluteFill>
   );
 };
