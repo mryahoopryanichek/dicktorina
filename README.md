@@ -17,7 +17,7 @@ npm run render:outro  # концовка → out/outro.mp4
 |---|---|
 | Цвета, шрифт, формат 1080×1920 | `src/brand.ts` |
 | Заставка: слово, пыль, линия, 8 | `src/intro/Intro.tsx` |
-| Концовка: заставка + кнопка «Регистрируйтесь» | `src/outro/Outro.tsx` |
+| Концовка: заставка, вопрос, стрелка на ник автора | `src/outro/Outro.tsx` |
 | Лист всех палитр | `src/Palettes.tsx` |
 | Список роликов | `src/Root.tsx` |
 

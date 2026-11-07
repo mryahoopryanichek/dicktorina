@@ -1,18 +1,18 @@
-// Лист палитр: кадр n — концовка в палитре n, застывшая на моменте `8=====D` + кнопка.
+// Лист палитр: кадр n — концовка в палитре n, застывшая на моменте, когда на экране всё.
 // Подпись внизу, в зоне, которую на площадках всё равно закрывает интерфейс.
-import {AbsoluteFill, Sequence, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, Sequence, useCurrentFrame, useVideoConfig} from 'remotion';
 import {FONT, PALETTES, PALETTE_IDS} from './brand';
-import {Outro} from './outro/Outro';
+import {OUTRO_STILL_AT, Outro} from './outro/Outro';
 
-export const PALETTE_SHEET_AT = 120; // кадр концовки, 2 с
 
 export const Palettes = () => {
   const frame = useCurrentFrame();
+  const at = Math.round(OUTRO_STILL_AT * useVideoConfig().fps);
   const id = PALETTE_IDS[frame % PALETTE_IDS.length];
   return (
     <AbsoluteFill>
-      {/* Сдвиг начала: внутри всегда кадр PALETTE_SHEET_AT. <Freeze> в 4.0.538 тут застывал не на том кадре */}
-      <Sequence from={frame - PALETTE_SHEET_AT} layout="none">
+      {/* Сдвиг начала: внутри всегда кадр at. <Freeze> в 4.0.538 тут застывал не на том кадре */}
+      <Sequence from={frame - at} layout="none">
         <Outro palette={id} />
       </Sequence>
       <div
@@ -20,7 +20,7 @@ export const Palettes = () => {
           position: 'absolute',
           left: 0,
           right: 0,
-          bottom: 120,
+          bottom: 60,
           textAlign: 'center',
           fontFamily: FONT.fontFamily,
           fontWeight: 800,

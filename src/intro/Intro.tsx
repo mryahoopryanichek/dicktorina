@@ -11,55 +11,77 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
-import {ASH, FONT, PALETTES, WORD, type PaletteId} from '../brand';
+import {ASH, FONT, PALETTES, WORD, fontCss, textWidth, type PaletteId} from '../brand';
 import {Background} from '../Background';
 
-// Моменты заставки, в секундах. Заставка стоит в конце ролика и укладывается в 2,5 с.
+// Моменты заставки, в секундах. Отдельная заставка укладывается в 2,5 с.
 const T = {
   inEnd: 0.25, // слово проявилось
   snap: 0.3, // щелчок: «икторина» начинает рассыпаться
   stagger: 0.4, // за сколько волна пыли проходит слово слева направо
   jitter: 0.2, // разброс начала у соседних пылинок; к 1 с букв уже нет
   darken: 0.15, // за сколько до своего начала пылинка темнеет — буква «пеплится» перед волной
-  line: [0.8, 1.05], // линия выезжает слева к D, D стоит на месте
-  away: [1.05, 2.4], // всё уезжает вправо, последней — 8
+  line: [0.8, 1.05] as [number, number], // линия выезжает слева к D, D стоит на месте
+  away: [1.05, 2.4] as [number, number], // всё уезжает вправо, последней — 8
+  settle: [1.05, 1.65] as [number, number], // с остановкой: 8=====D въезжает на место слова
 };
 export const INTRO_SECONDS = 2.5;
-const LINE_EQ = 8; // сколько «=» в линии
+const LINE_EQ = 8; // сколько «=» в линии без остановки
 const WORD_WIDTH = 0.84; // доля ширины кадра под слово
 
+// Размер и место слова «Dикторина»: по ширине кадра, по центру или от левого края
+export function logoMetrics(width: number, left?: number) {
+  const word = WORD.head + WORD.tail;
+  const size = Math.floor((100 * width * WORD_WIDTH) / textWidth(word, 100));
+  const full = textWidth(word, size);
+  return {size, full, x0: left ?? (width - full) / 2};
+}
+
 type Dust = {x: number; y: number; a: number; start: number; life: number; vx: number; vy: number; wob: number};
-type Layout = {font: string; x0: number; xI: number; cy: number; lineW: number; dust: Dust[]};
+type Layout = {
+  font: string;
+  x0: number;
+  xI: number;
+  cy: number;
+  cx: number; // середина слова — от неё слово проявляется
+  line: string; // «8====…»
+  lineScale: number; // поджать линию, чтобы 8=====D было ровно шириной слова
+  lineW: number;
+  dust: Dust[];
+};
 
 const clamp = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
 const ASH_RGB = rgb(ASH);
 
-function buildLayout(width: number, cy: number): Layout {
-  const ctx = document.createElement('canvas').getContext('2d')!;
-  const font = (s: number) => `800 ${s}px "${FONT.fontFamily}"`;
-  const word = WORD.head + WORD.tail;
-  ctx.font = font(100);
-  const size = Math.floor((100 * width * WORD_WIDTH) / ctx.measureText(word).width);
-  ctx.font = font(size);
-  const full = ctx.measureText(word).width;
-  const wTail = ctx.measureText(WORD.tail).width;
-  const x0 = (width - full) / 2;
+function buildLayout(width: number, cy: number, left: number | undefined, hold: boolean): Layout {
+  const {size, full, x0} = logoMetrics(width, left);
+  const wTail = textWidth(WORD.tail, size);
   const xI = x0 + full - wTail;
+
+  // С остановкой 8=====D встаёт на место слова: от 8 до D — ровно ширина «Dикторина»
+  const wD = textWidth(WORD.head, size);
+  const w8 = textWidth('8', size);
+  const wEq = textWidth('=', size);
+  const eq = hold ? Math.max(LINE_EQ, Math.round((full - wD - w8) / wEq)) : LINE_EQ;
+  const line = '8' + '='.repeat(eq);
+  const natural = textWidth(line, size);
+  const lineScale = hold ? (full - wD) / natural : 1;
+
   // Каждый пиксель «икторина» становится пылинкой: на месте она рисует ровно этот пиксель.
   // Буквы рисуются с той же дробной долей x, что и в кадре, а пылинки стоят на целых пикселях — без мути.
   const pad = Math.ceil(size * 0.1);
   const bw = Math.ceil(wTail) + 2 * pad + 1;
   const bh = 2 * Math.ceil(size * 0.8);
-  const left = Math.floor(xI) - pad;
+  const leftPx = Math.floor(xI) - pad;
   const off = document.createElement('canvas');
   off.width = bw;
   off.height = bh;
   const o = off.getContext('2d')!;
-  o.font = font(size);
+  o.font = fontCss(size);
   o.textBaseline = 'middle';
   o.fillStyle = '#fff';
-  o.fillText(WORD.tail, xI - left, bh / 2);
+  o.fillText(WORD.tail, xI - leftPx, bh / 2);
   const px = o.getImageData(0, 0, bw, bh).data;
   const dust: Dust[] = [];
   for (let y = 0; y < bh; y++) {
@@ -70,7 +92,7 @@ function buildLayout(width: number, cy: number): Layout {
       // Больше половины пылинок осыпается быстро, остальные долго уносит ветром — пыль редкая, а не пятно
       const longLived = random('k' + k) < 0.4;
       dust.push({
-        x: left + x,
+        x: leftPx + x,
         y: cy - bh / 2 + y,
         a: a / 255,
         start: T.snap + (x / bw) * T.stagger + random('s' + k) * T.jitter,
@@ -81,14 +103,7 @@ function buildLayout(width: number, cy: number): Layout {
       });
     }
   }
-  return {
-    font: font(size),
-    x0,
-    xI,
-    cy,
-    lineW: ctx.measureText('8' + '='.repeat(LINE_EQ)).width,
-    dust,
-  };
+  return {font: fontCss(size), x0, xI, cy, cx: x0 + full / 2, line, lineScale, lineW: natural * lineScale, dust};
 }
 
 const mix = (ink: number[], m: number) =>
@@ -120,14 +135,16 @@ function drawDust(ctx: CanvasRenderingContext2D, dust: Dust[], t: number, ink: n
   }
 }
 
-function draw(ctx: CanvasRenderingContext2D, L: Layout, t: number, width: number, ink: string) {
+type Motion = {settle?: [number, number]; leave: [number, number]};
+
+function draw(ctx: CanvasRenderingContext2D, L: Layout, t: number, width: number, ink: string, M: Motion) {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   ctx.font = L.font;
   ctx.textBaseline = 'middle';
 
   // Появление слова
   const appear = interpolate(t, [0, T.inEnd], [0, 1], {...clamp, easing: Easing.out(Easing.cubic)});
-  const cx = width / 2;
+  const cx = L.cx;
   const s = 0.88 + 0.12 * appear;
   ctx.save();
   ctx.globalAlpha = appear;
@@ -135,16 +152,25 @@ function draw(ctx: CanvasRenderingContext2D, L: Layout, t: number, width: number
   ctx.scale(s, s);
   ctx.translate(-cx, -L.cy);
 
-  // D стоит на месте; линия доезжает до неё, потом всё вместе уезжает вправо, пока 8 не скроется
-  const away = interpolate(t, T.away, [0, 1], {...clamp, easing: Easing.in(Easing.quad)});
-  const shift = away * (width - (L.x0 - L.lineW) + 60);
+  // D стоит на месте; линия доезжает до неё. С остановкой всё сдвигается, пока 8 не встанет на место D,
+  // и стоит до leave. Потом всё уезжает вправо, пока 8 не скроется.
+  const settle = M.settle
+    ? interpolate(t, M.settle, [0, L.lineW], {...clamp, easing: Easing.inOut(Easing.cubic)})
+    : 0;
+  const settled = M.settle ? L.lineW : 0;
+  const away = interpolate(t, M.leave, [0, 1], {...clamp, easing: Easing.in(Easing.quad)});
+  const shift = settle + away * (width + 60 - L.x0 + L.lineW - settled);
   const xD = L.x0 + shift;
 
   if (t >= T.line[0]) {
     const lineRight = interpolate(t, T.line, [-40, L.x0], {...clamp, easing: Easing.out(Easing.cubic)});
+    ctx.save();
+    ctx.translate(lineRight + shift, L.cy);
+    ctx.scale(L.lineScale, 1);
     ctx.textAlign = 'right';
     ctx.fillStyle = ink;
-    ctx.fillText('8' + '='.repeat(LINE_EQ), lineRight + shift, L.cy);
+    ctx.fillText(L.line, 0, 0);
+    ctx.restore();
   }
   ctx.textAlign = 'left';
   ctx.fillStyle = ink;
@@ -158,11 +184,19 @@ function draw(ctx: CanvasRenderingContext2D, L: Layout, t: number, width: number
   ctx.restore();
 }
 
-// Заставка без фона: рисуется поверх любого кадра. y — середина слова, доля высоты кадра.
-export const IntroLayer = ({ink, y = 0.5}: {ink: string; y?: number}) => {
+export type IntroLayerProps = {
+  ink: string;
+  y?: number; // середина слова, доля высоты кадра
+  left?: number; // левый край слова, px; без него — по центру
+  leaveAt?: [number, number]; // с остановкой: 8=====D стоит на месте слова и уезжает в эти секунды
+};
+
+// Заставка без фона: рисуется поверх любого кадра
+export const IntroLayer = ({ink, y = 0.5, left, leaveAt}: IntroLayerProps) => {
   const frame = useCurrentFrame();
   const {fps, width, height} = useVideoConfig();
   const cy = Math.round(height * y);
+  const hold = Boolean(leaveAt);
   const ref = useRef<HTMLCanvasElement>(null);
   const [layout, setLayout] = useState<Layout | null>(null);
   const [handle] = useState(() => delayRender('Шрифт и пиксели заставки'));
@@ -171,22 +205,26 @@ export const IntroLayer = ({ink, y = 0.5}: {ink: string; y?: number}) => {
   useLayoutEffect(() => {
     let alive = true;
     FONT.waitUntilDone().then(() => {
-      if (alive) setLayout(buildLayout(width, cy));
+      if (alive) setLayout(buildLayout(width, cy, left, hold));
     });
     return () => {
       alive = false;
     };
-  }, [width, cy]);
+  }, [width, cy, left, hold]);
 
+  const l0 = leaveAt?.[0];
+  const l1 = leaveAt?.[1];
   useLayoutEffect(() => {
     const c = ref.current;
     if (!c || !layout) return;
-    draw(c.getContext('2d')!, layout, frame / fps, width, ink);
+    const motion: Motion =
+      l0 !== undefined && l1 !== undefined ? {settle: T.settle, leave: [l0, l1]} : {leave: T.away};
+    draw(c.getContext('2d')!, layout, frame / fps, width, ink, motion);
     if (!released.current) {
       released.current = true;
       continueRender(handle);
     }
-  }, [layout, frame, fps, width, ink, handle]);
+  }, [layout, frame, fps, width, ink, handle, l0, l1]);
 
   return <canvas ref={ref} width={width} height={height} style={{position: 'absolute', inset: 0}} />;
 };

@@ -1,5 +1,7 @@
 // Бренд: формат роликов, шрифт, слово и палитры. У каждого ролика своя палитра —
 // градиент от low (низ-лево) через светлую mid к high (верх), ink — цвет текста поверх него.
+import {useLayoutEffect, useState} from 'react';
+import {continueRender, delayRender} from 'remotion';
 import {loadFont} from '@remotion/google-fonts/Unbounded';
 
 export const REEL = {width: 1080, height: 1920, fps: 60};
@@ -7,6 +9,28 @@ export const REEL = {width: 1080, height: 1920, fps: 60};
 export const WORD = {head: 'D', tail: 'икторина'};
 
 export const FONT = loadFont('normal', {weights: ['800'], subsets: ['latin', 'cyrillic']});
+export const fontCss = (size: number) => `800 ${size}px "${FONT.fontFamily}"`;
+
+let measurer: CanvasRenderingContext2D | null = null;
+// Ширина текста шрифтом бренда, px. Верна только после загрузки шрифта (useFontReady)
+export const textWidth = (text: string, size: number) => {
+  measurer ??= document.createElement('canvas').getContext('2d')!;
+  measurer.font = fontCss(size);
+  return measurer.measureText(text).width;
+};
+
+// Держит кадр, пока не загрузится шрифт: до этого мерить текст нельзя
+export const useFontReady = () => {
+  const [ready, setReady] = useState(false);
+  const [handle] = useState(() => delayRender('Шрифт бренда'));
+  useLayoutEffect(() => {
+    FONT.waitUntilDone().then(() => {
+      setReady(true);
+      continueRender(handle);
+    });
+  }, [handle]);
+  return ready;
+};
 
 export type Palette = {
   name: string; // по-русски, для листа палитр
@@ -43,8 +67,8 @@ const luma = (hex: string) => {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 };
 
-// Кнопка призыва: заливка цветом текста, надпись — контрастным цветом палитры
-export const buttonColors = (p: Palette) => ({
+// Плашка-акцент («1000»): заливка цветом текста, надпись — контрастным цветом палитры
+export const chipColors = (p: Palette) => ({
   fill: p.ink,
   label: luma(p.ink) > 0.5 ? p.low : p.high,
 });
