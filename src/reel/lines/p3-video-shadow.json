@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-video-shadow-q-vivienne.mp3",
+      "len": 2.79,
+      "text": "Кто победит? Шаолиньский монах или чёртова палка?"
+    },
+    "a": {
+      "file": "q/p3-video-shadow-a-vivienne.mp3",
+      "len": 2.11,
+      "text": "Шаолиньский монах! Палка не выдержала."
+    },
+    "h": {
+      "file": "q/p3-video-shadow-h-vivienne.mp3",
+      "len": 2.58,
+      "text": "Внимание! Вопрос по восточным единоборствам!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-video-shadow-q-andrew.mp3",
+      "len": 2.57,
+      "text": "Кто победит? Шаолиньский монах или чёртова палка?"
+    },
+    "a": {
+      "file": "q/p3-video-shadow-a-andrew.mp3",
+      "len": 2.15,
+      "text": "Шаолиньский монах! Палка не выдержала."
+    },
+    "h": {
+      "file": "q/p3-video-shadow-h-andrew.mp3",
+      "len": 2.47,
+      "text": "Внимание! Вопрос по восточным единоборствам!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-video-shadow-q-remy.mp3",
+      "len": 2.76,
+      "text": "Кто победит? Шаолиньский монах или чёртова палка?"
+    },
+    "a": {
+      "file": "q/p3-video-shadow-a-remy.mp3",
+      "len": 2.14,
+      "text": "Шаолиньский монах! Палка не выдержала."
+    },
+    "h": {
+      "file": "q/p3-video-shadow-h-remy.mp3",
+      "len": 2.67,
+      "text": "Внимание! Вопрос по восточным единоборствам!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-video-shadow-q-svetlana.mp3",
+      "len": 2.92,
+      "text": "Кто победит? Шаолиньский монах или чёртова палка?"
+    },
+    "a": {
+      "file": "q/p3-video-shadow-a-svetlana.mp3",
+      "len": 2.14,
+      "text": "Шаолиньский монах! Палка не выдержала."
+    },
+    "h": {
+      "file": "q/p3-video-shadow-h-svetlana.mp3",
+      "len": 2.61,
+      "text": "Внимание! Вопрос по восточным единоборствам!"
+    }
+  }
+}

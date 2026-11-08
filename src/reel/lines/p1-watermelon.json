@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p1-watermelon-q-vivienne.mp3",
+      "len": 1.24,
+      "text": "Что мы скрыли у Виталия?"
+    },
+    "a": {
+      "file": "q/p1-watermelon-a-vivienne.mp3",
+      "len": 2.44,
+      "text": "Арбуз! Виталий — человек приличный."
+    },
+    "h": {
+      "file": "q/p1-watermelon-h-vivienne.mp3",
+      "len": 1.96,
+      "text": "Внимание! Вопрос по иконописи!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p1-watermelon-q-andrew.mp3",
+      "len": 1.42,
+      "text": "Что мы скрыли у Виталия?"
+    },
+    "a": {
+      "file": "q/p1-watermelon-a-andrew.mp3",
+      "len": 2.16,
+      "text": "Арбуз! Виталий — человек приличный."
+    },
+    "h": {
+      "file": "q/p1-watermelon-h-andrew.mp3",
+      "len": 2.03,
+      "text": "Внимание! Вопрос по иконописи!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p1-watermelon-q-remy.mp3",
+      "len": 1.29,
+      "text": "Что мы скрыли у Виталия?"
+    },
+    "a": {
+      "file": "q/p1-watermelon-a-remy.mp3",
+      "len": 2.45,
+      "text": "Арбуз! Виталий — человек приличный."
+    },
+    "h": {
+      "file": "q/p1-watermelon-h-remy.mp3",
+      "len": 2.1,
+      "text": "Внимание! Вопрос по иконописи!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p1-watermelon-q-svetlana.mp3",
+      "len": 1.4,
+      "text": "Что мы скрыли у Виталия?"
+    },
+    "a": {
+      "file": "q/p1-watermelon-a-svetlana.mp3",
+      "len": 2.43,
+      "text": "Арбуз! Виталий — человек приличный."
+    },
+    "h": {
+      "file": "q/p1-watermelon-h-svetlana.mp3",
+      "len": 2.17,
+      "text": "Внимание! Вопрос по иконописи!"
+    }
+  }
+}

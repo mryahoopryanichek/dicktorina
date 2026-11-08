@@ -123,6 +123,7 @@ function fitText(text: string, maxW: number, maxH: number, sizes = [74, 68, 62, 
       }
     }
     lines.push(cur);
+    if (lines.some((l) => textWidth(l, size) > maxW)) continue; // длинное слово шире строки — берём шрифт меньше, иначе обрежется
     if (lines.length * size * 1.1 <= maxH) return {size, height: lines.length * size * 1.1};
   }
   return {size: sizes[sizes.length - 1], height: maxH};

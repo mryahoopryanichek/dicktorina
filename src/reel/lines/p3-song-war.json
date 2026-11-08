@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-song-war-q-vivienne.mp3",
+      "len": 1.71,
+      "text": "Что за песня загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-war-a-vivienne.mp3",
+      "len": 1.68,
+      "text": "Хаммали и Наваи, «Девочка-война»!"
+    },
+    "h": {
+      "file": "q/p3-song-war-h-vivienne.mp3",
+      "len": 2.26,
+      "text": "Внимание! Вопрос для дешифровщиков!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-song-war-q-andrew.mp3",
+      "len": 1.65,
+      "text": "Что за песня загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-war-a-andrew.mp3",
+      "len": 1.5,
+      "text": "Хаммали и Наваи, «Девочка-война»!"
+    },
+    "h": {
+      "file": "q/p3-song-war-h-andrew.mp3",
+      "len": 2.12,
+      "text": "Внимание! Вопрос для дешифровщиков!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-song-war-q-remy.mp3",
+      "len": 1.76,
+      "text": "Что за песня загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-war-a-remy.mp3",
+      "len": 1.86,
+      "text": "Хаммали и Наваи, «Девочка-война»!"
+    },
+    "h": {
+      "file": "q/p3-song-war-h-remy.mp3",
+      "len": 2.36,
+      "text": "Внимание! Вопрос для дешифровщиков!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-song-war-q-svetlana.mp3",
+      "len": 1.76,
+      "text": "Что за песня загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-war-a-svetlana.mp3",
+      "len": 1.99,
+      "text": "Хаммали и Наваи, «Девочка-война»!"
+    },
+    "h": {
+      "file": "q/p3-song-war-h-svetlana.mp3",
+      "len": 2.38,
+      "text": "Внимание! Вопрос для дешифровщиков!"
+    }
+  }
+}

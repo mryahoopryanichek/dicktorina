@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-song-glamour-q-vivienne.mp3",
+      "len": 2.17,
+      "text": "Строчка из какой песни загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-glamour-a-vivienne.mp3",
+      "len": 3.1,
+      "text": "Гламур! Гламур, блонды, гламур и брюнетки."
+    },
+    "h": {
+      "file": "q/p3-song-glamour-h-vivienne.mp3",
+      "len": 2.1,
+      "text": "Внимание! Вопрос на знание глянца!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-song-glamour-q-andrew.mp3",
+      "len": 2.23,
+      "text": "Строчка из какой песни загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-glamour-a-andrew.mp3",
+      "len": 2.81,
+      "text": "Гламур! Гламур, блонды, гламур и брюнетки."
+    },
+    "h": {
+      "file": "q/p3-song-glamour-h-andrew.mp3",
+      "len": 2.16,
+      "text": "Внимание! Вопрос на знание глянца!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-song-glamour-q-remy.mp3",
+      "len": 2.24,
+      "text": "Строчка из какой песни загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-glamour-a-remy.mp3",
+      "len": 3.11,
+      "text": "Гламур! Гламур, блонды, гламур и брюнетки."
+    },
+    "h": {
+      "file": "q/p3-song-glamour-h-remy.mp3",
+      "len": 2.27,
+      "text": "Внимание! Вопрос на знание глянца!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-song-glamour-q-svetlana.mp3",
+      "len": 2.25,
+      "text": "Строчка из какой песни загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-glamour-a-svetlana.mp3",
+      "len": 3.13,
+      "text": "Гламур! Гламур, блонды, гламур и брюнетки."
+    },
+    "h": {
+      "file": "q/p3-song-glamour-h-svetlana.mp3",
+      "len": 2.29,
+      "text": "Внимание! Вопрос на знание глянца!"
+    }
+  }
+}

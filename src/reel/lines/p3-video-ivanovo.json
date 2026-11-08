@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-video-ivanovo-q-vivienne.mp3",
+      "len": 2.54,
+      "text": "Чем закончится видео про съёмную квартиру в Иваново?"
+    },
+    "a": {
+      "file": "q/p3-video-ivanovo-a-vivienne.mp3",
+      "len": 2.08,
+      "text": "Просто выйдет на кухню! А вы чего ждали?"
+    },
+    "h": {
+      "file": "q/p3-video-ivanovo-h-vivienne.mp3",
+      "len": 2.45,
+      "text": "Внимание! Вопрос на знание рынка аренды!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-video-ivanovo-q-andrew.mp3",
+      "len": 2.53,
+      "text": "Чем закончится видео про съёмную квартиру в Иваново?"
+    },
+    "a": {
+      "file": "q/p3-video-ivanovo-a-andrew.mp3",
+      "len": 2.21,
+      "text": "Просто выйдет на кухню! А вы чего ждали?"
+    },
+    "h": {
+      "file": "q/p3-video-ivanovo-h-andrew.mp3",
+      "len": 2.55,
+      "text": "Внимание! Вопрос на знание рынка аренды!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-video-ivanovo-q-remy.mp3",
+      "len": 2.4,
+      "text": "Чем закончится видео про съёмную квартиру в Иваново?"
+    },
+    "a": {
+      "file": "q/p3-video-ivanovo-a-remy.mp3",
+      "len": 2.16,
+      "text": "Просто выйдет на кухню! А вы чего ждали?"
+    },
+    "h": {
+      "file": "q/p3-video-ivanovo-h-remy.mp3",
+      "len": 2.53,
+      "text": "Внимание! Вопрос на знание рынка аренды!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-video-ivanovo-q-svetlana.mp3",
+      "len": 2.39,
+      "text": "Чем закончится видео про съёмную квартиру в Иваново?"
+    },
+    "a": {
+      "file": "q/p3-video-ivanovo-a-svetlana.mp3",
+      "len": 2.18,
+      "text": "Просто выйдет на кухню! А вы чего ждали?"
+    },
+    "h": {
+      "file": "q/p3-video-ivanovo-h-svetlana.mp3",
+      "len": 2.5,
+      "text": "Внимание! Вопрос на знание рынка аренды!"
+    }
+  }
+}

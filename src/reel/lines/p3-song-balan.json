@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-song-balan-q-vivienne.mp3",
+      "len": 2.72,
+      "text": "В каком году у Дана Балана стрельнул хит «До утра»?"
+    },
+    "a": {
+      "file": "q/p3-song-balan-a-vivienne.mp3",
+      "len": 1.42,
+      "text": "В две тысячи одиннадцатом!"
+    },
+    "h": {
+      "file": "q/p3-song-balan-h-vivienne.mp3",
+      "len": 2.26,
+      "text": "Внимание! Вопрос для ценителей шаурмы!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-song-balan-q-andrew.mp3",
+      "len": 2.76,
+      "text": "В каком году у Дана Балана стрельнул хит «До утра»?"
+    },
+    "a": {
+      "file": "q/p3-song-balan-a-andrew.mp3",
+      "len": 1.43,
+      "text": "В две тысячи одиннадцатом!"
+    },
+    "h": {
+      "file": "q/p3-song-balan-h-andrew.mp3",
+      "len": 2.49,
+      "text": "Внимание! Вопрос для ценителей шаурмы!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-song-balan-q-remy.mp3",
+      "len": 2.63,
+      "text": "В каком году у Дана Балана стрельнул хит «До утра»?"
+    },
+    "a": {
+      "file": "q/p3-song-balan-a-remy.mp3",
+      "len": 1.46,
+      "text": "В две тысячи одиннадцатом!"
+    },
+    "h": {
+      "file": "q/p3-song-balan-h-remy.mp3",
+      "len": 2.43,
+      "text": "Внимание! Вопрос для ценителей шаурмы!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-song-balan-q-svetlana.mp3",
+      "len": 2.6,
+      "text": "В каком году у Дана Балана стрельнул хит «До утра»?"
+    },
+    "a": {
+      "file": "q/p3-song-balan-a-svetlana.mp3",
+      "len": 1.36,
+      "text": "В две тысячи одиннадцатом!"
+    },
+    "h": {
+      "file": "q/p3-song-balan-h-svetlana.mp3",
+      "len": 2.41,
+      "text": "Внимание! Вопрос для ценителей шаурмы!"
+    }
+  }
+}

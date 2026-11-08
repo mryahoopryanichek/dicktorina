@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-video-ufc-q-vivienne.mp3",
+      "len": 2.92,
+      "text": "Парню прислали контракт UFC. Что он с ним сделает?"
+    },
+    "a": {
+      "file": "q/p3-video-ufc-a-vivienne.mp3",
+      "len": 2.15,
+      "text": "Помочится на него! Вот и все переговоры."
+    },
+    "h": {
+      "file": "q/p3-video-ufc-h-vivienne.mp3",
+      "len": 2.5,
+      "text": "Внимание! Вопрос на знание спортивного права!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-video-ufc-q-andrew.mp3",
+      "len": 2.82,
+      "text": "Парню прислали контракт UFC. Что он с ним сделает?"
+    },
+    "a": {
+      "file": "q/p3-video-ufc-a-andrew.mp3",
+      "len": 2.23,
+      "text": "Помочится на него! Вот и все переговоры."
+    },
+    "h": {
+      "file": "q/p3-video-ufc-h-andrew.mp3",
+      "len": 2.51,
+      "text": "Внимание! Вопрос на знание спортивного права!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-video-ufc-q-remy.mp3",
+      "len": 2.98,
+      "text": "Парню прислали контракт UFC. Что он с ним сделает?"
+    },
+    "a": {
+      "file": "q/p3-video-ufc-a-remy.mp3",
+      "len": 2.31,
+      "text": "Помочится на него! Вот и все переговоры."
+    },
+    "h": {
+      "file": "q/p3-video-ufc-h-remy.mp3",
+      "len": 2.64,
+      "text": "Внимание! Вопрос на знание спортивного права!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-video-ufc-q-svetlana.mp3",
+      "len": 2.78,
+      "text": "Парню прислали контракт UFC. Что он с ним сделает?"
+    },
+    "a": {
+      "file": "q/p3-video-ufc-a-svetlana.mp3",
+      "len": 2.09,
+      "text": "Помочится на него! Вот и все переговоры."
+    },
+    "h": {
+      "file": "q/p3-video-ufc-h-svetlana.mp3",
+      "len": 2.58,
+      "text": "Внимание! Вопрос на знание спортивного права!"
+    }
+  }
+}

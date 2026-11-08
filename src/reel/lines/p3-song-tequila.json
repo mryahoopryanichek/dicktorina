@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-song-tequila-q-vivienne.mp3",
+      "len": 2.28,
+      "text": "Часть куплета какой песни загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-tequila-a-vivienne.mp3",
+      "len": 1.79,
+      "text": "Валерий Меладзе, «Текила-любовь»!"
+    },
+    "h": {
+      "file": "q/p3-song-tequila-h-vivienne.mp3",
+      "len": 2.4,
+      "text": "Внимание! Вопрос на знание ракообразных!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-song-tequila-q-andrew.mp3",
+      "len": 2.44,
+      "text": "Часть куплета какой песни загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-tequila-a-andrew.mp3",
+      "len": 1.77,
+      "text": "Валерий Меладзе, «Текила-любовь»!"
+    },
+    "h": {
+      "file": "q/p3-song-tequila-h-andrew.mp3",
+      "len": 2.37,
+      "text": "Внимание! Вопрос на знание ракообразных!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-song-tequila-q-remy.mp3",
+      "len": 2.26,
+      "text": "Часть куплета какой песни загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-tequila-a-remy.mp3",
+      "len": 1.81,
+      "text": "Валерий Меладзе, «Текила-любовь»!"
+    },
+    "h": {
+      "file": "q/p3-song-tequila-h-remy.mp3",
+      "len": 2.44,
+      "text": "Внимание! Вопрос на знание ракообразных!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-song-tequila-q-svetlana.mp3",
+      "len": 2.28,
+      "text": "Часть куплета какой песни загадана картинками?"
+    },
+    "a": {
+      "file": "q/p3-song-tequila-a-svetlana.mp3",
+      "len": 1.78,
+      "text": "Валерий Меладзе, «Текила-любовь»!"
+    },
+    "h": {
+      "file": "q/p3-song-tequila-h-svetlana.mp3",
+      "len": 2.51,
+      "text": "Внимание! Вопрос на знание ракообразных!"
+    }
+  }
+}

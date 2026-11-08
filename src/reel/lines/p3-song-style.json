@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-song-style-q-vivienne.mp3",
+      "len": 1.73,
+      "text": "Строчки из какой песни мы загадали?"
+    },
+    "a": {
+      "file": "q/p3-song-style-a-vivienne.mp3",
+      "len": 1.81,
+      "text": "Потап и Настя, «Стиль собачки»!"
+    },
+    "h": {
+      "file": "q/p3-song-style-h-vivienne.mp3",
+      "len": 2.43,
+      "text": "Внимание! Вопрос для французских бульдогов!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-song-style-q-andrew.mp3",
+      "len": 1.8,
+      "text": "Строчки из какой песни мы загадали?"
+    },
+    "a": {
+      "file": "q/p3-song-style-a-andrew.mp3",
+      "len": 1.76,
+      "text": "Потап и Настя, «Стиль собачки»!"
+    },
+    "h": {
+      "file": "q/p3-song-style-h-andrew.mp3",
+      "len": 2.31,
+      "text": "Внимание! Вопрос для французских бульдогов!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-song-style-q-remy.mp3",
+      "len": 1.77,
+      "text": "Строчки из какой песни мы загадали?"
+    },
+    "a": {
+      "file": "q/p3-song-style-a-remy.mp3",
+      "len": 1.89,
+      "text": "Потап и Настя, «Стиль собачки»!"
+    },
+    "h": {
+      "file": "q/p3-song-style-h-remy.mp3",
+      "len": 2.61,
+      "text": "Внимание! Вопрос для французских бульдогов!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-song-style-q-svetlana.mp3",
+      "len": 1.8,
+      "text": "Строчки из какой песни мы загадали?"
+    },
+    "a": {
+      "file": "q/p3-song-style-a-svetlana.mp3",
+      "len": 1.78,
+      "text": "Потап и Настя, «Стиль собачки»!"
+    },
+    "h": {
+      "file": "q/p3-song-style-h-svetlana.mp3",
+      "len": 2.64,
+      "text": "Внимание! Вопрос для французских бульдогов!"
+    }
+  }
+}

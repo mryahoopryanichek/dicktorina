@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-lr-volga-q-vivienne.mp3",
+      "len": 1.87,
+      "text": "На какой из картинок изображена Волга?"
+    },
+    "a": {
+      "file": "q/p3-lr-volga-a-vivienne.mp3",
+      "len": 3.15,
+      "text": "Левая! А на правой — Енисей. Такое знать надо."
+    },
+    "h": {
+      "file": "q/p3-lr-volga-h-vivienne.mp3",
+      "len": 1.98,
+      "text": "Внимание! Вопрос по гидрографии!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-lr-volga-q-andrew.mp3",
+      "len": 1.78,
+      "text": "На какой из картинок изображена Волга?"
+    },
+    "a": {
+      "file": "q/p3-lr-volga-a-andrew.mp3",
+      "len": 2.97,
+      "text": "Левая! А на правой — Енисей. Такое знать надо."
+    },
+    "h": {
+      "file": "q/p3-lr-volga-h-andrew.mp3",
+      "len": 1.96,
+      "text": "Внимание! Вопрос по гидрографии!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-lr-volga-q-remy.mp3",
+      "len": 2.02,
+      "text": "На какой из картинок изображена Волга?"
+    },
+    "a": {
+      "file": "q/p3-lr-volga-a-remy.mp3",
+      "len": 3.24,
+      "text": "Левая! А на правой — Енисей. Такое знать надо."
+    },
+    "h": {
+      "file": "q/p3-lr-volga-h-remy.mp3",
+      "len": 2.07,
+      "text": "Внимание! Вопрос по гидрографии!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-lr-volga-q-svetlana.mp3",
+      "len": 1.93,
+      "text": "На какой из картинок изображена Волга?"
+    },
+    "a": {
+      "file": "q/p3-lr-volga-a-svetlana.mp3",
+      "len": 3.25,
+      "text": "Левая! А на правой — Енисей. Такое знать надо."
+    },
+    "h": {
+      "file": "q/p3-lr-volga-h-svetlana.mp3",
+      "len": 2.13,
+      "text": "Внимание! Вопрос по гидрографии!"
+    }
+  }
+}

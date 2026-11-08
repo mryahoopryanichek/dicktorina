@@ -1,0 +1,70 @@
+{
+  "vivienne": {
+    "q": {
+      "file": "q/p3-lr-larin-q-vivienne.mp3",
+      "len": 2.83,
+      "text": "Кто встречался с этой девушкой? Ларин или Джарахов?"
+    },
+    "a": {
+      "file": "q/p3-lr-larin-a-vivienne.mp3",
+      "len": 1.9,
+      "text": "Оба! И Ларин, и Джарахов."
+    },
+    "h": {
+      "file": "q/p3-lr-larin-h-vivienne.mp3",
+      "len": 2.42,
+      "text": "Внимание! Вопрос на знание русского ютуба!"
+    }
+  },
+  "andrew": {
+    "q": {
+      "file": "q/p3-lr-larin-q-andrew.mp3",
+      "len": 2.62,
+      "text": "Кто встречался с этой девушкой? Ларин или Джарахов?"
+    },
+    "a": {
+      "file": "q/p3-lr-larin-a-andrew.mp3",
+      "len": 1.64,
+      "text": "Оба! И Ларин, и Джарахов."
+    },
+    "h": {
+      "file": "q/p3-lr-larin-h-andrew.mp3",
+      "len": 2.46,
+      "text": "Внимание! Вопрос на знание русского ютуба!"
+    }
+  },
+  "remy": {
+    "q": {
+      "file": "q/p3-lr-larin-q-remy.mp3",
+      "len": 2.86,
+      "text": "Кто встречался с этой девушкой? Ларин или Джарахов?"
+    },
+    "a": {
+      "file": "q/p3-lr-larin-a-remy.mp3",
+      "len": 1.86,
+      "text": "Оба! И Ларин, и Джарахов."
+    },
+    "h": {
+      "file": "q/p3-lr-larin-h-remy.mp3",
+      "len": 2.53,
+      "text": "Внимание! Вопрос на знание русского ютуба!"
+    }
+  },
+  "svetlana": {
+    "q": {
+      "file": "q/p3-lr-larin-q-svetlana.mp3",
+      "len": 2.83,
+      "text": "Кто встречался с этой девушкой? Ларин или Джарахов?"
+    },
+    "a": {
+      "file": "q/p3-lr-larin-a-svetlana.mp3",
+      "len": 1.93,
+      "text": "Оба! И Ларин, и Джарахов."
+    },
+    "h": {
+      "file": "q/p3-lr-larin-h-svetlana.mp3",
+      "len": 2.6,
+      "text": "Внимание! Вопрос на знание русского ютуба!"
+    }
+  }
+}
