@@ -12,3 +12,6 @@ public/media/
 
 # Озвучка вопросов — генерируется: python tools/voice.py questions (длины и тексты — src/reel/lines/)
 public/voices/q/
+
+# Модель Whisper — скачивается сама при первом запуске tools/words.py
+tools/models/
