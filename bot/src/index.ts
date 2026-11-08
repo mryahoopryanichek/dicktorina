@@ -25,6 +25,7 @@ const SOURCE_NAMES: Record<string, string> = {
 };
 
 const now = () => new Date().toISOString();
+const goalText = (env: Env) => Number(env.GOAL).toLocaleString('ru-RU'); // «10 000»
 
 async function tg(env: Env, method: string, body: unknown) {
   const r = await fetch(`https://api.telegram.org/bot${env.BOT_TOKEN}/${method}`, {
@@ -45,7 +46,7 @@ const send = (env: Env, chatId: number, text: string, buttons: Button[][] = []) 
 
 function buttons(env: Env): Button[][] {
   const invite = `https://t.me/${env.BOT_USERNAME}?start=fr`;
-  const pitch = 'Записываюсь на Dикторину — квиз не про знания, а про чёрный юмор и шутки ниже пояса. Наберём 5000 игроков — сделают. Го со мной!';
+  const pitch = 'Записываюсь на Dикторину — квиз не про знания, а про чёрный юмор и шутки ниже пояса. Наберём 10 000 игроков — сделают. Го со мной!';
   const share = `https://t.me/share/url?url=${encodeURIComponent(invite)}&text=${encodeURIComponent(pitch)}`;
   const rows: Button[][] = [];
   if (env.GROUP_LINK) rows.push([{text: 'Вступить в группу', url: env.GROUP_LINK}]);
@@ -83,7 +84,7 @@ async function stats(env: Env) {
     `SELECT COALESCE(source, 'без метки') AS s, COUNT(*) AS n FROM users GROUP BY s ORDER BY n DESC`,
   ).all<{s: string; n: number}>();
   return [
-    `Записалось: ${row?.n ?? 0} из ${env.GOAL}`,
+    `Записалось: ${row?.n ?? 0} из ${goalText(env)}`,
     `За сутки: ${row?.d1 ?? 0}, за неделю: ${row?.d7 ?? 0}`,
     '',
     'Откуда:',
@@ -113,9 +114,9 @@ async function onMessage(env: Env, m: Message) {
   const fresh = await upsert(env, u, source);
   const n = await total(env);
   const text1 = fresh
-    ? `Ты в списке — №${n} из ${env.GOAL}! 🙌\n\nКогда наберём ${env.GOAL} игроков, сделаем Dикторину и позовём тебя первым.` +
+    ? `Ты в списке — №${n} из ${goalText(env)}! 🙌\n\nКогда наберём ${goalText(env)} игроков, сделаем Dикторину и позовём тебя первым.` +
       (env.GROUP_LINK ? '\n\nА пока заходи в группу: там анонсы и вопросы из игры.' : '')
-    : `Ты уже в списке. Нас ${n} из ${env.GOAL} — зови друзей, так быстрее 😉`;
+    : `Ты уже в списке. Нас ${n} из ${goalText(env)} — зови друзей, так быстрее 😉`;
   await send(env, m.chat.id, text1, buttons(env));
   if (fresh && source === 'none') await send(env, m.chat.id, 'Откуда ты о нас узнал?', ASK_SOURCE);
 }

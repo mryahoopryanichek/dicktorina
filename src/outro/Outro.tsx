@@ -23,7 +23,7 @@ export type {VoiceId};
 
 export const CTA_TEXT = {
   question: ['Поиграл бы в такую', 'викторину?'],
-  voice: 'Поиграл бы в такую викторину? Если да, регистрируйся на сайте. Наберём пять тысяч игроков — сделаем!',
+  voice: 'Поиграл бы в такую викторину? Если да, регистрируйся на сайте. Наберём десять тысяч игроков — сделаем!',
   arrow: 'ссылка в профиле',
 };
 
@@ -137,7 +137,7 @@ const Cta = ({palette, voice, t}: {palette: Palette; voice: VoiceId; t: number})
             на сайте.
           </Reveal>
           <Reveal t={t} at={at(v.gather)}>
-            Наберём <span style={{background: fill, color: label, borderRadius: 14, padding: '0 14px'}}>5000</span>
+            Наберём <span style={{background: fill, color: label, borderRadius: 14, padding: '0 14px'}}>10&nbsp;000</span>
           </Reveal>
           <div>
             <Reveal t={t} at={at(v.gather) + 0.5} inline>
